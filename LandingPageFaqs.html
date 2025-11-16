@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SISVORA - FAQs</title>
+  <style>
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box
+    }
+    body{
+        font-family:Arial, sans-serif;
+        background:#2a2a2a
+    }
+    nav{
+        background:#f5d5b8;
+        padding:15px 60px;
+        display:flex;
+        justify-content:space-between;
+        align-items:center
+    }
+    .nav-logo{
+        display:flex;
+        align-items:center;
+        gap:10px;
+        cursor:pointer
+    }
+    .nav-logo svg{
+        width:35px;
+        height:35px
+    }
+    .nav-logo span{
+        color:#d64933;
+        font-weight:700;
+        font-size:16px
+    }
+    .nav-links{
+        display:flex;
+        gap:35px
+    }
+    .nav-links a{
+        color:#333;
+        text-decoration:none;
+        font-size:14px;
+        cursor:pointer;
+        transition:color .3s
+    }
+    .nav-links a:hover,.nav-links a.active{
+        color:#d64933
+    }
+    .nav-buttons{
+        display:flex;
+        gap:10px
+    }
+    .btn-login,.btn-register{
+        padding:8px 24px;
+        border-radius:20px;
+        font-size:13px;
+        font-weight:600;
+        cursor:pointer;
+        transition:all .3s;
+        border:2px solid #d64933;
+        text-decoration:none
+    }
+    .btn-login{
+        background:transparent;
+        color:#d64933
+    }
+    .btn-login:hover{
+        background:#d64933;
+        color:#fff
+    }
+    .btn-register{
+        background:#d64933;
+        color:#fff
+    }
+    .btn-register:hover{
+        background:#c03d29
+    }
+    .faqs{
+        background:linear-gradient(
+            to bottom right,#f5c4a0,#f5e6d3);
+            padding:70px 60px
+        }
+    .faqs-content{
+        max-width:900px;
+        margin:0 auto
+    }
+    .faqs-header{
+        text-align:center;
+        margin-bottom:50px
+    }
+    .faq-illustration{
+        font-size:100px;
+        margin-bottom:15px
+    }
+    .faqs-header h2{
+        font-size:28px;
+        color:#d64933;
+        margin-bottom:15px
+    }
+    .faq-item{
+        background:white;
+        padding:25px;
+        border-radius:8px;
+        margin-bottom:20px;
+        transition:transform .3s
+    }
+    .faq-item:hover{
+        transform:translateY(-5px)
+    }
+    .faq-question{
+        font-size:15px;
+        font-weight:bold;color:#d64933;
+        margin-bottom:12px
+    }
+    .faq-answer{
+        font-size:13px;
+        color:#666;
+        line-height:1.7
+    }
+    footer{
+        background:#f5d5b8;
+        padding:35px 60px
+    }
+    .footer-content{
+        max-width:1100px;
+        margin:0 auto;
+        display:flex;
+        justify-content:space-between;
+        align-items:center
+    }
+    .footer-logo{
+        display:flex;
+        align-items:center;
+        gap:10px
+    }
+    .footer-logo svg{
+        width:35px;
+        height:35px
+    }
+    .footer-logo span{
+        color:#d64933;
+        font-weight:700;
+        font-size:16px
+    }
+    .notification{
+        position:fixed;
+        top:20px;
+        right:20px;
+        background:#4caf50;
+        color:#fff;
+        padding:15px 25px;
+        border-radius:8px;
+        box-shadow:0 4px 12px rgba(0,0,0,.2);
+        z-index:1000;
+        display:none
+    }
+    .notification.show{
+        display:block;
+        animation:slideIn .3s
+    }
+    @keyframes slideIn{from{
+        transform:translateX(400px);
+        opacity:0}to{transform:translateX(0);
+        opacity:1}
+    }
+    @media(max-width:768px){nav{
+        padding:15px 20px;
+        flex-direction:column;
+        gap:15px
+    }.nav-links{
+        flex-wrap:wrap;
+        gap:15px
+    }.faqs{
+        padding:50px 20px
+    }
+    }
+
+  </style>
+</head>
+<body>
+  <div id="notification" class="notification"></div>
+
+  <nav>
+    <div class="nav-logo" onclick="location.href='LandingPageHome.html'">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="45" fill="none" stroke="#d64933" stroke-width="3"/>
+        <circle cx="50" cy="35" r="12" fill="#d64933"/>
+        <path d="M 30 70 Q 50 55 70 70" fill="none" stroke="#d64933" stroke-width="3"/>
+        <path d="M 65 45 L 75 35 L 85 45" fill="none" stroke="#d64933" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span>SISVORA</span>
+    </div>
+
+    <div class="nav-links">
+      <a id="nav-home" href="LandingPageHome.html">Home</a>
+      <a id="nav-about" href="LandingPageAbout.html">About</a>
+      <a id="nav-contact" href="LandingPageContact.html">Contact Us</a>
+      <a id="nav-faqs" href="LandingPageFaqs.html">FAQs</a>
+    </div>
+
+    <div class="nav-buttons">
+      <a class="btn-login" href="loginuser.html" ; return false;">Login</a>
+      <a class="btn-register" href="register.html" ; return false;">Register</a>
+    </div>
+  </nav>
+
+  <main id="faqs-page" class="faqs">
+    <div class="faqs-content">
+      <div class="faqs-header">
+        <div class="faq-illustration">❓</div>
+        <h2>FREQUENTLY ASKED QUESTIONS</h2>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">How can I be sure that my vote and information are safe on this platform?</div>
+        <div class="faq-answer">
+          Your data and participation are secured on this platform. The online voting system is built on the highest security protocol and standards.
+          It also uses advanced cryptographic methods to protect user security and privacy.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">How long does it take for my vote to be counted?</div>
+        <div class="faq-answer">
+          This is an online voting system that speeds up the ballot counting process and returns voting instantly after they are submitted.
+          Once you finish casting your vote, it is immediately processed, tabulated, and added to the final tally.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">How can I receive election date reminders?</div>
+        <div class="faq-answer">
+          The system will provide reminders about upcoming election dates directly to the user. These reminders can be set up via email and dashboard.
+          This online voting system also allows you to set a calendar view of all upcoming elections, which can be synced to your personal device.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">Would my vote be kept private and secure?</div>
+        <div class="faq-answer">
+          Yes, your vote will be kept secret and secured on the online voting system. The system is designed to protect the integrity of the vote and ensure that the results are accurate and untampered with.
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-logo">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="50" r="45" fill="none" stroke="#d64933" stroke-width="3"/>
+          <circle cx="50" cy="35" r="12" fill="#d64933"/>
+          <path d="M 30 70 Q 50 55 70 70" fill="none" stroke="#d64933" stroke-width="3"/>
+          <path d="M 65 45 L 75 35 L 85 45" fill="none" stroke="#d64933" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>SISVORA</span>
+      </div>
+
+      <div class="footer-links">
+        <a href="#" onclick="showNotification('Product info coming soon!'); return false;">Product</a>
+        <a href="#" onclick="showNotification('Legal info coming soon!'); return false;">Legal</a>
+        <a href="LandingPageContact.html">Contact Us</a>
+      </div>
+
+      <div class="footer-social">
+        <a class="social-icon" href="#" onclick="showNotification('Email: info@sisvora.com'); return false;">📧</a>
+        <a class="social-icon" href="#" onclick="showNotification('LinkedIn coming soon!'); return false;">🔗</a>
+        <a class="social-icon" href="#" onclick="showNotification('Instagram coming soon!'); return false;">📱</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function showNotification(message) {
+      const notification = document.getElementById('notification');
+      notification.textContent = message;
+      notification.classList.add('show');
+      setTimeout(() => notification.classList.remove('show'), 3000);
+    }
+
+    (function markActive(){
+      const path = location.pathname.split('/').pop() || 'index.html';
+      const maps = {
+        'LandingPageHome.html': 'nav-home',
+        '': 'nav-home',
+        'LandingPageAbout.html': 'nav-about',
+        'LandingPageContact.html': 'nav-contact',
+        'LandingPageFaqs.html': 'nav-faqs'
+      };
+      const id = maps[path];
+      if (id) document.getElementById(id).classList.add('active');
+    })();
+  </script>
+</body>
+</html>
