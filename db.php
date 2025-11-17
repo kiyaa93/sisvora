@@ -1,23 +1,15 @@
 <?php
-// db.php
-declare(strict_types=1);
-
-define('DB_HOST', '127.0.0.1');
-define('DB_NAME', 'sisvora_db');
-define('DB_USER', 'root');
-define('DB_PASS', ''); // set password jika ada
-define('DB_CHARSET', 'utf8mb4');
-
-$options = [
-    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-];
+// db.php - Koneksi Database menggunakan PDO
+$host = 'localhost';
+$dbname = 'sisvora_db';
+$username = 'root';
+$password = '';
 
 try {
-    $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=" . DB_CHARSET;
-    $pdo = new PDO($dsn, DB_USER, DB_PASS, $options);
-} catch (PDOException $e) {
-    // Jangan tampilkan error detail di production
-    echo "Koneksi database gagal: " . htmlspecialchars($e->getMessage());
-    exit;
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+} catch(PDOException $e) {
+    die("Koneksi database gagal: " . $e->getMessage());
 }
+?>

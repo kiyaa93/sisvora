@@ -44,6 +44,7 @@
             font-size: 1.8rem;
             cursor: pointer;
             transition: .3s ease;
+            margin-right: -10px;
         }
 
         .navbar-toggle-btn:hover {
@@ -58,13 +59,14 @@
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 1rem;
         }
         
         .logo-img {
             height: 45px;   /* sesuaikan */
             width: auto;
             object-fit: contain;
+            transform: scale(1.5);
         }
         
         .navbar .search-bar {
@@ -124,7 +126,6 @@
             box-shadow: 2px 0 4px rgba(0,0,0,0.1);
             transition: transform 0.3s ease;
             z-index: 999;
-            overflow-y: auto;
         }
         
         .sidebar-wrapper.collapsed {

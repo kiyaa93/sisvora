@@ -1,11 +1,3 @@
-<?php
-// candidate-data.php
-require_once 'db.php';
-
-$stmt = $pdo->query("SELECT * FROM candidates ORDER BY urutan_kandidat ASC, id ASC");
-$candidate = $stmt->fetchAll();
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>

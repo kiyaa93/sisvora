@@ -117,27 +117,27 @@ body {
             <div class="row mb-3">
                 <div class="col-md-4 label-title">Urutan Kandidat :</div>
                 <div class="col-md-8">
-                    <input type="number" name="order" class="form-control"
-                           value="<?= $editData['order'] ?? '' ?>" required>
+                    <input type="number" name="urutan_kandidat" class="form-control"
+                           value="<?= $editData['urutan_kandidat'] ?? '' ?>" required>
                 </div>
             </div>
 
             <div class="row mb-3">
                 <div class="col-md-4 label-title">Nama Kandidat :</div>
                 <div class="col-md-8">
-                    <input type="text" name="name" class="form-control"
-                           value="<?= $editData['name'] ?? '' ?>" required>
+                    <input type="text" name="nama_kandidat" class="form-control"
+                           value="<?= $editData['nama_kandidat'] ?? '' ?>" required>
                 </div>
             </div>
 
             <div class="row mb-3">
                 <div class="col-md-4 label-title">Jenis Kandidat :</div>
                 <div class="col-md-8 d-flex gap-3 mt-2">
-                    <label><input type="radio" name="jenis" value="Ketua"
-                        <?= isset($editData['jenis']) && $editData['jenis']=="Ketua" ? "checked" : "" ?> required> Ketua</label>
+                    <label><input type="radio" name="jenis_kandidat" value="Ketua"
+                        <?= isset($editData['jenis_kandidat']) && $editData['jenis_kandidat']=="Ketua" ? "checked" : "" ?> required> Ketua</label>
 
-                    <label><input type="radio" name="jenis" value="Wakil Ketua"
-                        <?= isset($editData['jenis']) && $editData['jenis']=="Wakil Ketua" ? "checked" : "" ?>> Wakil Ketua</label>
+                    <label><input type="radio" name="jenis_kandidat" value="Wakil Ketua"
+                        <?= isset($editData['jenis_kandidat']) && $editData['jenis_kandidat']=="Wakil Ketua" ? "checked" : "" ?>> Wakil Ketua</label>
                 </div>
             </div>
 
