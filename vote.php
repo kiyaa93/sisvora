@@ -34,6 +34,7 @@
             position: fixed;
             left: 0;
             width: 100%;
+            display: 
             z-index: 2000;
             height: 80px;
         }

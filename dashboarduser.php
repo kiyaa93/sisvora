@@ -13,7 +13,7 @@
             --orange-dark: #8B4513;
             --beige-bg: #F5E6D3;
             --beige-sidebar: #E8D4BF;
-
+        }
         * {
             margin: 0;
             padding: 0;
@@ -31,10 +31,11 @@
             position: fixed;
             left: 0;
             top: 80px;
-            height: calc(100vh - 76px);
+            height: 100vh;
             width: 280px;
             background-color: var(--beige-sidebar);
             border-top: 1px solid rgba(0,0,0,0.08);
+            border-top-right-radius: 50px;
             box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
             transition: transform 0.3s ease;
             z-index: 999;
@@ -133,9 +134,8 @@
 
         /* Navbar Styles */
         .navbar {
-            background-color: var(--beige-sidebar);
+            background-color: var(--beige-bg);
             padding: 1rem 2rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             position: fixed;
             left: 0;
             width: 100%;
@@ -143,20 +143,21 @@
         }
         
         .navbar .logo {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             margin-left: 8px;
             font-weight: bold;
             color: var(--orange-primary);
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 1rem;
         }
 
         .logo-img {
             height: 45px;   /* sesuaikan */
             width: auto;
             object-fit: contain;
+            transform: scale(1.5); 
         }
 
         .navbar .search-bar {
@@ -207,8 +208,8 @@
 
         .content-area {
             margin-left: 280px;
-            padding: 2rem;
-            padding-top: 110px;
+            padding: 2.3rem;
+            padding-top: 80px;
             transition: margin-left 0.3s ease;
             min-height: calc(100vh - 76px);
         }
@@ -506,7 +507,7 @@
                         <button class="btn-vote">Vote Now</button>
                     </div>
                     <div class="election-illustration">
-                        <img src="img/v1.png" alt="Election Illustration">
+                        <img src="img/d1.png" alt="Election Illustration">
                     </div>
                 </div>
 
