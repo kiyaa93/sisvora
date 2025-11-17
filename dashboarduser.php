@@ -142,6 +142,20 @@
             z-index: 2000;
         }
         
+        .navbar-toggle-btn {
+            background: none;
+            border: none;
+            color: var(--orange-primary);
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: .3s ease;
+        }
+
+        .navbar-toggle-btn:hover {
+            color: var(--orange-dark);
+            transform: scale(1.1);
+        }
+
         .navbar .logo {
             font-size: 1.5rem;
             margin-left: 8px;
@@ -418,6 +432,80 @@
                 transform: translateX(0);
             }
         }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.35);
+            backdrop-filter: blur(3px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+
+        .modal-box {
+            width: 450px;
+            background: #ffff;
+            padding: 30px 35px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .modal-icon {
+            font-size: 55px;
+            color: #c45a09;
+            margin-bottom: 10px;
+        }
+
+        .modal-box h2 {
+            font-size: 26px;
+            margin-bottom: 8px;
+            color: #3d2b1f;
+        }
+
+        .modal-box p {
+            color: #6f5845;
+            margin-bottom: 25px;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .btn-cancel {
+            padding: 10px 25px;
+            border: 2px solid #c45a09;
+            color: #c45a09;
+            background: transparent;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .btn-confirm {
+            padding: 10px 25px;
+            border: none;
+            color: white;
+            background: #c45a09;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .btn-cancel:hover {
+            background: rgba(196, 90, 9, 0.08);
+        }
+
+        .btn-confirm:hover {
+            background: #a24907;
+        }
     </style>
 </head>
 <body>
@@ -430,37 +518,37 @@
             <div class="user-status">Student, Unvoted</div>
         </div>
 
-        <div class="menu">
-            <div class="menu-item active" onclick="go('dashboarduser')">
-                <span class="menu-icon">🏠</span>
-                <span>Dashboard</span>
-            </div>
-            <div class="menu-item" onclick="go('vote')">
-                <span class="menu-icon">🗳️</span>
-                <span>Vote</span>
-            </div>
-            <div class="menu-item" onclick="go('votersguad')">
-                <span class="menu-icon">📋</span>
-                <span>Voters Guideline</span>
-            </div>
-            <div class="menu-item" onclick="go('settinguser')">
-                <span class="menu-icon">⚙️</span>
-                <span>Settings</span>
-            </div>
-        </div>
+        <nav class="sidebar-menu">
+            <a href="dashboard.php" class="menu-item active"><i class="fas fa-home"></i><span>Dashboard</span></a>
+            <a href="voters-data.php" class="menu-item"><i class="fas fa-users"></i><span>Voters Data</span></a>
+            <a href="candidate-data.php" class="menu-item"><i class="fas fa-user-tie"></i><span>Candidate Data</span></a>
+            <a href="election-settings.php" class="menu-item"><i class="fas fa-cog"></i><span>Election Settings</span></a>
+            <a href="result&report.php" class="menu-item"><i class="fas fa-chart-bar"></i><span>Results & Report</span></a>
+            <div class="menu-separator"></div>
+            <a href="#" id="logoutMenu" class="menu-item"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
+        </nav>
+    </div>
 
-        <div class="logout" onclick="logout()">
-            <span class="menu-icon">🚪</span>
-            <span>Logout</span>
+    <div id="logoutModal" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-icon">⚠️</div>
+
+            <h2>Are you sure to leave?</h2>
+            <p>You can always login back any time.</p>
+
+            <div class="modal-actions">
+                <button id="cancelLogout" class="btn-cancel">CANCEL</button>
+                <button id="confirmLogout" class="btn-confirm">YES, I'M SURE</button>
+            </div>
         </div>
     </div>
 
     <!-- Main Content -->
-    <div class="main-content">
+    <div class="main-content" id="mainContent ">
 
         <nav class="navbar">
             <div class="container-fluid">
-                <button class="btn d-md-none me-2" type="button" onclick="toggleSidebar()">
+                <button class="navbar-toggle-btn me-3" onclick="toggleSidebar()">
                     <i class="fas fa-bars"></i>
                 </button>
                 <a href="#" class="logo">
@@ -590,28 +678,30 @@
         
         setInterval(updateTimer, 1000);
 
-        function logout() {
-            if (confirm('Are you sure you want to logout?')) {
-                alert('Logged out successfully!');
-            }
-        }
+        // SHOW MODAL
+        const logoutMenu = document.getElementById("logoutMenu"); // tombol logout kamu
+        const logoutModal = document.getElementById("logoutModal");
+        const cancelLogout = document.getElementById("cancelLogout");
+        const confirmLogout = document.getElementById("confirmLogout");
 
-        document.getElementById("notifBtn").addEventListener("click", () => {
-            document.getElementById("notifOverlay").style.display = "block";
-            document.getElementById("notifPanel").style.right = "0";
+        logoutMenu.addEventListener("click", function(e) {
+            e.preventDefault();
+            logoutModal.style.display = "flex";
         });
 
-        document.querySelector(".notif-close").addEventListener("click", () => {
-            closeNotifPanel();
+        cancelLogout.addEventListener("click", function() {
+            logoutModal.style.display = "none";
         });
 
-        document.getElementById("notifOverlay").addEventListener("click", () => {
-            closeNotifPanel();
+        // Proses logout
+        confirmLogout.addEventListener("click", function() {
+            window.location.href = "/logout"; 
         });
 
-        function closeNotifPanel() {
-            document.getElementById("notifOverlay").style.display = "none";
-            document.getElementById("notifPanel").style.right = "-380px";
+        // Sidebar Toggle
+        function toggleSidebar() {
+            document.getElementById("sidebar").classList.toggle("collapsed");
+            document.getElementById("mainContent").classList.toggle("expanded");
         }
     </script>
 

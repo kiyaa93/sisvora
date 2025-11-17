@@ -61,8 +61,10 @@
             gap: 0.5rem;
         }
         
-        .navbar .logo i {
-            font-size: 1.8rem;
+        .logo-img {
+            height: 45px;   /* sesuaikan */
+            width: auto;
+            object-fit: contain;
         }
         
         .navbar .search-bar {
@@ -491,7 +493,7 @@
                 <i class="fas fa-bars"></i>
             </button>
             <a href="#" class="logo">
-                <i class="fas fa-vote-yea"></i>
+                <img src="img/logo.png" alt="SISVORA Logo" class="logo-img">
                 <span>SISVORA</span>
             </a>
             <div class="search-bar mx-4 d-none d-md-block">
