@@ -436,7 +436,7 @@
                 <span>Dashboard</span>
             </div>
             <div class="menu-item" onclick="go('vote')">
-                <span class="menu-icon">🗳</span>
+                <span class="menu-icon">🗳️</span>
                 <span>Vote</span>
             </div>
             <div class="menu-item" onclick="go('votersguad')">
@@ -444,7 +444,7 @@
                 <span>Voters Guideline</span>
             </div>
             <div class="menu-item" onclick="go('settinguser')">
-                <span class="menu-icon">⚙</span>
+                <span class="menu-icon">⚙️</span>
                 <span>Settings</span>
             </div>
         </div>
@@ -585,7 +585,7 @@
             }
             
             timerEl.textContent = 
-                ${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')};
+                `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
         }
         
         setInterval(updateTimer, 1000);

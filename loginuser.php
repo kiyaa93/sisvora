@@ -134,7 +134,7 @@
     <p>Please login to vote for your preferred candidate.</p>
 </div>
 
-<form method="POST" action="proses_loginuser.php">
+<form method="POST" action="dashboarduser.php">
 
     <div class="form-group">
         <label for="nis">NIS</label>
