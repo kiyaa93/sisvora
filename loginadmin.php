@@ -130,10 +130,10 @@
 
 <div class="title">
     <h2>Welcome Back!</h2>
-    <p>Admin login page.</p>
+    <p>Admin Login Page.</p>
 </div>
 
-<form method="POST" action="proses_loginadmin.php">
+<form method="POST" action="dashboard.php">
 
     <div class="form-group">
         <label for="adminID">ADMIN ID</label>

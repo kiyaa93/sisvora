@@ -1,11 +1,3 @@
-<?php
-// KONEKSI DATABASE
-require 'config.php';
-
-// Ambil data election untuk ditampilkan (optional)
-$query = mysqli_query($conn, "SELECT * FROM elections ORDER BY id DESC");
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -61,9 +53,9 @@ $query = mysqli_query($conn, "SELECT * FROM elections ORDER BY id DESC");
         text-decoration: none;
         display: flex;
         align-items: center;
-        gap: 0.5rem;
+        gap: 1rem;
     }
-    .navbar .logo i { font-size: 1.8rem; }
+    .logo-img { height: 45px;   /* sesuaikan */ width: auto; object-fit: contain; transform: scale(1.5); }
     .navbar .search-bar { max-width: 600px; flex-grow: 1; }
     .navbar .search-bar input {
         border-radius: 25px; border: 2px solid #ddd; padding: 0.6rem 1.5rem;
@@ -87,7 +79,7 @@ $query = mysqli_query($conn, "SELECT * FROM elections ORDER BY id DESC");
         position: fixed; left: 0; top: 76px; height: calc(100vh - 76px);
         width: 280px; background-color: var(--beige-sidebar);
         box-shadow: 2px 0 4px rgba(0,0,0,0.1); transition: transform 0.3s ease;
-        z-index: 999; overflow-y: auto;
+        z-index: 999;
     }
     .sidebar-wrapper.collapsed { transform: translateX(-280px); }
     .sidebar.collapsed { width: 85px; }
@@ -252,7 +244,10 @@ $query = mysqli_query($conn, "SELECT * FROM elections ORDER BY id DESC");
         <button class="navbar-toggle-btn me-3" onclick="toggleSidebar()">
             <i class="fas fa-bars"></i>
         </button>
-        <a href="#" class="logo"><i class="fas fa-vote-yea"></i><span>SISVORA</span></a>
+        <a href="#" class="logo">
+            <img src="img/logo.png" alt="SISVORA Logo" class="logo-img">
+            <span>SISVORA</span>
+        </a>
         <div class="search-bar mx-4 d-none d-md-block">
             <input type="search" class="form-control" placeholder="🔍 Search...">
         </div>
@@ -302,23 +297,6 @@ $query = mysqli_query($conn, "SELECT * FROM elections ORDER BY id DESC");
     <h3 class="fw-bold mb-4">Available Election</h3>
 
     <div class="row g-4">
-        <!-- LOOPING DATA ELECTION -->
-        <?php while($row = mysqli_fetch_assoc($query)) { ?>
-
-        <div class="col-md-6">
-            <div class="election-card">
-                <div>
-                    <small class="text-muted">Ongoing Elections</small>
-                    <h5 class="fw-bold mt-1"><?= $row['election_name']; ?></h5>
-                    <form action="delete-election.php" method="POST">
-                        <input type="hidden" name="id" value="<?= $row['id']; ?>">
-                        <button class="btn-delete mt-2" onclick="return confirm('Delete election?')">Delete</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <?php } ?>
-
         <!-- CREATE NEW -->
         <div class="col-md-6">
             <div class="create-card" id="openElectionModal">
@@ -394,7 +372,7 @@ document.getElementById("openElectionModal").addEventListener("click", function 
 
         // Proses logout
         confirmLogout.addEventListener("click", function() {
-            window.location.href = "/logout"; 
+            window.location.href = "logout.php"; 
         });
 
 // SIDEBAR RESPONSIVE

@@ -60,11 +60,14 @@
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 1rem;
         }
         
-        .navbar .logo i {
-            font-size: 1.8rem;
+        .logo-img {
+            height: 45px;   /* sesuaikan */
+            width: auto;
+            object-fit: contain;
+            transform: scale(1.5);
         }
         
         .navbar .search-bar {
@@ -124,7 +127,6 @@
             box-shadow: 2px 0 4px rgba(0,0,0,0.1);
             transition: transform 0.3s ease;
             z-index: 999;
-            overflow-y: auto;
         }
         
         .sidebar-wrapper.collapsed {
@@ -315,7 +317,7 @@
                 <i class="fas fa-bars"></i>
             </button>
             <a href="#" class="logo">
-                <i class="fas fa-vote-yea"></i>
+                <img src="img/logo.png" alt="SISVORA Logo" class="logo-img">
                 <span>SISVORA</span>
             </a>
             <div class="search-bar mx-4 d-none d-md-block">
@@ -435,7 +437,7 @@
 
         // Proses logout
         confirmLogout.addEventListener("click", function() {
-            window.location.href = "/logout"; 
+            window.location.href = "logout.php"; 
         });
   </script>
 

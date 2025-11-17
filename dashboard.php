@@ -655,7 +655,7 @@
 
         // Proses logout
         confirmLogout.addEventListener("click", function() {
-            window.location.href = "/logout"; 
+            window.location.href = "logout.php"; 
         });
 
         // Sidebar Toggle
