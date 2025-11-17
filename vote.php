@@ -27,89 +27,140 @@
             min-height: 100vh;
         }
 
-        /* ---------------- NAVBAR FIXED ---------------- */
         .navbar {
-            background-color: var(--beige-sidebar);
-            padding: 0.8rem 2rem;
+            background-color: #E8D4BF;
+            padding: 1rem 2rem;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             position: fixed;
-            top: 0;
             left: 0;
             width: 100%;
             z-index: 2000;
+            height: 80px;
+        }
 
+        .navbar .container-fluid {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 20px;
+            height: 100%;
         }
 
-        .navbar .logo {
+        .logo {
+            font-size: 1.5rem;
+            margin-left: 8px;
+            font-weight: bold;
+            color: #D2691E;
+            text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 10px;
-            text-decoration: none;
-            color: var(--orange-primary);
-            font-size: 1.4rem;
-            font-weight: bold;
+            gap: 0.5rem;
         }
 
         .logo-img {
-            height: 40px;
-            width: auto;
+            height: 45px;
             object-fit: contain;
         }
 
         .search-bar {
-            flex: 1;
-            display: flex;
-            justify-content: center;
+            margin: 0 !important;
         }
 
         .search-bar input {
-            width: 380px;
-            padding: 10px 18px;
             border-radius: 25px;
             border: 2px solid #ddd;
+            padding: 0.6rem 1.5rem;
         }
-
         .search-bar input:focus {
-            border-color: var(--orange-primary);
-            outline: none;
-        }
-
-        .nav-icons {
-            display: flex;
-            align-items: center;
-            gap: 20px;
+            border-color: #D2691E;
+            box-shadow: 0 0 0 0.2rem rgba(210,105,30,0.25);
         }
 
         .icon-btn {
             background: none;
             border: none;
+            color: #D2691E;
             font-size: 1.5rem;
             cursor: pointer;
-            color: var(--orange-primary);
+            transition: all 0.3s;
             position: relative;
         }
-
         .icon-btn:hover {
-            color: var(--orange-dark);
+            color: #8B4513;
+            transform: scale(1.1);
         }
 
         .notification-badge {
             position: absolute;
-            top: -6px;
-            right: -6px;
-            background: #dc3545;
+            top: -5px;
+            right: -5px;
+            background-color: #dc3545;
             color: white;
-            width: 17px;
-            height: 17px;
             border-radius: 50%;
-            font-size: 10px;
+            width: 18px;
+            height: 18px;
+            font-size: 0.7rem;
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+
+        /* OVERLAY */
+        .notif-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.2);
+            display: none;
+            backdrop-filter: blur(2px);
+            z-index: 2000;
+        }
+
+        /* PANEL */
+        .notif-panel {
+            position: fixed;
+            top: 0;
+            right: -380px;
+            width: 350px;
+            height: 100%;
+            background: #fff;
+            box-shadow: -3px 0 15px rgba(0,0,0,.15);
+            padding: 20px;
+            z-index: 2100;
+            transition: right .3s ease;
+            overflow-y: auto;
+            border-left: 1px solid #eee;
+        }
+
+        /* PANEL CONTENT */
+        .notif-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .notif-close {
+            cursor: pointer;
+            font-size: 22px;
+            padding: 0 5px;
+        }
+
+        .notif-item {
+            display: flex;
+            gap: 12px;
+            padding: 12px;
+            background: #fff7f0;
+            border-radius: 10px;
+            border: 1px solid #eee;
+            margin-bottom: 12px;
+        }
+
+        .notif-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
         }
 
         /* ---------------- SIDEBAR ---------------- */
@@ -273,27 +324,63 @@
 </head>
 
 <body>
+<nav class="navbar">
+    <div class="container-fluid">
+        <button class="btn d-md-none me-2" type="button" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+        </button>
 
-    <!-- NAVBAR -->
-    <nav class="navbar">
         <a href="#" class="logo">
-            <img src="img/logo.png" class="logo-img" alt="SISVORA Logo">
+            <img src="img/logo.png" alt="SISVORA Logo" class="logo-img">
             <span>SISVORA</span>
         </a>
 
-        <div class="search-bar">
-            <input type="text" placeholder="🔍 Search...">
+        <div class="search-bar d-none d-md-block">
+            <input type="search" class="form-control" placeholder="🔍 Search...">
         </div>
 
-        <div class="nav-icons">
-            <button class="icon-btn">
+        <div class="d-flex gap-3 align-items-center">
+            <button class="icon-btn" id="notifBtn" title="Notifications">
                 <i class="fas fa-bell"></i>
                 <span class="notification-badge">3</span>
             </button>
-            <button class="icon-btn"><i class="fas fa-question-circle"></i></button>
-            <button class="icon-btn"><i class="fas fa-user-circle"></i></button>
+            <button class="icon-btn" title="Help">
+                <i class="fas fa-question-circle"></i>
+            </button>
+            <button class="icon-btn" title="Profile">
+                <i class="fas fa-user-circle"></i>
+            </button>
         </div>
-    </nav>
+    </div>
+</nav>
+
+<!-- OVERLAY -->
+<div id="notifOverlay" class="notif-overlay"></div>
+
+<!-- SLIDE PANEL -->
+<div id="notifPanel" class="notif-panel">
+    <div class="notif-header">
+        <h2>Notification</h2>
+        <span class="notif-close">&times;</span>
+    </div>
+
+    <div class="notif-item">
+        <img src="img/logo.png" class="notif-icon">
+        <div>
+            <h4>Let’s choose your choice!</h4>
+            <p>Make sure that you carefully read the candidate’s vision and mission.</p>
+        </div>
+    </div>
+
+    <div class="notif-item">
+        <img src="img/logo.png" class="notif-icon">
+        <div>
+            <h4>New Update</h4>
+            <p>Voting results will be announced soon.</p>
+        </div>
+    </div>
+</div>
+
 
     <!-- SIDEBAR -->
     <div class="sidebar">
@@ -304,10 +391,10 @@
         </div>
 
         <div class="menu">
-            <div class="menu-item" onclick="go('dashboard')">🏠 Dashboard</div>
+            <div class="menu-item" onclick="go('dashboarduser')">🏠 Dashboard</div>
             <div class="menu-item active" onclick="go('vote')">🗳️ Vote</div>
-            <div class="menu-item" onclick="go('guideline')">📋 Voters Guideline</div>
-            <div class="menu-item" onclick="go('settings')">⚙️ Settings</div>
+            <div class="menu-item" onclick="go('votersguad')">📋 Voters Guideline</div>
+            <div class="menu-item" onclick="go('settinguser')">⚙️ Settings</div>
         </div>
 
         <div class="logout" onclick="logout()">🚪 Logout</div>
@@ -402,6 +489,9 @@
     </div>
 
     <script>
+        function go(page) {
+            window.location.href = page + ".php";
+        }
         function showVoteAlert(name) {
             document.getElementById("alert-text").innerText =
                 "Are you sure you want to vote for " + name + "?";
@@ -416,6 +506,25 @@
             closeAlert();
             alert("Your vote has been submitted!");
         }
+
+        document.getElementById("notifBtn").addEventListener("click", () => {
+    document.getElementById("notifOverlay").style.display = "block";
+    document.getElementById("notifPanel").style.right = "0";
+});
+
+document.querySelector(".notif-close").addEventListener("click", () => {
+    closeNotifPanel();
+});
+
+document.getElementById("notifOverlay").addEventListener("click", () => {
+    closeNotifPanel();
+});
+
+function closeNotifPanel() {
+    document.getElementById("notifOverlay").style.display = "none";
+    document.getElementById("notifPanel").style.right = "-380px";
+}
+
     </script>
 
 </body>

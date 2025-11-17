@@ -380,7 +380,9 @@
                     </div>
                 </div>
 
-                <div class="guideline-illustration">✅</div>
+                <div class="guideline-illustration">
+                    <img src="img/v3.png" alt="Guideline Illustration">
+                </div>
             </div>
         </div>
 

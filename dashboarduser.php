@@ -289,6 +289,13 @@
             font-size: 80px;
         }
 
+        .election-illustration img {
+            width: 100%;
+            max-width: 180px; 
+            display: block;
+            margin: 0 auto;
+        }
+
         .voting-progress {
             margin-top: 30px;
         }
@@ -329,6 +336,74 @@
         .stat-label {
             color: #666;
             font-size: 14px;
+        }
+
+        /* OVERLAY */
+        .notif-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.2);
+            display: none;
+            backdrop-filter: blur(2px);
+            z-index: 2000;
+        }
+
+        /* PANEL */
+        .notif-panel {
+            position: fixed;
+            top: 0;
+            right: -380px; 
+            width: 350px;
+            height: 100%;
+            background: #fff;
+            box-shadow: -3px 0 15px rgba(0,0,0,.15);
+            padding: 20px;
+            z-index: 2100;
+            transition: right .3s ease;
+            overflow-y: auto;
+            border-left: 1px solid #eee;
+        }
+
+        /* HEADER */
+        .notif-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .notif-close {
+            cursor: pointer;
+            font-size: 22px;
+            padding: 0 5px;
+        }
+
+        .notif-item {
+            display: flex;
+            gap: 12px;
+            padding: 12px;
+            background: #fff7f0;
+            border-radius: 10px;
+            border: 1px solid #eee;
+            margin-bottom: 12px;
+        }
+
+        .notif-item h4 {
+            margin: 0;
+        }
+        .notif-item p {
+            margin-top: 3px;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .notif-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
         }
 
         @media (max-width: 1024px) {
@@ -430,7 +505,9 @@
                         <h3>President Student Council<br>2025/2026</h3>
                         <button class="btn-vote">Vote Now</button>
                     </div>
-                    <div class="election-illustration">🗳️</div>
+                    <div class="election-illustration">
+                        <img src="img/v1.png" alt="Election Illustration">
+                    </div>
                 </div>
 
                 <div class="voting-progress">
@@ -453,6 +530,35 @@
 
             </div>
 
+        </div>
+
+    </div>
+
+    <!-- OVERLAY -->
+    <div id="notifOverlay" class="notif-overlay"></div>
+
+    <!-- SLIDE PANEL -->
+    <div id="notifPanel" class="notif-panel">
+
+        <div class="notif-header">
+            <h2>Notification</h2>
+            <span class="notif-close">&times;</span>
+        </div>
+
+        <div class="notif-item">
+            <img src="img/logo.png" class="notif-icon">
+            <div>
+                <h4>Let’s choose your choice!</h4>
+                <p>Make sure that you carefully read the candidate’s vision and mission.</p>
+            </div>
+        </div>
+
+        <div class="notif-item">
+            <img src="img/logo.png" class="notif-icon">
+            <div>
+                <h4>New Update</h4>
+                <p>Voting results will be announced soon.</p>
+            </div>
         </div>
 
     </div>
@@ -490,9 +596,23 @@
             }
         }
 
-        document.getElementById("notifBtn").addEventListener("click", function() {
-            window.location.href = "notification.php";
+        document.getElementById("notifBtn").addEventListener("click", () => {
+            document.getElementById("notifOverlay").style.display = "block";
+            document.getElementById("notifPanel").style.right = "0";
         });
+
+        document.querySelector(".notif-close").addEventListener("click", () => {
+            closeNotifPanel();
+        });
+
+        document.getElementById("notifOverlay").addEventListener("click", () => {
+            closeNotifPanel();
+        });
+
+        function closeNotifPanel() {
+            document.getElementById("notifOverlay").style.display = "none";
+            document.getElementById("notifPanel").style.right = "-380px";
+        }
     </script>
 
 </body>
