@@ -1,7 +1,7 @@
 <?php
 // config.php - Koneksi Database menggunakan MySQLi
 $host = 'localhost';
-$dbname = 'sisvora_db';
+$dbname = 'admin_db';
 $username = 'root';
 $password = '';
 
