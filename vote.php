@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SISVORA - Voting System</title>
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --orange-primary: #D2691E;
@@ -28,13 +29,12 @@
         }
 
         .navbar {
-            background-color: #E8D4BF;
+            background-color: var(--beige-bg);
             padding: 1rem 2rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             position: fixed;
             left: 0;
             width: 100%;
-            display: 
+            display: flex;
             z-index: 2000;
             height: 80px;
         }
@@ -47,29 +47,35 @@
         }
 
         .logo {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             margin-left: 8px;
             font-weight: bold;
             color: #D2691E;
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 1rem;
         }
 
         .logo-img {
             height: 45px;
             object-fit: contain;
+            transform: scale(1.5);
         }
 
         .search-bar {
-            margin: 0 !important;
+            flex-grow: 1;
+            max-width: 650px;
+            margin: 0 40px;
         }
 
         .search-bar input {
             border-radius: 25px;
+            padding: 0.6rem 1.2rem;
             border: 2px solid #ddd;
-            padding: 0.6rem 1.5rem;
+            width: 100%;
+            background: #fff;
+            font-size: 0.95rem;
         }
         .search-bar input:focus {
             border-color: #D2691E;
@@ -173,6 +179,7 @@
             width: 280px;
             background-color: var(--beige-sidebar);
             border-top: 1px solid rgba(0,0,0,0.08);
+            border-top-right-radius: 50px;
             box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
             overflow-y: auto;
             z-index: 999;
@@ -250,6 +257,12 @@
             text-align: center;
             margin-bottom: 40px;
         }
+        .vote-title {
+            font-size: 30px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #D2691E;
+        }
 
         .candidate-section {
             background: white;
@@ -325,63 +338,62 @@
 </head>
 
 <body>
-<nav class="navbar">
-    <div class="container-fluid">
-        <button class="btn d-md-none me-2" type="button" onclick="toggleSidebar()">
-            <i class="fas fa-bars"></i>
-        </button>
-
-        <a href="#" class="logo">
-            <img src="img/logo.png" alt="SISVORA Logo" class="logo-img">
-            <span>SISVORA</span>
-        </a>
-
-        <div class="search-bar d-none d-md-block">
-            <input type="search" class="form-control" placeholder="🔍 Search...">
-        </div>
-
-        <div class="d-flex gap-3 align-items-center">
-            <button class="icon-btn" id="notifBtn" title="Notifications">
-                <i class="fas fa-bell"></i>
-                <span class="notification-badge">3</span>
+    <nav class="navbar">
+        <div class="container-fluid">
+            <button class="btn d-md-none me-2" type="button" onclick="toggleSidebar()">
+                <i class="fas fa-bars"></i>
             </button>
-            <button class="icon-btn" title="Help">
-                <i class="fas fa-question-circle"></i>
-            </button>
-            <button class="icon-btn" title="Profile">
-                <i class="fas fa-user-circle"></i>
-            </button>
+
+            <a href="#" class="logo">
+                <img src="img/logo.png" alt="SISVORA Logo" class="logo-img">
+                <span>SISVORA</span>
+            </a>
+
+            <div class="search-bar d-none d-md-block">
+                <input type="search" class="form-control" placeholder="🔍 Search...">
+            </div>
+
+            <div class="d-flex gap-3 align-items-center">
+                <button class="icon-btn" id="notifBtn" title="Notifications">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">3</span>
+                </button>
+                <button class="icon-btn" title="Help">
+                    <i class="fas fa-question-circle"></i>
+                </button>
+                <button class="icon-btn" title="Profile">
+                    <i class="fas fa-user-circle"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- OVERLAY -->
+    <div id="notifOverlay" class="notif-overlay"></div>
+
+    <!-- SLIDE PANEL -->
+    <div id="notifPanel" class="notif-panel">
+        <div class="notif-header">
+            <h2>Notification</h2>
+            <span class="notif-close">&times;</span>
+        </div>
+
+        <div class="notif-item">
+            <img src="img/logo.png" class="notif-icon">
+            <div>
+                <h4>Let’s choose your choice!</h4>
+                <p>Make sure that you carefully read the candidate’s vision and mission.</p>
+            </div>
+        </div>
+
+        <div class="notif-item">
+            <img src="img/logo.png" class="notif-icon">
+            <div>
+                <h4>New Update</h4>
+                <p>Voting results will be announced soon.</p>
+            </div>
         </div>
     </div>
-</nav>
-
-<!-- OVERLAY -->
-<div id="notifOverlay" class="notif-overlay"></div>
-
-<!-- SLIDE PANEL -->
-<div id="notifPanel" class="notif-panel">
-    <div class="notif-header">
-        <h2>Notification</h2>
-        <span class="notif-close">&times;</span>
-    </div>
-
-    <div class="notif-item">
-        <img src="img/logo.png" class="notif-icon">
-        <div>
-            <h4>Let’s choose your choice!</h4>
-            <p>Make sure that you carefully read the candidate’s vision and mission.</p>
-        </div>
-    </div>
-
-    <div class="notif-item">
-        <img src="img/logo.png" class="notif-icon">
-        <div>
-            <h4>New Update</h4>
-            <p>Voting results will be announced soon.</p>
-        </div>
-    </div>
-</div>
-
 
     <!-- SIDEBAR -->
     <div class="sidebar">
@@ -509,22 +521,22 @@
         }
 
         document.getElementById("notifBtn").addEventListener("click", () => {
-    document.getElementById("notifOverlay").style.display = "block";
-    document.getElementById("notifPanel").style.right = "0";
-});
+            document.getElementById("notifOverlay").style.display = "block";
+            document.getElementById("notifPanel").style.right = "0";
+        });
 
-document.querySelector(".notif-close").addEventListener("click", () => {
-    closeNotifPanel();
-});
+        document.querySelector(".notif-close").addEventListener("click", () => {
+            closeNotifPanel();
+        });
 
-document.getElementById("notifOverlay").addEventListener("click", () => {
-    closeNotifPanel();
-});
+        document.getElementById("notifOverlay").addEventListener("click", () => {
+            closeNotifPanel();
+        });
 
-function closeNotifPanel() {
-    document.getElementById("notifOverlay").style.display = "none";
-    document.getElementById("notifPanel").style.right = "-380px";
-}
+        function closeNotifPanel() {
+            document.getElementById("notifOverlay").style.display = "none";
+            document.getElementById("notifPanel").style.right = "-380px";
+        }
 
     </script>
 

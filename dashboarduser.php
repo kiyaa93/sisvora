@@ -426,7 +426,7 @@
     <!-- Sidebar -->
     <div class="sidebar">
         <div class="user-profile">
-            <div class="avatar"><i class="fas fa-user"></i></div>
+            <div class="user-avatar">👤</div>
             <div class="user-name">Jan Adam</div>
             <div class="user-status">Student, Unvoted</div>
         </div>
