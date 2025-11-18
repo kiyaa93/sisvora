@@ -162,6 +162,13 @@
             transform: scale(1.1);
         }
 
+        .navbar .container-fluid {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 100%;
+        }
+
         .navbar .logo {
             font-size: 1.2rem;
             margin-left: 8px;
@@ -574,7 +581,7 @@
             <a href="#" id="logoutMenu" class="menu-item">
                 <i class="fas fa-sign-out-alt"></i>
                 <span>Logout</span>
-            </div>
+            </a>
         </div>
     </div>
 

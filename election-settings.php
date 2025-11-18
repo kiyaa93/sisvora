@@ -18,20 +18,28 @@
         --beige-bg: #F5E6D3;
         --beige-sidebar: #E8D4BF;
     }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * { 
+        margin: 0; 
+        padding: 0; 
+        box-sizing: border-box; 
+    }
+
     body {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         background-color: var(--beige-bg);
         overflow-x: hidden;
     }
+
     .navbar {
-        background-color: var(--beige-sidebar);
+        background-color: var(--beige-bg);
         padding: 1rem 2rem;
         box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        position: sticky;
+        position: fixed;
         top: 0;
-        z-index: 1000;
+        width: 100%;
+        z-index: 2000;
     }
+
     .navbar-toggle-btn {
         background: none;
         border: none;
@@ -39,6 +47,7 @@
         font-size: 1.8rem;
         cursor: pointer;
         transition: .3s ease;
+        margin-right: -10px;
     }
 
     .navbar-toggle-btn:hover {
@@ -55,32 +64,59 @@
         align-items: center;
         gap: 1rem;
     }
-    .logo-img { height: 45px;   /* sesuaikan */ width: auto; object-fit: contain; transform: scale(1.5); }
-    .navbar .search-bar { max-width: 600px; flex-grow: 1; }
-    .navbar .search-bar input {
-        border-radius: 25px; border: 2px solid #ddd; padding: 0.6rem 1.5rem;
+
+    .logo-img { 
+        height: 45px;   /* sesuaikan */ 
+        width: auto; 
+        object-fit: contain; 
+        transform: scale(1.5); 
     }
+
+    .navbar .search-bar { 
+        max-width: 600px; 
+        flex-grow: 1; 
+    }
+
+    .navbar .search-bar input {
+        border-radius: 25px; 
+        border: 2px solid #ddd; 
+        padding: 0.6rem 1.5rem;
+    }
+    
     .navbar .search-bar input:focus {
         border-color: var(--orange-primary);
         box-shadow: 0 0 0 0.2rem rgba(210, 105, 30, 0.25);
     }
+
     .icon-btn {
-        background: none; border: none; color: var(--orange-primary);
-        font-size: 1.5rem; cursor: pointer; transition: all 0.3s; position: relative;
+        background: none; 
+        border: none; 
+        color: var(--orange-primary);
+        font-size: 1.5rem; 
+        cursor: pointer; 
+        transition: all 0.3s; 
+        position: relative;
     }
-    .icon-btn:hover { color: var(--orange-dark); transform: scale(1.1); }
+
+    .icon-btn:hover { 
+        color: var(--orange-dark); 
+        transform: scale(1.1); 
+    }
+
     .notification-badge {
         position: absolute; top: -5px; right: -5px; background-color: #dc3545;
         color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem;
         display: flex; align-items: center; justify-content: center;
     }
+
     /* Sidebar */
     .sidebar-wrapper {
-        position: fixed; left: 0; top: 76px; height: calc(100vh - 76px);
-        width: 280px; background-color: var(--beige-sidebar);
-        box-shadow: 2px 0 4px rgba(0,0,0,0.1); transition: transform 0.3s ease;
-        z-index: 999;
+        position: fixed; left: 0; top: 80px; height: 100vh; width: 280px; 
+        background-color: var(--beige-sidebar); border-top: 1px solid rgba(0,0,0,0.08);
+        border-top-right-radius: 50px; box-shadow: 2px 0 4px rgba(0,0,0,0.1); 
+        transition: transform 0.3s ease; z-index: 999;
     }
+
     .sidebar-wrapper.collapsed { transform: translateX(-280px); }
     .sidebar.collapsed { width: 85px; }
     .sidebar.collapsed .menu-text { display: none; }
@@ -96,7 +132,7 @@
         display: flex; align-items: center; justify-content: center;
         color: white; font-size: 2rem; box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     }
-    .user-profile h5 { color: var(--orange-dark); font-weight: bold; margin-bottom: 0.3rem; }
+    .admin-id { color: var(--orange-dark); font-weight: bold; font-size: 1.3rem; margin-bottom: 0.3rem; }
     .user-profile p { color: #666; font-size: 0.9rem; }
     .sidebar-menu { padding: 1rem 0; }
     .menu-item {
@@ -111,8 +147,8 @@
     .menu-separator {
         margin: 1rem 1.5rem; border-top: 1px solid rgba(210, 105, 30, 0.2);
     }
-    .content { margin-left: 280px; padding: 2rem; transition: margin-left 0.3s ease; min-height: calc(100vh - 76px); }
-    .content.expanded { margin-left: 0; }
+    .main-content { margin-left: 280px; padding: 2.3rem; padding-top: 120px; transition: margin-left 0.3s ease; min-height: calc(100vh - 76px); }
+    .main-content.expanded { margin-left: 0; }
     .election-card {
         background: white; border-radius: 18px; box-shadow: 0 4px 12px rgba(0,0,0,0.12); 
         padding: 20px; display: flex; justify-content: space-between; align-items: center;
@@ -263,7 +299,7 @@
 <div class="sidebar-wrapper" id="sidebar">
     <div class="user-profile">
         <div class="avatar"><i class="fas fa-user"></i></div>
-        <h5>Admin_ID</h5>
+        <div class="admin-id">Admin_ID</div>
         <p class="text-muted">Administrator</p>
     </div>
 
@@ -277,6 +313,7 @@
         <a href="#" id="logoutMenu" class="menu-item"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
         </nav>
     </div>
+</div>
 
     <div id="logoutModal" class="modal-overlay">
         <div class="modal-box">
@@ -293,7 +330,7 @@
     </div>
 
 <!-- MAIN CONTENT -->
-<div class="content">
+<div class="main-content" id="mainContent">
     <h3 class="fw-bold mb-4">Available Election</h3>
 
     <div class="row g-4">

@@ -31,6 +31,7 @@
         .navbar {
             background-color: var(--beige-bg);
             padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             position: fixed;
             left: 0;
             width: 100%;
@@ -229,7 +230,7 @@
         .main-content {
             margin-left: 280px;
             padding: 2.3rem;
-            padding-top: 80px;
+            padding-top: 120px;
             transition: margin-left 0.3s ease;
             min-height: calc(100vh - 76px);
         }
@@ -490,7 +491,7 @@
             background: #a24907;
         }
 
-                /* OVERLAY */
+        /* OVERLAY */
         .notif-overlay {
             position: fixed;
             top: 0; left: 0;
@@ -962,18 +963,7 @@
             // Uncomment untuk enable real-time updates
             // startRealTimeUpdates();
             
-            // Close sidebar on mobile when clicking outside
-            document.addEventListener('click', function(event) {
-                const sidebar = document.getElementById('sidebar');
-                const toggleBtn = document.querySelector('.toggle-sidebar-btn');
-                
-                if (window.innerWidth <= 768 && 
-                    !sidebar.contains(event.target) && 
-                    !toggleBtn.contains(event.target) &&
-                    sidebar.classList.contains('show')) {
-                    toggleSidebar();
-                }
-            });
+
         });
     </script>
     <script>

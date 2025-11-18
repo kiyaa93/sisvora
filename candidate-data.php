@@ -31,12 +31,13 @@
         
         /* Navbar Styles */
         .navbar {
-            background-color: var(--beige-sidebar);
+            background-color: var(--beige-bg);
             padding: 1rem 2rem;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            position: fixed;
+            left: 0;
+            width: 100%;
+            z-index: 2000;
         }
         
         .navbar-toggle-btn {
@@ -46,6 +47,7 @@
             font-size: 1.8rem;
             cursor: pointer;
             transition: .3s ease;
+            margin-right: -10px;
         }
 
         .navbar-toggle-btn:hover {
@@ -54,7 +56,8 @@
         }
 
         .navbar .logo {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
+            margin-left: 8px;
             font-weight: bold;
             color: var(--orange-primary);
             text-decoration: none;
@@ -120,10 +123,12 @@
         .sidebar-wrapper {
             position: fixed;
             left: 0;
-            top: 76px;
-            height: calc(100vh - 76px);
+            top: 80px;
+            height: 100vh;
             width: 280px;
             background-color: var(--beige-sidebar);
+            border-top: 1px solid rgba(0,0,0,0.08);
+            border-top-right-radius: 50px;
             box-shadow: 2px 0 4px rgba(0,0,0,0.1);
             transition: transform 0.3s ease;
             z-index: 999;
@@ -162,9 +167,10 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
         
-        .user-profile h5 {
+        .admin-id {
             color: var(--orange-dark);
             font-weight: bold;
+            font-size: 1.3rem;
             margin-bottom: 0.3rem;
         }
         
@@ -223,10 +229,16 @@
         }
 
         /* CONTENT */
-        .content {
-            padding: 30px;
+        .main-content {
+            padding: 2.3rem;
+            padding-top: 120px;
             margin-left: 280px;
-            transition: 0.3s;
+            transition: margin-left 0.3s ease;
+            min-height: calc(100vh - 76px);
+        }
+
+        .main-content.expanded {
+            margin-left: 0;
         }
 
         .btn-add {
@@ -314,6 +326,74 @@
         .btn-confirm:hover {
             background: #a24907;
         }
+
+        /* OVERLAY */
+        .notif-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.2);
+            display: none;
+            backdrop-filter: blur(2px);
+            z-index: 2000;
+        }
+
+        /* PANEL */
+        .notif-panel {
+            position: fixed;
+            top: 0;
+            right: -380px; 
+            width: 350px;
+            height: 100%;
+            background: #fff;
+            box-shadow: -3px 0 15px rgba(0,0,0,.15);
+            padding: 20px;
+            z-index: 2100;
+            transition: right .3s ease;
+            overflow-y: auto;
+            border-left: 1px solid #eee;
+        }
+
+        /* HEADER */
+        .notif-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .notif-close {
+            cursor: pointer;
+            font-size: 22px;
+            padding: 0 5px;
+        }
+
+        .notif-item {
+            display: flex;
+            gap: 12px;
+            padding: 12px;
+            background: #fff7f0;
+            border-radius: 10px;
+            border: 1px solid #eee;
+            margin-bottom: 12px;
+        }
+
+        .notif-item h4 {
+            margin: 0;
+        }
+        .notif-item p {
+            margin-top: 3px;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .notif-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+        }
     </style>
 </head>
 <body>
@@ -331,7 +411,7 @@
                 <input type="search" class="form-control" placeholder="🔍 Search...">
             </div>
             <div class="d-flex gap-3 align-items-center">
-                <button class="icon-btn" title="Notifications">
+                <button class="icon-btn" id="notifBtn" title="Notifications">
                     <i class="fas fa-bell"></i>
                     <span class="notification-badge">3</span>
                 </button>
@@ -349,7 +429,7 @@
     <div class="sidebar-wrapper" id="sidebar">
         <div class="user-profile">
             <div class="avatar"><i class="fas fa-user"></i></div>
-            <h5>Admin_ID</h5>
+            <div class="admin-id">Admin_ID</div>
             <p class="text-muted">Administrator</p>
         </div>
 
@@ -378,7 +458,7 @@
         </div>
     </div>
 
-    <div class="content">
+    <div class="main-content" id="mainContent">
     <h3 class="fw-bold mb-4">Candidate Data</h3>
     <a href="add-candidate.php" class="btn btn-add mb-3"><i class="fa fa-plus me-2"></i> Add Candidate</a>
 
@@ -438,6 +518,35 @@
     </div>
 </div>
 
+    <!-- OVERLAY -->
+    <div id="notifOverlay" class="notif-overlay"></div>
+
+    <!-- SLIDE PANEL -->
+    <div id="notifPanel" class="notif-panel">
+
+        <div class="notif-header">
+            <h2>Notification</h2>
+            <span class="notif-close">&times;</span>
+        </div>
+
+        <div class="notif-item">
+            <img src="img/logo.png" class="notif-icon">
+            <div>
+                <h4>Let’s choose your choice!</h4>
+                <p>Make sure that you carefully read the candidate’s vision and mission.</p>
+            </div>
+        </div>
+
+        <div class="notif-item">
+            <img src="img/logo.png" class="notif-icon">
+            <div>
+                <h4>New Update</h4>
+                <p>Voting results will be announced soon.</p>
+            </div>
+        </div>
+
+    </div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     // Sidebar Toggle
@@ -465,6 +574,25 @@
         confirmLogout.addEventListener("click", function() {
             window.location.href = "logout.php"; 
         });
+</script>
+<script>
+        document.getElementById("notifBtn").addEventListener("click", () => {
+            document.getElementById("notifOverlay").style.display = "block";
+            document.getElementById("notifPanel").style.right = "0";
+        });
+
+        document.querySelector(".notif-close").addEventListener("click", () => {
+            closeNotifPanel();
+        });
+
+        document.getElementById("notifOverlay").addEventListener("click", () => {
+            closeNotifPanel();
+        });
+
+        function closeNotifPanel() {
+            document.getElementById("notifOverlay").style.display = "none";
+            document.getElementById("notifPanel").style.right = "-380px";
+        }
 </script>
 </body>
 </html>

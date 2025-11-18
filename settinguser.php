@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,23 +23,35 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--beige-bg);
-            display: flex;
-            min-height: 100vh;
+            overflow-x: hidden;
         }
 
          /* ---------------- SIDEBAR ---------------- */
-        .sidebar {
+        .sidebar-wrapper {
             position: fixed;
             left: 0;
             top: 80px;
-            height: calc(100vh - 80px);
+            height: 100vh;
             width: 280px;
             background-color: var(--beige-sidebar);
             border-top: 1px solid rgba(0,0,0,0.08);
             border-top-right-radius: 50px;
             box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
             overflow-y: auto;
             z-index: 999;
+        }
+
+        .sidebar-wrapper.collapsed {
+            transform: translateX(-280px);
+        }
+
+        .sidebar.collapsed {
+            width: 85px;
+        }
+
+        .sidebar.collapsed .menu-text {
+            display: none;
         }
 
         .user-profile {
@@ -51,7 +61,7 @@
             border-bottom: 2px solid rgba(210, 105, 30, 0.2);
         }
 
-        .user-avatar {
+        .user-profile .avatar {
             width: 80px;
             height: 80px;
             background: linear-gradient(135deg, var(--orange-primary), var(--orange-light));
@@ -65,7 +75,19 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
 
-        .menu {
+        .user-name {
+            font-weight: bold;
+            font-size: 1.3rem;
+            color: var(--orange-dark);
+            margin-bottom: 0.3rem;
+        }
+
+        .user-status {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .sidebar-menu {
             padding: 1rem 0;
         }
 
@@ -94,14 +116,20 @@
             border-left: 4px solid #B83D1F;
         }
 
-        .logout {
-            padding: 15px 20px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: #D94E28;
-            cursor: pointer;
-            margin-top: auto;
+        .menu-item i {
+            text-align: center;
+            font-size: 1.2rem;
+            width: 24px;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .menu-separator {
+            margin: 1rem 1.5rem;
+            border-top: 1px solid rgba(210, 105, 30, 0.2);
         }
 
         .main-content {
@@ -116,9 +144,22 @@
             position: fixed;
             left: 0;
             width: 100%;
-            display: flex;
             z-index: 2000;
-            height: 80px;
+        }
+
+        .navbar-toggle-btn {
+            background: none;
+            border: none;
+            color: var(--orange-primary);
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: .3s ease;
+            margin-right: -10px;
+        }
+
+        .navbar-toggle-btn:hover {
+            color: var(--orange-dark);
+            transform: scale(1.1);
         }
 
         .navbar .container-fluid {
@@ -128,11 +169,11 @@
             height: 100%;
         }
 
-        .logo {
+        .navbar .logo {
             font-size: 1.2rem;
             margin-left: 8px;
             font-weight: bold;
-            color: #D2691E;
+            color: var(--orange-primary);
             text-decoration: none;
             display: flex;
             align-items: center;
@@ -141,40 +182,38 @@
 
         .logo-img {
             height: 45px;
+            width: auto;
             object-fit: contain;
             transform: scale(1.5);
         }
 
-        .search-bar {
+        .navbar .search-bar {
             flex-grow: 1;
-            max-width: 650px;
-            margin: 0 40px;
+            max-width: 600px;
         }
 
-        .search-bar input {
+        .navbar .search-bar input {
             border-radius: 25px;
             padding: 0.6rem 1.2rem;
             border: 2px solid #ddd;
-            width: 100%;
-            background: #fff;
-            font-size: 0.95rem;
         }
+
         .search-bar input:focus {
-            border-color: #D2691E;
+            border-color: var(--orange-primary);
             box-shadow: 0 0 0 0.2rem rgba(210,105,30,0.25);
         }
 
         .icon-btn {
             background: none;
             border: none;
-            color: #D2691E;
+            color: var(--orange-primary);
             font-size: 1.5rem;
             cursor: pointer;
             transition: all 0.3s;
             position: relative;
         }
         .icon-btn:hover {
-            color: #8B4513;
+            color: var(--orange-dark);
             transform: scale(1.1);
         }
 
@@ -253,17 +292,30 @@
         }
 
         /* SETTINGS PAGE CSS */
-
         .content-area {
-            padding-left: 300px;
-            padding-right: 40px;
-            padding-top: 110px;
-            transition: .3s;
+            margin-left: 280px;
+            padding: 2.3rem;
+            padding-top: 100px;
+            transition: margin-left 0.3s ease;
+            min-height: calc(100vh - 76px);
+            position: relative;
+            z-index: 1;
         }
 
-        @media (max-width: 768px) {
-            .content-area {
-                padding-left: 20px; 
+        .content-area.expanded {
+            margin-left: 0;
+        }
+
+        @media (max-width: 1024px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                transform: translateX(-280px);
+            }
+            
+            .sidebar.show {
+                transform: translateX(0);
             }
         }
 
@@ -345,7 +397,6 @@
         }
 
         /* MODAL */
-
         .modal {
             display: none;
             position: fixed;
@@ -520,34 +571,86 @@
             height: 40px;
             border-radius: 8px;
         }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.35);
+            backdrop-filter: blur(3px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+
+        .modal-box {
+            width: 450px;
+            background: #ffff;
+            padding: 30px 35px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .modal-icon {
+            font-size: 55px;
+            color: #c45a09;
+            margin-bottom: 10px;
+        }
+
+        .modal-box h2 {
+            font-size: 26px;
+            margin-bottom: 8px;
+            color: #3d2b1f;
+        }
+
+        .modal-box p {
+            color: #6f5845;
+            margin-bottom: 25px;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .btn-cancel {
+            padding: 10px 25px;
+            border: 2px solid #c45a09;
+            color: #c45a09;
+            background: transparent;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .btn-confirm {
+            padding: 10px 25px;
+            border: none;
+            color: white;
+            background: #c45a09;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .btn-cancel:hover {
+            background: rgba(196, 90, 9, 0.08);
+        }
+
+        .btn-confirm:hover {
+            background: #a24907;
+        }
     </style>
 </head>
 <body>
-
-    <!-- SIDEBAR -->
-    <div class="sidebar">
-        <div class="user-profile">
-            <div class="user-avatar">👤</div>
-            <div class="user-name">Jan Adam</div>
-            <div class="user-status">Student, Unvoted</div>
-        </div>
-
-        <div class="menu">
-            <div class="menu-item" onclick="go('dashboarduser')">🏠 Dashboard</div>
-            <div class="menu-item" onclick="go('vote')">🗳️ Vote</div>
-            <div class="menu-item" onclick="go('votersguad')">📋 Voters Guideline</div>
-            <div class="menu-item active" onclick="go('settinguser')">⚙️ Settings</div>
-        </div>
-
-        <div class="logout" onclick="logout()">🚪 Logout</div>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div class="main-content">
-
-        <nav class="navbar">
+<nav class="navbar">
     <div class="container-fluid">
-        <button class="btn d-md-none me-2" type="button" onclick="toggleSidebar()">
+        <button class="navbar-toggle-btn me-3" onclick="toggleSidebar()">
             <i class="fas fa-bars"></i>
         </button>
 
@@ -575,8 +678,56 @@
     </div>
 </nav>
 
-        <!-- SETTINGS CONTENT -->
-        <div class="content-area">
+    <!-- SIDEBAR -->
+    <div class="sidebar-wrapper" id="sidebar">
+        <div class="user-profile">
+            <div class="avatar"><i class="fas fa-user"></i></div>
+            <div class="user-name">Jan Adam</div>
+            <div class="user-status">Student, Unvoted</div>
+        </div>
+
+        <div class="sidebar-menu">
+            <div class="menu-item" onclick="go('dashboarduser')">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+            </div>
+            <div class="menu-item" onclick="go('vote')">
+                <i class="fas fa-vote-yea"></i>
+                <span>Vote</span>
+            </div>
+            <div class="menu-item" onclick="go('votersguad')">
+                <i class="fas fa-list-alt"></i>
+                <span>Voters Guideline</span>
+            </div>
+            <div class="menu-item active" onclick="go('settinguser')">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+            </div>
+            <div class="menu-separator"></div>
+            <a href="#" id="logoutMenu" class="menu-item">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </div>
+
+    <div id="logoutModal" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-icon">⚠️</div>
+
+            <h2>Are you sure to leave?</h2>
+            <p>You can always login back any time.</p>
+
+            <div class="modal-actions">
+                <button id="cancelLogout" class="btn-cancel">CANCEL</button>
+                <button id="confirmLogout" class="btn-confirm">YES, I'M SURE</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <div class="content-area" id="mainContent">
             <div class="settings-container">
 
                 <h1 class="page-title">Settings</h1>
@@ -716,11 +867,31 @@
             window.location.href = page + ".php";
         }
 
-        function logout() {
-            if (confirm("Are you sure you want to logout?")) {
-                alert("Logged out successfully!");
-            }
+                // Sidebar Toggle
+        function toggleSidebar() {
+            document.getElementById("sidebar").classList.toggle("collapsed");
+            document.getElementById("mainContent").classList.toggle("expanded");
         }
+
+        // SHOW MODAL
+        const logoutMenu = document.getElementById("logoutMenu"); // tombol logout kamu
+        const logoutModal = document.getElementById("logoutModal");
+        const cancelLogout = document.getElementById("cancelLogout");
+        const confirmLogout = document.getElementById("confirmLogout");
+
+        logoutMenu.addEventListener("click", function(e) {
+            e.preventDefault();
+            logoutModal.style.display = "flex";
+        });
+
+        cancelLogout.addEventListener("click", function() {
+            logoutModal.style.display = "none";
+        });
+
+        // Proses logout
+        confirmLogout.addEventListener("click", function() {
+            window.location.href = "logout.php"; 
+        });
 
         function openEditProfile() {
             document.getElementById("editProfileModal").classList.add("active");
