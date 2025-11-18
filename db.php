@@ -1,7 +1,7 @@
 <?php
 // db.php - Koneksi Database menggunakan PDO
 $host = 'localhost';
-$dbname = 'admin_db';
+$dbname = 'sisvora_db';
 $username = 'root';
 $password = '';
 

@@ -1,3 +1,15 @@
+<?php
+include "config.php";
+
+$result = $conn->query("SELECT * FROM candidates_admin ORDER BY id DESC");
+
+$candidates = [];
+while ($row = $result->fetch_assoc()) {
+    $candidates[] = $row;
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -314,6 +326,12 @@
         .btn-confirm:hover {
             background: #a24907;
         }
+
+        .table td {
+            text-align: left !important;
+            vertical-align: middle;
+        }
+
     </style>
 </head>
 <body>
@@ -411,20 +429,21 @@
                             
                             <td>
                                 <?php if (!empty($c['foto']) && file_exists(__DIR__ . '/uploads/' . $c['foto'])): ?>
-                                    <img src="uploads/<?= htmlspecialchars($c['foto']) ?>" alt="foto">
+                                    <button class="btn btn-sm btn-warning view-photo" 
+                                            data-photo="uploads/<?= htmlspecialchars($c['foto']) ?>">
+                                        View Photo
+                                    </button>
                                 <?php else: ?>
                                     <span class="text-muted">-</span>
                                 <?php endif; ?>
                             </td>
-
-                            <td><?= (int)$c['votes'] ?></td>
 
                             <td>
                                 <a href="add-candidate.php?id=<?= $c['id'] ?>" title="Edit">
                                     <i class="fa-solid fa-pen-to-square icon-action"></i>
                                 </a>
 
-                                <a href="delete_candidate.php?id=<?= $c['id'] ?>"
+                                <a href="delete-candidate.php?id=<?= $c['id'] ?>"
                                 onclick="return confirm('Yakin ingin menghapus kandidat ini?')"
                                 title="Delete">
                                     <i class="fa-solid fa-trash icon-action"></i>
@@ -436,6 +455,18 @@
             </tbody>
         </table>
     </div>
+
+    <!-- PHOTO MODAL -->
+    <div class="modal fade" id="photoModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="border-radius: 15px;">
+        <div class="modal-body text-center">
+            <img id="photoPreview" src="" style="width: 100%; border-radius: 10px;">
+        </div>
+        </div>
+    </div>
+    </div>
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -465,6 +496,15 @@
         confirmLogout.addEventListener("click", function() {
             window.location.href = "logout.php"; 
         });
+
+        document.querySelectorAll(".view-photo").forEach(btn => {
+            btn.addEventListener("click", function() {
+                document.getElementById("photoPreview").src = this.dataset.photo;
+                let modal = new bootstrap.Modal(document.getElementById("photoModal"));
+                modal.show();
+            });
+        });
+
 </script>
 </body>
 </html>

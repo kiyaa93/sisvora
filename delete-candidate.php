@@ -1,9 +1,5 @@
 <?php
 session_start();
-if(!isset($_SESSION['admin_logged_in'])){
-    header('Location: login.php');
-    exit;
-}
 
 require_once 'db.php';
 
@@ -17,7 +13,7 @@ $id = (int)$_GET['id'];
 
 try {
     // Ambil data kandidat untuk mendapatkan nama file foto
-    $stmt = $pdo->prepare("SELECT nama_kandidat, foto FROM candidates WHERE id = ?");
+    $stmt = $pdo->prepare("SELECT nama_kandidat, foto FROM candidates_admin WHERE id = ?");
     $stmt->execute([$id]);
     $row = $stmt->fetch();
 
@@ -34,7 +30,7 @@ try {
         }
 
         // Hapus data dari database
-        $stmtDel = $pdo->prepare("DELETE FROM candidates WHERE id = ?");
+        $stmtDel = $pdo->prepare("DELETE FROM candidates_admin WHERE id = ?");
         $stmtDel->execute([$id]);
         
         $_SESSION['success'] = "Kandidat '$nama' berhasil dihapus";

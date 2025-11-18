@@ -2,7 +2,7 @@
 include 'config.php';
 
 // Ambil data election settings
-$electionQuery = mysqli_query($conn, "SELECT * FROM elections LIMIT 1");
+$electionQuery = mysqli_query($conn, "SELECT * FROM elections_admin LIMIT 1");
 $election = mysqli_fetch_assoc($electionQuery);
 
 // Hitung status
@@ -19,15 +19,15 @@ if($current < $start){
 }
 
 // Ambil total voters
-$votersQuery = mysqli_query($conn, "SELECT COUNT(*) AS total FROM voters");
+$votersQuery = mysqli_query($conn, "SELECT COUNT(*) AS total FROM voters_admin");
 $totalVoters = mysqli_fetch_assoc($votersQuery)['total'];
 
 // Ambil yang sudah vote
-$votedQuery = mysqli_query($conn, "SELECT COUNT(*) AS total FROM voters WHERE status = 'Voted'");
+$votedQuery = mysqli_query($conn, "SELECT COUNT(*) AS total FROM voters_admin WHERE status = 'Voted'");
 $totalVoted = mysqli_fetch_assoc($votedQuery)['total'];
 
 // Ambil total participants (yang datang/hadir)
-$participantsQuery = mysqli_query($conn, "SELECT COUNT(*) AS total FROM voters WHERE status IN ('Voted', 'Not Voted')");
+$participantsQuery = mysqli_query($conn, "SELECT COUNT(*) AS total FROM voters_admin WHERE status IN ('Voted', 'Not Voted')");
 $totalParticipants = mysqli_fetch_assoc($participantsQuery)['total'];
 
 $totalNotVoted = $totalVoted > 0 ? $totalParticipants - $totalVoted : 0;
@@ -37,7 +37,7 @@ $votedPercentage = $totalVoters > 0 ? round(($totalVoted / $totalVoters) * 100) 
 $notVotedPercentage = $totalVoters > 0 ? round(($totalNotVoted / $totalVoters) * 100) : 0;
 
 // Ambil hasil per kandidat
-$candidatesQuery = mysqli_query($conn, "SELECT * FROM candidates ORDER BY votes DESC");
+$candidatesQuery = mysqli_query($conn, "SELECT * FROM candidates_admin ORDER BY votes DESC");
 $candidates = [];
 $rank = 1;
 while($row = mysqli_fetch_assoc($candidatesQuery)){

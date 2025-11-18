@@ -16,5 +16,3 @@ session_destroy();
 header('Location: loginadmin.php');
 exit;
 ?>
-
-<?php

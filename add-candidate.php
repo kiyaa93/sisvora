@@ -5,7 +5,7 @@ include "config.php";
 $editData = null;
 if (isset($_GET['id'])) {
     $id = (int)$_GET['id'];
-    $q = $conn->query("SELECT * FROM candidates WHERE id = $id");
+    $q = $conn->query("SELECT * FROM candidates_admin WHERE id = $id");
     $editData = $q->fetch_assoc();
 }
 ?>
