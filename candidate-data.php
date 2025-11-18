@@ -43,12 +43,13 @@ while ($row = $result->fetch_assoc()) {
         
         /* Navbar Styles */
         .navbar {
-            background-color: var(--beige-sidebar);
+            background-color: var(--beige-bg);
             padding: 1rem 2rem;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            position: fixed;
+            left: 0;
+            width: 100%;
+            z-index: 2000;
         }
         
         .navbar-toggle-btn {
@@ -58,6 +59,7 @@ while ($row = $result->fetch_assoc()) {
             font-size: 1.8rem;
             cursor: pointer;
             transition: .3s ease;
+            margin-right: -10px;
         }
 
         .navbar-toggle-btn:hover {
@@ -66,7 +68,8 @@ while ($row = $result->fetch_assoc()) {
         }
 
         .navbar .logo {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
+            margin-left: 8px;
             font-weight: bold;
             color: var(--orange-primary);
             text-decoration: none;
@@ -132,10 +135,12 @@ while ($row = $result->fetch_assoc()) {
         .sidebar-wrapper {
             position: fixed;
             left: 0;
-            top: 76px;
-            height: calc(100vh - 76px);
+            top: 80px;
+            height: 100vh;
             width: 280px;
             background-color: var(--beige-sidebar);
+            border-top: 1px solid rgba(0,0,0,0.08);
+            border-top-right-radius: 50px;
             box-shadow: 2px 0 4px rgba(0,0,0,0.1);
             transition: transform 0.3s ease;
             z-index: 999;
@@ -174,9 +179,10 @@ while ($row = $result->fetch_assoc()) {
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
         
-        .user-profile h5 {
+        .admin-id {
             color: var(--orange-dark);
             font-weight: bold;
+            font-size: 1.3rem;
             margin-bottom: 0.3rem;
         }
         
@@ -235,10 +241,16 @@ while ($row = $result->fetch_assoc()) {
         }
 
         /* CONTENT */
-        .content {
-            padding: 30px;
+        .main-content {
+            padding: 2.3rem;
+            padding-top: 120px;
             margin-left: 280px;
-            transition: 0.3s;
+            transition: margin-left 0.3s ease;
+            min-height: calc(100vh - 76px);
+        }
+
+        .main-content.expanded {
+            margin-left: 0;
         }
 
         .btn-add {
@@ -326,12 +338,6 @@ while ($row = $result->fetch_assoc()) {
         .btn-confirm:hover {
             background: #a24907;
         }
-
-        .table td {
-            text-align: left !important;
-            vertical-align: middle;
-        }
-
     </style>
 </head>
 <body>
@@ -349,7 +355,7 @@ while ($row = $result->fetch_assoc()) {
                 <input type="search" class="form-control" placeholder="🔍 Search...">
             </div>
             <div class="d-flex gap-3 align-items-center">
-                <button class="icon-btn" title="Notifications">
+                <button class="icon-btn" id="notifBtn" title="Notifications">
                     <i class="fas fa-bell"></i>
                     <span class="notification-badge">3</span>
                 </button>
@@ -367,7 +373,7 @@ while ($row = $result->fetch_assoc()) {
     <div class="sidebar-wrapper" id="sidebar">
         <div class="user-profile">
             <div class="avatar"><i class="fas fa-user"></i></div>
-            <h5>Admin_ID</h5>
+            <div class="admin-id">Admin_ID</div>
             <p class="text-muted">Administrator</p>
         </div>
 
@@ -396,7 +402,7 @@ while ($row = $result->fetch_assoc()) {
         </div>
     </div>
 
-    <div class="content">
+    <div class="main-content" id="mainContent">
     <h3 class="fw-bold mb-4">Candidate Data</h3>
     <a href="add-candidate.php" class="btn btn-add mb-3"><i class="fa fa-plus me-2"></i> Add Candidate</a>
 
@@ -455,18 +461,6 @@ while ($row = $result->fetch_assoc()) {
             </tbody>
         </table>
     </div>
-
-    <!-- PHOTO MODAL -->
-    <div class="modal fade" id="photoModal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content" style="border-radius: 15px;">
-        <div class="modal-body text-center">
-            <img id="photoPreview" src="" style="width: 100%; border-radius: 10px;">
-        </div>
-        </div>
-    </div>
-    </div>
-
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -505,6 +499,25 @@ while ($row = $result->fetch_assoc()) {
             });
         });
 
+</script>
+<script>
+        document.getElementById("notifBtn").addEventListener("click", () => {
+            document.getElementById("notifOverlay").style.display = "block";
+            document.getElementById("notifPanel").style.right = "0";
+        });
+
+        document.querySelector(".notif-close").addEventListener("click", () => {
+            closeNotifPanel();
+        });
+
+        document.getElementById("notifOverlay").addEventListener("click", () => {
+            closeNotifPanel();
+        });
+
+        function closeNotifPanel() {
+            document.getElementById("notifOverlay").style.display = "none";
+            document.getElementById("notifPanel").style.right = "-380px";
+        }
 </script>
 </body>
 </html>
