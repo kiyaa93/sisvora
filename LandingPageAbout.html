@@ -4,6 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>SISVORA - About</title>
+
   <style>
     *{
         margin:0;
@@ -21,21 +22,24 @@
         justify-content:space-between;
         align-items:center
     }
+
+    /* === LOGO NAV === */
     .nav-logo{
         display:flex;
         align-items:center;
         gap:10px;
         cursor:pointer
     }
-    .nav-logo svg{
-        width:35px;
-        height:35px
+    .nav-logo img{
+        width:40px;
+        height:40px;
     }
     .nav-logo span{
         color:#d64933;
         font-weight:700;
         font-size:16px
     }
+
     .nav-links{
         display:flex;
         gap:35px
@@ -47,13 +51,16 @@
         cursor:pointer;
         transition:color .3s
     }
-    .nav-links a:hover,.nav-links a.active{
+    .nav-links a:hover,
+    .nav-links a.active{
         color:#d64933
     }
+
     .nav-buttons{
         display:flex;
         gap:10px
     }
+
     .btn-login,.btn-register{
         padding:8px 24px;
         border-radius:20px;
@@ -79,6 +86,7 @@
     .btn-register:hover{
         background:#c03d29
     }
+
     .about{
         background:linear-gradient(to bottom right,#f5c4a0,#f5e6d3);
         padding:70px 60px
@@ -88,11 +96,16 @@
         margin:0 auto;
         text-align:center
     }
+
+    /* === TITLE KECILIN SESUAI PERMINTAAN === */
     .about-content h2{
-        font-size:28px;
+        font-size:22px;
+        letter-spacing:1px;
         color:#333;
+        font-weight:700;
         margin-bottom:25px
     }
+
     .about-content > p{
         font-size:15px;
         color:#666;
@@ -102,6 +115,8 @@
         margin-left:auto;
         margin-right:auto
     }
+
+    /* === ICON ORANGE FLAT STYLE === */
     .strengths-grid{
         display:grid;
         grid-template-columns:repeat(4,1fr);
@@ -114,36 +129,42 @@
     .strength-item:hover{
         transform:translateY(-10px)
     }
+
     .strength-icon{
-        width:90px;
-        height:90px;
-        background:#d64933;
+        width:110px;
+        height:110px;
+        background:#e86f3e;           /* WARNA ORANGE KAYA SS */
         border-radius:50%;
         display:flex;
         align-items:center;
         justify-content:center;
-        margin:0 auto 15px;
+        margin:0 auto 18px;
+        box-shadow:0 4px 10px rgba(0,0,0,0.15);
         transition:transform .3s
     }
     .strength-item:hover .strength-icon{
-        transform:scale(1.1)
+        transform:scale(1.08)
     }
     .strength-icon svg{
-        width:45px;
-        height:45px;
+        width:48px;
+        height:48px;
         fill:#fff
     }
+
     .strength-item h4{
         font-size:14px;
         color:#333;
         margin-bottom:10px;
         font-weight:700
     }
+
     .strength-item p{
         font-size:12px;
         color:#666;
         line-height:1.5
     }
+
+    /* === FOOTER === */
     footer{
         background:#f5d5b8;
         padding:35px 60px
@@ -155,20 +176,23 @@
         justify-content:space-between;
         align-items:center
     }
+
+    /* === LOGO FOOTER === */
     .footer-logo{
         display:flex;
         align-items:center;
         gap:10px
     }
-    .footer-logo svg{
-        width:35px;
-        height:35px
+    .footer-logo img{
+        width:38px;
+        height:38px
     }
     .footer-logo span{
         color:#d64933;
         font-weight:700;
         font-size:16px
     }
+
     .footer-links{
         display:flex;
         gap:30px
@@ -183,6 +207,7 @@
     .footer-links a:hover{
         color:#d64933
     }
+
     .footer-social{
         display:flex;
         gap:12px
@@ -204,6 +229,7 @@
         background:#c03d29;
         transform:scale(1.1)
     }
+
     .notification{
         position:fixed;
         top:20px;
@@ -220,45 +246,48 @@
         display:block;
         animation:slideIn .3s
     }
+
     @keyframes slideIn{
         from{
             transform:translateX(400px);
             opacity:0
-        }to
-        {transform:translateX(0);
+        }
+        to{
+            transform:translateX(0);
             opacity:1
         }
     }
+
     @media(max-width:768px){
         nav{
             padding:15px 20px;
             flex-direction:column;
             gap:15px
-        }.nav-links{
+        }
+        .nav-links{
             flex-wrap:wrap;
             gap:15px
-        }.about{
+        }
+        .about{
             padding:50px 20px
-        }.strengths-grid{
+        }
+        .strengths-grid{
             grid-template-columns:1fr
         }
     }
-
   </style>
 </head>
+
 <body>
   <div id="notification" class="notification"></div>
 
+  <!-- NAV -->
   <nav>
-    <div class="nav-logo" onclick="location.href='LandingPageHome.html'">
-      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="50" cy="50" r="45" fill="none" stroke="#d64933" stroke-width="3"/>
-        <circle cx="50" cy="35" r="12" fill="#d64933"/>
-        <path d="M 30 70 Q 50 55 70 70" fill="none" stroke="#d64933" stroke-width="3"/>
-        <path d="M 65 45 L 75 35 L 85 45" fill="none" stroke="#d64933" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      <span>SISVORA</span>
-    </div>
+  <div class="nav-logo" onclick="location.href='LandingPageHome.html'">
+    <img src="./img/logo.png" alt="logo">
+    <span>SISVORA</span>
+  </div>
+
 
     <div class="nav-links">
       <a id="nav-home" href="LandingPageHome.html">Home</a>
@@ -268,13 +297,15 @@
     </div>
 
     <div class="nav-buttons">
-      <a class="btn-login" href="loginuser.html" ; return false;">Login</a>
-      <a class="btn-register" href="register.html" ; return false;">Register</a>
+      <a class="btn-login" href="loginuser.html">Login</a>
+      <a class="btn-register" href="register.html">Register</a>
     </div>
   </nav>
 
+  <!-- MAIN -->
   <main class="about">
     <div class="about-content">
+
       <h2>ABOUT US</h2>
       <p>
         SISVORA is a Digital Voting System designed for the OSIS presidential election.
@@ -283,12 +314,12 @@
       </p>
 
       <h2 style="margin-top:40px;margin-bottom:25px">OUR STRENGTHS</h2>
+
       <div class="strengths-grid">
+
         <div class="strength-item">
           <div class="strength-icon">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="white"/>
-            </svg>
+            <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
           </div>
           <h4>Increased Voter Turnout</h4>
           <p>Encourage more participation by making it easy and convenient for everyone to vote.</p>
@@ -296,9 +327,7 @@
 
         <div class="strength-item">
           <div class="strength-icon">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z" fill="white"/>
-            </svg>
+            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
           </div>
           <h4>Accurate Vote Records</h4>
           <p>With automatic vote-tabulation, there is no error in the counting method and can be verified.</p>
@@ -306,9 +335,7 @@
 
         <div class="strength-item">
           <div class="strength-icon">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="white"/>
-            </svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
           </div>
           <h4>Cost-Effective</h4>
           <p>Digital elections cut costs. No papers to be printed, and only a few equipment needed.</p>
@@ -316,28 +343,24 @@
 
         <div class="strength-item">
           <div class="strength-icon">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z" fill="white"/>
-            </svg>
+            <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
           </div>
           <h4>Guaranteed Security</h4>
           <p>The student's identity and vote data are kept extremely secure compared with paper-based methods.</p>
         </div>
+
       </div>
     </div>
   </main>
 
-  <footer>
-    <div class="footer-content">
-      <div class="footer-logo">
-        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="50" cy="50" r="45" fill="none" stroke="#d64933" stroke-width="3"/>
-          <circle cx="50" cy="35" r="12" fill="#d64933"/>
-          <path d="M 30 70 Q 50 55 70 70" fill="none" stroke="#d64933" stroke-width="3"/>
-          <path d="M 65 45 L 75 35 L 85 45" fill="none" stroke="#d64933" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <span>SISVORA</span>
-      </div>
+  <!-- FOOTER -->
+ <footer>
+  <div class="footer-content">
+    <div class="footer-logo">
+      <img src="./img/logo.png" alt="logo">
+      <span>SISVORA</span>
+    </div>
+
 
       <div class="footer-links">
         <a href="#" onclick="showNotification('Product info coming soon!'); return false;">Product</a>
@@ -374,5 +397,6 @@
       if (id) document.getElementById(id).classList.add('active');
     })();
   </script>
+
 </body>
 </html>

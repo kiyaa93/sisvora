@@ -25,12 +25,12 @@
     .nav-logo{
         display:flex;
         align-items:center;
-        gap:50px;
+        gap:10px;
         cursor:pointer
     }
-    .nav-logo svg{
+    .nav-logo img{
         width:35px;
-        height:35px
+        height:35px;
     }
     .nav-logo span{
         color:#d64933;
@@ -198,9 +198,9 @@
         align-items:center;
         gap:10px
     }
-    .footer-logo svg{
+    .footer-logo img{
         width:35px;
-        height:35px
+        height:35px;
     }
     .footer-logo span{
         color:#d64933;
@@ -254,12 +254,7 @@
 
   <nav>
     <div class="nav-logo" onclick="location.href='LandingPageHome.html'">
-      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="50" cy="50" r="45" fill="none" stroke="#d64933" stroke-width="3"/>
-        <circle cx="50" cy="35" r="12" fill="#d64933"/>
-        <path d="M 30 70 Q 50 55 70 70" fill="none" stroke="#d64933" stroke-width="3"/>
-        <path d="M 65 45 L 75 35 L 85 45" fill="none" stroke="#d64933" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
+    <img src="./img/logo.png" alt="logo">
       <span>SISVORA</span>
     </div>
 
@@ -319,15 +314,10 @@
 
   <footer>
     <div class="footer-content">
-      <div class="footer-logo">
-        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="50" cy="50" r="45" fill="none" stroke="#d64933" stroke-width="3"/>
-          <circle cx="50" cy="35" r="12" fill="#d64933"/>
-          <path d="M 30 70 Q 50 55 70 70" fill="none" stroke="#d64933" stroke-width="3"/>
-          <path d="M 65 45 L 75 35 L 85 45" fill="none" stroke="#d64933" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <span>SISVORA</span>
-      </div>
+    <div class="footer-logo">
+    <img src="./img/logo.png" alt="logo">
+      <span>SISVORA</span>
+    </div>
 
       <div class="footer-links">
         <a href="#" onclick="showNotification('Product info coming soon!'); return false;">Product</a>
