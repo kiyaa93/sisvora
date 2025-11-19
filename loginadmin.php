@@ -1,3 +1,6 @@
+<?php session_start(); ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -133,7 +136,7 @@
     <p>Admin Login Page.</p>
 </div>
 
-<form method="POST" action="dashboard.php">
+<form method="POST" action="proses_login_admin.php">
 
     <div class="form-group">
         <label for="adminID">ADMIN ID</label>

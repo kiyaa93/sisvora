@@ -1,3 +1,33 @@
+<?php
+require "config.php";
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $first = $_POST['first_name'];
+    $last = $_POST['last_name'];
+    $nis = $_POST['nis'];
+    $birthday = $_POST['birthday'];
+    $contact = $_POST['contact'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    // Hash password
+    $hashedPass = password_hash($password, PASSWORD_DEFAULT);
+
+    $sql = "INSERT INTO login_user 
+            (first_name, last_name, nis, birthday, contact, email, password)
+            VALUES 
+            ('$first', '$last', '$nis', '$birthday', '$contact', '$email', '$hashedPass')";
+
+    if (mysqli_query($conn, $sql)) {
+        echo "Register berhasil!";
+    } else {
+        echo "Error: " . mysqli_error($conn);
+    }
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

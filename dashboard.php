@@ -1,3 +1,15 @@
+<?php
+session_start();
+
+// kalau belum login → tendang ke login
+if (!isset($_SESSION['adminID'])) {
+    header("Location: loginadmin.php");
+    exit;
+}
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -625,7 +637,7 @@
     <!-- Main Content -->
     <div class="main-content" id="mainContent">
         <div class="welcome-text">
-            <h2>Hello, <strong>Admin!</strong></h2>
+            <h2>Hello,<strong><?php echo $_SESSION['adminID']; ?>!</strong></h2>
             <p>Welcome Back to SISVORA Management Panel.</p>
         </div>
 
