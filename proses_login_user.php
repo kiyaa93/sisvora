@@ -31,7 +31,7 @@ if ($row = mysqli_fetch_assoc($result)) {
         $_SESSION['user_name'] = $row['first_name'] . " " . $row['last_name'];
 
         // Redirect ke dashboard user
-        header("Location: dashboard_user.php");
+        header("Location: dashboarduser.php");
         exit;
 
     } else {

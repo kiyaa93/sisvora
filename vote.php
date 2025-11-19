@@ -7,7 +7,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sisvora - Student Voting System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></style>
     <style>
+        :root {
+            --orange-primary: #D2691E;
+            --orange-light: #F4A460;
+            --orange-dark: #8B4513;
+            --beige-bg: #F5E6D3;
+            --beige-sidebar: #E8D4BF;
+        }
         * {
             margin: 0;
             padding: 0;
@@ -56,229 +65,212 @@
             animation: fadeIn 0.6s ease-out;
         }
 
-        /* Header */
-        header {
+        /* Navbar Styles */
+        .navbar {
+            background-color: var(--beige-bg);
+            padding: 1rem 2rem;
             position: fixed;
-            top: 0;
             left: 0;
-            right: 0;
-            height: clamp(80px, 15vh, 135px);
-            background-color: #f7f1e5;
-            z-index: 100;
-            padding: 0 clamp(20px, 4vw, 51px);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: clamp(20px, 5vw, 75px);
-        }
-
-        .menu-icon {
-            width: clamp(35px, 5vw, 45px);
-            height: clamp(35px, 5vw, 45px);
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            gap: clamp(4px, 1vw, 6px);
-        }
-
-        .menu-icon span {
             width: 100%;
-            height: clamp(3px, 0.5vw, 4px);
-            background-color: #000;
-            border-radius: 2px;
-            transition: all 0.3s;
+            z-index: 2000;
+            top: 1rem;
         }
-
-        .logo {
-            width: clamp(60px, 10vw, 135px);
-            height: clamp(60px, 10vw, 135px);
-        }
-
-        .logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        .search-bar {
-            width: clamp(200px, 40vw, 730px);
-            height: clamp(45px, 6vh, 65px);
-            background-color: rgba(255, 255, 255, 0.45);
-            border: 1px solid rgba(229, 100, 31, 0.45);
-            border-radius: 50px;
-            display: flex;
-            align-items: center;
-            padding: 0 clamp(15px, 2vw, 20px);
-            gap: clamp(10px, 1.5vw, 15px);
-        }
-
-        .search-icon {
-            width: clamp(20px, 3vw, 30px);
-            height: clamp(20px, 3vw, 30px);
-            opacity: 0.45;
-            flex-shrink: 0;
-        }
-
-        .search-bar input {
-            flex: 1;
-            border: none;
-            background: transparent;
-            font-size: clamp(14px, 1.5vw, 18px);
-            outline: none;
-            font-weight: 500;
-            min-width: 0;
-        }
-
-        .header-icons {
-            display: flex;
-            align-items: center;
-            gap: clamp(15px, 2.5vw, 31px);
-        }
-
-        .icon-btn {
-            width: clamp(25px, 3vw, 35px);
-            height: clamp(25px, 3vw, 35px);
+        
+        .navbar-toggle-btn {
             background: none;
             border: none;
+            color: var(--orange-primary);
+            font-size: 1.8rem;
             cursor: pointer;
-            position: relative;
-            transition: transform 0.2s;
-            flex-shrink: 0;
+            transition: .3s ease;
+            margin-right: -10px;
         }
 
-        .icon-btn:hover {
+        .navbar-toggle-btn:hover {
+            color: var(--orange-dark);
             transform: scale(1.1);
         }
 
-        .icon-btn.user {
-            width: clamp(40px, 5vw, 60px);
-            height: clamp(40px, 5vw, 60px);
-        }
-
-        /* Sidebar */
-        .sidebar {
-            position: fixed;
-            left: 0;
-            top: clamp(80px, 15vh, 150px);
-            width: clamp(280px, 25vw, 360px);
-            height: calc(100vh - clamp(80px, 15vh, 150px));
-            background-color: #f6d4b7;
-            border-top-right-radius: clamp(30px, 4vw, 50px);
-            padding-top: clamp(20px, 3vh, 33px);
-            z-index: 50;
-            transition: transform 0.3s;
-        }
-
-        .sidebar.mobile-hidden {
-            transform: translateX(-100%);
-        }
-
-        .user-profile {
-            padding: 0 clamp(30px, 8vw, 97px);
-            text-align: center;
-            margin-bottom: clamp(30px, 6vh, 70px);
-        }
-
-        .user-avatar {
-            width: clamp(70px, 8vw, 100px);
-            height: clamp(70px, 8vw, 100px);
-            margin: 0 auto clamp(5px, 1vh, 7px);
-            background-color: #b03d00;
-            border-radius: 50%;
+        .navbar .container-fluid {
             display: flex;
             align-items: center;
-            justify-content: center;
-        }
-
-        .user-avatar svg {
-            width: 100%;
+            justify-content: space-between;
             height: 100%;
         }
 
-        .user-name {
-            font-size: clamp(20px, 2.2vw, 26px);
-            font-weight: 700;
-            margin-bottom: clamp(8px, 1vh, 10px);
-            color: #000;
-        }
-
-        .user-status-wrapper {
+        .navbar .logo {
+            font-size: 1.2rem;
+            margin-left: 8px;
+            font-weight: bold;
+            color: var(--orange-primary);
+            text-decoration: none;
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 5px;
-            flex-wrap: wrap;
+            gap: 1rem;
         }
 
-        .user-role {
-            font-size: clamp(14px, 1.5vw, 18px);
-            color: rgba(0, 0, 0, 0.25);
+        .logo-img {
+            height: 45px;   /* sesuaikan */
+            width: auto;
+            object-fit: contain;
+            transform: scale(1.5); 
         }
 
-        .user-status {
-            background-color: #f7f1e5;
-            color: #b03d00;
-            padding: 0 5px;
-            border-radius: 8px;
-            font-size: clamp(14px, 1.5vw, 18px);
-            font-weight: 500;
+        .navbar .search-bar {
+            max-width: 600px;
+            flex-grow: 1;
         }
-
-        .nav-menu {
-            list-style: none;
+        
+        .navbar .search-bar input {
+            border-radius: 25px;
+            border: 2px solid #ddd;
+            padding: 0.6rem 1.5rem;
         }
-
-        .nav-item {
-            height: clamp(60px, 7vh, 75px);
-            display: flex;
-            align-items: center;
-            padding-left: clamp(30px, 4vw, 49px);
+        
+        .navbar .search-bar input:focus {
+            border-color: var(--orange-primary);
+            box-shadow: 0 0 0 0.2rem rgba(210, 105, 30, 0.25);
+        }
+        
+        .icon-btn {
+            background: none;
+            border: none;
+            color: var(--orange-primary);
+            font-size: 1.5rem;
             cursor: pointer;
             transition: all 0.3s;
             position: relative;
         }
-
-        .nav-item:hover {
-            background: linear-gradient(to right, rgba(229, 100, 31, 0.1), transparent);
+        
+        .icon-btn:hover {
+            color: var(--orange-dark);
+            transform: scale(1.1);
         }
-
-        .nav-item.active {
-            background: linear-gradient(to right, #e5641f, #ffc9ac);
-            border-top-right-radius: clamp(30px, 4vw, 50px);
-            border-bottom-right-radius: clamp(30px, 4vw, 50px);
-        }
-
-        .nav-item.active .nav-text {
-            color: white;
-        }
-
-        .nav-item.active .nav-icon {
-            filter: brightness(0) invert(1);
-        }
-
-        .nav-icon {
-            width: clamp(25px, 3vw, 35px);
-            height: clamp(25px, 3vw, 35px);
-            margin-right: clamp(15px, 2.5vw, 29px);
-            flex-shrink: 0;
-        }
-
-        .nav-text {
-            font-size: clamp(18px, 2vw, 24px);
-            font-weight: 600;
-            color: #b03d00;
-        }
-
-        .nav-item.logout {
+        
+        .notification-badge {
             position: absolute;
-            bottom: clamp(30px, 5vh, 50px);
-            width: 100%;
+            top: -5px;
+            right: -5px;
+            background-color: #dc3545;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sidebar-wrapper {
+            position: fixed;
+            left: 0;
+            top: 80px;
+            height: 100vh;
+            width: 280px;
+            background-color: var(--beige-sidebar);
+            border-top: 1px solid rgba(0,0,0,0.08);
+            border-top-right-radius: 50px;
+            box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            z-index: 999;
+            overflow-y: auto;
+        }
+
+        .sidebar-wrapper.collapsed {
+            transform: translateX(-280px);
+        }
+
+        .sidebar.collapsed {
+            width: 85px;
+        }
+
+        .sidebar.collapsed .menu-text {
+            display: none;
+        }
+
+        .user-profile {
+            text-align: center;
+            padding: 2rem 1rem;
+            background: linear-gradient(135deg, rgba(210, 105, 30, 0.1), rgba(244, 164, 96, 0.1));
+            border-bottom: 2px solid rgba(210, 105, 30, 0.2);
+        }
+
+        .user-profile .avatar {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--orange-primary), var(--orange-light));
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .user-name {
+            font-weight: bold;
+            font-size: 1.3rem;
+            color: var(--orange-dark);
+            margin-bottom: 0.3rem;
+        }
+
+        .user-status {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .sidebar-menu {
+            padding: 1rem 0;
+        }
+
+        .menu-item {
+            padding: 1rem 1.5rem;
+            color: var(--orange-dark);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s;
+            border-left: 4px solid transparent;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .menu-item:hover {
+            background-color: rgba(210, 105, 30, 0.1);
+            color: var(--orange-primary);
+            border-left-color: var(--orange-primary);
+        }
+
+        .menu-item.active {
+            background: #D94E28;
+            color: white;
+            border-left-color: var(--orange-dark);
+        }
+
+        .menu-item i {
+            text-align: center;
+            font-size: 1.2rem;
+            width: 24px;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .menu-separator {
+            margin: 1rem 1.5rem;
+            border-top: 1px solid rgba(210, 105, 30, 0.2);
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
         }
 
         /* Main Content */
@@ -782,95 +774,223 @@
                 width: 100%;
             }
         }
+
+        /* OVERLAY */
+        .notif-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.2);
+            display: none;
+            backdrop-filter: blur(2px);
+            z-index: 2000;
+        }
+
+        /* PANEL */
+        .notif-panel {
+            position: fixed;
+            top: 0;
+            right: -380px; 
+            width: 350px;
+            height: 100%;
+            background: #fff;
+            box-shadow: -3px 0 15px rgba(0,0,0,.15);
+            padding: 20px;
+            z-index: 2100;
+            transition: right .3s ease;
+            overflow-y: auto;
+            border-left: 1px solid #eee;
+        }
+
+        /* HEADER */
+        .notif-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .notif-close {
+            cursor: pointer;
+            font-size: 22px;
+            padding: 0 5px;
+        }
+
+        .notif-item {
+            display: flex;
+            gap: 12px;
+            padding: 12px;
+            background: #fff7f0;
+            border-radius: 10px;
+            border: 1px solid #eee;
+            margin-bottom: 12px;
+        }
+
+        .notif-item h4 {
+            margin: 0;
+        }
+        .notif-item p {
+            margin-top: 3px;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .notif-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+        }
+
+        @media (max-width: 1024px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                transform: translateX(-280px);
+            }
+            
+            .sidebar.show {
+                transform: translateX(0);
+            }
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.35);
+            backdrop-filter: blur(3px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+
+        .modal-box {
+            width: 450px;
+            background: #ffff;
+            padding: 30px 35px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .modal-icon {
+            font-size: 55px;
+            color: #c45a09;
+            margin-bottom: 10px;
+        }
+
+        .modal-box h2 {
+            font-size: 26px;
+            margin-bottom: 8px;
+            color: #3d2b1f;
+        }
+
+        .modal-box p {
+            color: #6f5845;
+            margin-bottom: 25px;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .btn-cancel {
+            padding: 10px 25px;
+            border: 2px solid #c45a09;
+            color: #c45a09;
+            background: transparent;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .btn-confirm {
+            padding: 10px 25px;
+            border: none;
+            color: white;
+            background: #c45a09;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .btn-cancel:hover {
+            background: rgba(196, 90, 9, 0.08);
+        }
+
+        .btn-confirm:hover {
+            background: #a24907;
+        }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header class="fade-in">
-        <div class="header-left">
-            <div class="menu-icon" onclick="toggleSidebar()">
-                <span></span>
-                <span></span>
-                <span></span>
+   <nav class="navbar">
+            <div class="container-fluid">
+                <button class="navbar-toggle-btn me-3" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <a href="#" class="logo">
+                    <img src="img/logo.png" alt="SISVORA Logo" class="logo-img">
+                    <span>SISVORA</span>
+                </a>
+                <div class="search-bar mx-4 d-none d-md-block">
+                    <input type="search" class="form-control" placeholder="🔍 Search...">
+                </div>
+                <div class="d-flex gap-3 align-items-center">
+                    <button class="icon-btn" id="notifBtn" title="Notifications" >
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge">3</span>
+                    </button>
+                    <button class="icon-btn" title="Help">
+                        <i class="fas fa-question-circle"></i>
+                    </button>
+                    <button class="icon-btn" title="Profile">
+                        <i class="fas fa-user-circle"></i>
+                    </button>
+                </div>
             </div>
-            <div class="logo">
-                <img src="img/logo.png" alt="Sisvora Logo">
-            </div>
-            <div class="search-bar">
-                <svg class="search-icon" viewBox="0 0 30 30" fill="none">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M13.125 3.75C7.94365 3.75 3.75 7.94365 3.75 13.125C3.75 18.3063 7.94365 22.5 13.125 22.5C15.4354 22.5 17.5521 21.6771 19.2042 20.3146L24.3198 25.4302C24.8104 25.9208 25.6021 25.9208 26.0927 25.4302C26.5833 24.9396 26.5833 24.1479 26.0927 23.6573L20.9771 18.5417C22.3396 16.8896 23.1625 14.7729 23.1625 12.4625C23.1625 7.28115 18.9688 3.0875 13.7875 3.0875L13.125 3.75ZM6.25 13.125C6.25 9.32365 9.32365 6.25 13.125 6.25C16.9263 6.25 20 9.32365 20 13.125C20 16.9263 16.9263 20 13.125 20C9.32365 20 6.25 16.9263 6.25 13.125Z" fill="#B03D00" fill-opacity="0.45"/>
-                </svg>
-                <input type="text" placeholder="Search candidates...">
-            </div>
-        </div>
-        <div class="header-icons">
-            <button class="icon-btn" aria-label="Notifications">
-                <svg viewBox="0 0 35 35" fill="none">
-                    <path d="M17.5 3.28125C12.0156 3.28125 7.65625 7.64062 7.65625 13.125V18.5938L5.46875 22.9688C5.35156 23.2031 5.46875 23.4375 5.70312 23.5547C5.82031 23.6719 5.9375 23.6719 6.05469 23.6719H28.9453C29.0625 23.6719 29.1797 23.6719 29.2969 23.5547C29.5312 23.4375 29.6484 23.2031 29.5312 22.9688L27.3438 18.5938V13.125C27.3438 7.64062 22.9844 3.28125 17.5 3.28125ZM20 26.25H15C15 27.8906 16.25 29.1406 17.8906 29.1406C19.5312 29.1406 20.7812 27.8906 20.7812 26.25H20Z" fill="#E5641F"/>
-                </svg>
-            </button>
-            <button class="icon-btn" aria-label="Help">
-                <svg viewBox="0 0 45 45" fill="none">
-                    <path d="M22.5 0C10.125 0 0 10.125 0 22.5C0 34.875 10.125 45 22.5 45C34.875 45 45 34.875 45 22.5C45 10.125 34.875 0 22.5 0ZM22.5 33.75C21.375 33.75 20.625 33 20.625 31.875C20.625 30.75 21.375 30 22.5 30C23.625 30 24.375 30.75 24.375 31.875C24.375 33 23.625 33.75 22.5 33.75ZM25.875 24.375C24.75 25.125 24.375 25.5 24.375 26.25V27H20.625V26.25C20.625 23.625 21.75 22.5 23.625 21.375C24.75 20.625 25.125 20.25 25.125 19.5C25.125 18.375 24 17.25 22.5 17.25C21 17.25 19.875 18.375 19.875 19.5H16.125C16.125 16.125 18.75 13.5 22.5 13.5C26.25 13.5 28.875 16.125 28.875 19.5C28.875 22.125 27.75 23.25 25.875 24.375Z" fill="#E5641F"/>
-                </svg>
-            </button>
-            <button class="icon-btn user" aria-label="Profile">
-                <svg viewBox="0 0 60 60" fill="none">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M30 0C13.5 0 0 13.5 0 30C0 46.5 13.5 60 30 60C46.5 60 60 46.5 60 30C60 13.5 46.5 0 30 0ZM30 15C25.875 15 22.5 18.375 22.5 22.5C22.5 26.625 25.875 30 30 30C34.125 30 37.5 26.625 37.5 22.5C37.5 18.375 34.125 15 30 15ZM45 42.75C45 45 43.125 46.875 40.875 46.875H19.125C16.875 46.875 15 45 15 42.75V40.5C15 36.375 18.375 33 22.5 33H37.5C41.625 33 45 36.375 45 40.5V42.75Z" fill="#B03D00"/>
-                </svg>
-            </button>
-        </div>
-    </header>
-
-    <!-- Sidebar -->
-    <aside class="sidebar mobile-hidden fade-in">
-        <div class="user-profile">
-            <div class="user-avatar">
-                <svg viewBox="0 0 100 100" fill="none">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M50 0C22.5 0 0 22.5 0 50C0 77.5 22.5 100 50 100C77.5 100 100 77.5 100 50C100 22.5 77.5 0 50 0ZM50 25C43.125 25 37.5 30.625 37.5 37.5C37.5 44.375 43.125 50 50 50C56.875 50 62.5 44.375 62.5 37.5C62.5 30.625 56.875 25 50 25ZM75 71.25C75 75 71.875 78.125 68.125 78.125H31.875C28.125 78.125 25 75 25 71.25V67.5C25 60.625 30.625 55 37.5 55H62.5C69.375 55 75 60.625 75 67.5V71.25Z" fill="white"/>
-                </svg>
-            </div>
-            <div class="user-name">Jan Adam</div>
-            <div class="user-status-wrapper">
-                <span class="user-role">Student</span>
-                <span class="user-status">Unvoted</span>
-            </div>
-        </div>
-        <nav>
-            <ul class="nav-menu">
-                <li class="nav-item" data-page="dashboard">
-                    <svg class="nav-icon" viewBox="0 0 35 35" fill="none">
-                        <path d="M14.5833 32.0833V18.9583H20.4167V32.0833H27.7083V15.0417H32.0833L17.5 2.91666L2.91667 15.0417H7.29167V32.0833H14.5833Z" fill="#B03D00"/>
-                    </svg>
-                    <span class="nav-text">Dashboard</span>
-                </li>
-                <li class="nav-item active" data-page="vote">
-                    <svg class="nav-icon" viewBox="0 0 35 35" fill="none">
-                        <path d="M17.5 2.91666L2.91667 8.74999V15.0417C2.91667 23.3333 8.75 31.0417 17.5 32.0833C26.25 31.0417 32.0833 23.3333 32.0833 15.0417V8.74999L17.5 2.91666ZM14.5833 23.3333L8.75 17.5L10.7917 15.4583L14.5833 19.25L24.2083 9.62499L26.25 11.6667L14.5833 23.3333Z" fill="#B03D00"/>
-                    </svg>
-                    <span class="nav-text">Vote</span>
-                </li>
-                <li class="nav-item" data-page="guideline">
-                    <svg class="nav-icon" viewBox="0 0 35 35" fill="none">
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M8.75 2.91666H26.25C27.7917 2.91666 29.1667 4.29166 29.1667 5.83333V29.1667C29.1667 30.7083 27.7917 32.0833 26.25 32.0833H8.75C7.20833 32.0833 5.83333 30.7083 5.83333 29.1667V5.83333C5.83333 4.29166 7.20833 2.91666 8.75 2.91666ZM11.6667 26.25H23.3333V23.3333H11.6667V26.25ZM23.3333 20.4167H11.6667V17.5H23.3333V20.4167ZM11.6667 14.5833H23.3333V11.6667H11.6667V14.5833Z" fill="#B03D00"/>
-                    </svg>
-                    <span class="nav-text">Voters Guideline</span>
-                </li>
-                <li class="nav-item" data-page="settings">
-                    <svg class="nav-icon" viewBox="0 0 35 35" fill="none">
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M17.5 11.6667C14.5833 11.6667 12.25 14 12.25 16.9167C12.25 19.8333 14.5833 22.1667 17.5 22.1667C20.4167 22.1667 22.75 19.8333 22.75 16.9167C22.75 14 20.4167 11.6667 17.5 11.6667ZM29.1667 17.5C29.1667 16.625 29.1667 15.75 28.875 15.1667L31.5 13.125C31.7917 12.8333 31.7917 12.25 31.5 11.9583L29.1667 7.875C28.875 7.58333 28.2917 7.58333 28 7.875L24.7917 9.33333C24.2083 8.75 23.625 8.16666 23.0417 7.875L22.75 4.66666C22.75 4.08333 22.4583 3.79166 21.875 3.79166H17.5C16.9167 3.79166 16.625 4.08333 16.625 4.66666L16.3333 7.875C15.75 8.16666 15.1667 8.75 14.5833 9.33333L11.375 7.875C11.0833 7.58333 10.5 7.58333 10.2083 7.875L7.875 11.9583C7.58333 12.25 7.58333 12.8333 7.875 13.125L10.5 15.1667C10.2083 15.75 10.2083 16.625 10.2083 17.5C10.2083 18.375 10.2083 19.25 10.5 19.8333L7.875 21.875C7.58333 22.1667 7.58333 22.75 7.875 23.0417L10.2083 27.125C10.5 27.4167 11.0833 27.4167 11.375 27.125L14.5833 25.6667C15.1667 26.25 15.75 26.8333 16.3333 27.125L16.625 30.3333C16.625 30.9167 16.9167 31.2083 17.5 31.2083H21.875C22.4583 31.2083 22.75 30.9167 22.75 30.3333L23.0417 27.125C23.625 26.8333 24.2083 26.25 24.7917 25.6667L28 27.125C28.2917 27.4167 28.875 27.4167 29.1667 27.125L31.5 23.0417C31.7917 22.75 31.7917 22.1667 31.5 21.875L28.875 19.8333C29.1667 19.25 29.1667 18.375 29.1667 17.5Z" fill="#B03D00"/>
-                    </svg>
-                    <span class="nav-text">Settings</span>
-                </li>
-                <li class="nav-item logout" onclick="handleLogout()">
-                    <svg class="nav-icon" viewBox="0 0 35 35" fill="none">
-                        <path d="M13.125 10.9375V8.75C13.125 6.5625 14.875 4.8125 17.0625 4.8125H26.25C28.4375 4.8125 30.1875 6.5625 30.1875 8.75V26.25C30.1875 28.4375 28.4375 30.1875 26.25 30.1875H17.0625C14.875 30.1875 13.125 28.4375 13.125 26.25V24.0625M8.75 17.5H24.0625M8.75 17.5L13.125 13.125M8.75 17.5L13.125 21.875" stroke="#B03D00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                    <span class="nav-text">Logout</span>
-                </li>
-            </ul>
         </nav>
-    </aside>
+
+     <!-- Sidebar -->
+    <div class="sidebar-wrapper" id="sidebar">
+        <div class="user-profile">
+            <div class="avatar"><i class="fas fa-user"></i></div>
+            <div class="user-name">Jan Adam</div>
+            <div class="user-status">Student, Unvoted</div>
+        </div>
+
+        <div class="sidebar-menu">
+            <div class="menu-item" onclick="go('dashboarduser')">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+            </div>
+            <div class="menu-item active" onclick="go('vote')">
+                <i class="fas fa-vote-yea"></i>
+                <span>Vote</span>
+            </div>
+            <div class="menu-item" onclick="go('votersguad')">
+                <i class="fas fa-list-alt"></i>
+                <span>Voters Guideline</span>
+            </div>
+            <div class="menu-item" onclick="go('settinguser')">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+            </div>
+            <div class="menu-separator"></div>
+            <a href="#" id="logoutMenu" class="menu-item">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </div>
 
     <!-- Main Content -->
     <main class="main-content fade-in">
@@ -1096,21 +1216,59 @@
         </div>
     </div>
 
+    <div id="logoutModal" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-icon">⚠️</div>
+
+            <h2>Are you sure to leave?</h2>
+            <p>You can always login back any time.</p>
+
+            <div class="modal-actions">
+                <button id="cancelLogout" class="btn-cancel">CANCEL</button>
+                <button id="confirmLogout" class="btn-confirm">YES, I'M SURE</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- OVERLAY -->
+    <div id="notifOverlay" class="notif-overlay"></div>
+
+    <!-- SLIDE PANEL -->
+    <div id="notifPanel" class="notif-panel">
+
+        <div class="notif-header">
+            <h2>Notification</h2>
+            <span class="notif-close">&times;</span>
+        </div>
+
+        <div class="notif-item">
+            <img src="img/logo.png" class="notif-icon">
+            <div>
+                <h4>Let’s choose your choice!</h4>
+                <p>Make sure that you carefully read the candidate’s vision and mission.</p>
+            </div>
+        </div>
+
+        <div class="notif-item">
+            <img src="img/logo.png" class="notif-icon">
+            <div>
+                <h4>New Update</h4>
+                <p>Voting results will be announced soon.</p>
+            </div>
+        </div>
+
+    </div>
+
     <script>
-        // Toggle Sidebar
-        function toggleSidebar() {
-            const sidebar = document.querySelector('.sidebar');
-            sidebar.classList.toggle('mobile-hidden');
-            sidebar.classList.toggle('mobile-visible');
+        function go(page) {
+            window.location.href = page + ".php";
         }
 
-        // Navigation
-        document.querySelectorAll('.nav-item:not(.logout)').forEach(item => {
-            item.addEventListener('click', function() {
-                document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
-                this.classList.add('active');
-            });
-        });
+        // Sidebar Toggle
+        function toggleSidebar() {
+            document.getElementById("sidebar").classList.toggle("collapsed");
+            document.getElementById("mainContent").classList.toggle("expanded");
+        }
 
         // NEW FLOW: VOTE → ALERT → CAMERA → SUCCESS → PROOF
         let currentCandidate = '';
@@ -1200,6 +1358,35 @@
                 closeSuccessModal();
             }
         });
+
+        // Proses logout
+        confirmLogout.addEventListener("click", function() {
+            window.location.href = "logout.php"; 
+        });
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                alert('Logged out successfully!');
+            }
+        }
+
+        document.getElementById("notifBtn").addEventListener("click", () => {
+            document.getElementById("notifOverlay").style.display = "block";
+            document.getElementById("notifPanel").style.right = "0";
+        });
+
+        document.querySelector(".notif-close").addEventListener("click", () => {
+            closeNotifPanel();
+        });
+
+        document.getElementById("notifOverlay").addEventListener("click", () => {
+            closeNotifPanel();
+        });
+
+        function closeNotifPanel() {
+            document.getElementById("notifOverlay").style.display = "none";
+            document.getElementById("notifPanel").style.right = "-380px";
+        }
     </script>
 </body>
 </html>
