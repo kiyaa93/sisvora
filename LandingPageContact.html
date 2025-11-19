@@ -28,9 +28,9 @@
         gap:10px;
         cursor:pointer
     }
-    .nav-logo svg{
+    .nav-logo img{
         width:35px;
-        height:35px
+        height:35px;
     }
     .nav-logo span{
         color:#d64933;
@@ -198,15 +198,52 @@
         align-items:center;
         gap:10px
     }
-    .footer-logo svg{
+    .footer-logo img{
         width:35px;
-        height:35px
+        height:35px;
     }
     .footer-logo span{
         color:#d64933;
         font-weight:700;
         font-size:16px
     }
+    .footer-links{
+        display:flex;
+        gap:30px
+    }
+    .footer-links a{
+        color:#333;
+        text-decoration:none;
+        font-size:13px;
+        cursor:pointer;
+        transition:color .3s
+    }
+    .footer-links a:hover{
+        color:#d64933
+    }
+
+    .footer-social{
+        display:flex;
+        gap:12px
+    }
+    .social-icon{
+        width:32px;
+        height:32px;
+        background:#d64933;
+        border-radius:50%;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        color:#fff;
+        font-size:14px;
+        cursor:pointer;
+        transition:all .3s
+    }
+    .social-icon:hover{
+        background:#c03d29;
+        transform:scale(1.1)
+    }
+    
     .notification{
         position:fixed;
         top:20px;
@@ -223,30 +260,35 @@
         display:block;
         animation:slideIn .3s
     }
+
     @keyframes slideIn{
         from{
             transform:translateX(400px);
             opacity:0
-        }to{
+        }
+        to{
             transform:translateX(0);
             opacity:1
         }
     }
+
     @media(max-width:768px){
         nav{
             padding:15px 20px;
             flex-direction:column;
             gap:15px
-        }.nav-links{
+        }
+        .nav-links{
             flex-wrap:wrap;
             gap:15px
-        }.contact{
+        }
+        .about{
             padding:50px 20px
-        }.form-row{
+        }
+        .strengths-grid{
             grid-template-columns:1fr
         }
     }
-
   </style>
 </head>
 <body>
@@ -254,12 +296,7 @@
 
   <nav>
     <div class="nav-logo" onclick="location.href='LandingPageHome.html'">
-      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="50" cy="50" r="45" fill="none" stroke="#d64933" stroke-width="3"/>
-        <circle cx="50" cy="35" r="12" fill="#d64933"/>
-        <path d="M 30 70 Q 50 55 70 70" fill="none" stroke="#d64933" stroke-width="3"/>
-        <path d="M 65 45 L 75 35 L 85 45" fill="none" stroke="#d64933" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
+    <img src="./img/logo.png" alt="logo">
       <span>SISVORA</span>
     </div>
 
@@ -319,17 +356,12 @@
 
   <footer>
     <div class="footer-content">
-      <div class="footer-logo">
-        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="50" cy="50" r="45" fill="none" stroke="#d64933" stroke-width="3"/>
-          <circle cx="50" cy="35" r="12" fill="#d64933"/>
-          <path d="M 30 70 Q 50 55 70 70" fill="none" stroke="#d64933" stroke-width="3"/>
-          <path d="M 65 45 L 75 35 L 85 45" fill="none" stroke="#d64933" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <span>SISVORA</span>
-      </div>
+    <div class="footer-logo">
+    <img src="./img/logo.png" alt="logo">
+      <span>SISVORA</span>
+    </div>
 
-      <div class="footer-links">
+       <div class="footer-links">
         <a href="#" onclick="showNotification('Product info coming soon!'); return false;">Product</a>
         <a href="#" onclick="showNotification('Legal info coming soon!'); return false;">Legal</a>
         <a href="LandingPageContact.html">Contact Us</a>

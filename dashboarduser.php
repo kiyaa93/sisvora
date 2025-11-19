@@ -1,3 +1,12 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    header("Location: loginuser.php");
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -605,7 +614,7 @@
             <div class="welcome-section">
                 <div class="welcome-header">
                     <div class="greeting">
-                        <h2>Hello, <strong>Jan!</strong></h2>
+                        <h2>Hello, <strong><?php echo htmlspecialchars($_SESSION['user_name']); ?></strong></h2>
                         <p>Welcome to SISVORA Online Voting System.</p>
                     </div>
                     <div class="timer">

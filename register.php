@@ -1,3 +1,33 @@
+<?php
+require "config.php";
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $first = $_POST['first_name'];
+    $last = $_POST['last_name'];
+    $nis = $_POST['nis'];
+    $birthday = $_POST['birthday'];
+    $contact = $_POST['contact'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    // Hash password
+    $hashedPass = password_hash($password, PASSWORD_DEFAULT);
+
+    $sql = "INSERT INTO login_user 
+            (first_name, last_name, nis, birthday, contact, email, password)
+            VALUES 
+            ('$first', '$last', '$nis', '$birthday', '$contact', '$email', '$hashedPass')";
+
+    if (mysqli_query($conn, $sql)) {
+        echo "Register berhasil!";
+    } else {
+        echo "Error: " . mysqli_error($conn);
+    }
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -150,34 +180,34 @@
     <p>Please fill out your information below.</p>
 </div>
 
-<form action="registerpw.php">
+<form action="registerpw.php" method="POST">
 
     <div class="row">
         <div>
             <label>FIRST NAME</label>
-            <input type="text">
+            <input type="text" name="first_name" required>
         </div>
 
         <div>
             <label>MIDDLE NAME</label>
-            <input type="text">
+            <input type="text" name="middle_name">
         </div>
 
         <div>
             <label>LAST NAME</label>
-            <input type="text">
+            <input type="text" name="last_name">
         </div>
     </div>
 
     <div class="row-2">
         <div>
             <label>NIS</label>
-            <input type="text">
+            <input type="text" name="nis" required>
         </div>
 
         <div>
             <label>BIRTHDAY</label>
-            <input type="date">
+            <input type="date" name="birthday" required>
         </div>
     </div>
 
@@ -186,13 +216,20 @@
             <label>CONTACT NUMBER</label>
             <div class="contact-wrapper">
                 <div class="country-code">+62 🇮🇩</div>
-                <input type="tel">
+                <input type="tel" name="contact">
             </div>
         </div>
 
         <div>
             <label>EMAIL</label>
-            <input type="email">
+            <input type="email" name="email">
+        </div>
+    </div>
+
+    <div class="row">
+        <div>
+            <label>PASSWORD</label>
+            <input type="password" name="password" required>
         </div>
     </div>
 

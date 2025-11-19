@@ -1,3 +1,5 @@
+<?php session_start(); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -134,7 +136,7 @@
     <p>Please login to vote for your preferred candidate.</p>
 </div>
 
-<form method="POST" action="dashboarduser.php">
+<form method="POST" action="proses_login_user.php">
 
     <div class="form-group">
         <label for="nis">NIS</label>
