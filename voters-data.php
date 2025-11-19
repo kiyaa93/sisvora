@@ -128,9 +128,10 @@
             background-color: var(--beige-sidebar);
             border-top: 1px solid rgba(0,0,0,0.08);
             border-top-right-radius: 50px;
-            box-shadow: 2px 0 4px rgba(0,0,0,0.1);
+            box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
             transition: transform 0.3s ease;
             z-index: 999;
+            overflow-y: auto;
         }
         
         .sidebar-wrapper.collapsed {

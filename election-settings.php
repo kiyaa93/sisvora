@@ -33,7 +33,6 @@
     .navbar {
         background-color: var(--beige-bg);
         padding: 1rem 2rem;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         position: fixed;
         top: 0;
         width: 100%;
@@ -54,10 +53,18 @@
         color: var(--orange-dark);
         transform: scale(1.1);
     }
+
+    .navbar .container-fluid {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 100%;
+    }
     
     .navbar .logo {
-        font-size: 1.5rem;
+        font-size: 1.2rem;
         font-weight: bold;
+        margin-left: 8px;
         color: var(--orange-primary);
         text-decoration: none;
         display: flex;
@@ -113,8 +120,8 @@
     .sidebar-wrapper {
         position: fixed; left: 0; top: 80px; height: 100vh; width: 280px; 
         background-color: var(--beige-sidebar); border-top: 1px solid rgba(0,0,0,0.08);
-        border-top-right-radius: 50px; box-shadow: 2px 0 4px rgba(0,0,0,0.1); 
-        transition: transform 0.3s ease; z-index: 999;
+        border-top-right-radius: 50px; box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease; z-index: 999; overflow-y: auto;
     }
 
     .sidebar-wrapper.collapsed { transform: translateX(-280px); }
@@ -140,6 +147,11 @@
         display: flex; align-items: center; gap: 1rem; transition: all 0.3s;
         border-left: 4px solid transparent; font-weight: 500; cursor: pointer;
     }
+    .menu-item i {
+            width: 24px;
+            font-size: 1.2rem;
+            text-align: center;
+        }
     .menu-item:hover { background-color: rgba(210, 105, 30, 0.1); color: var(--orange-primary); border-left-color: var(--orange-primary); }
     .menu-item.active { background-color: var(--orange-primary); color: white; border-left-color: var(--orange-dark); }
     .menu-item.active i { animation: pulse 2s infinite; }

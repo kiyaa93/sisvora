@@ -31,7 +31,6 @@
         .navbar {
             background-color: var(--beige-bg);
             padding: 1rem 2rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             position: fixed;
             left: 0;
             width: 100%;
@@ -130,6 +129,7 @@
             box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
             transition: transform 0.3s ease;
             z-index: 999;
+            overflow-y: auto;
         }
         
         .sidebar-wrapper.collapsed {
