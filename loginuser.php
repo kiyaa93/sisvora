@@ -1,4 +1,8 @@
-<?php session_start(); ?>
+<?php session_start(); 
+    if ($login_success) {
+    $_SESSION['voter_id'] = $data['id']; 
+    }
+?>
 
 <!DOCTYPE html>
 <html lang="en">

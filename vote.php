@@ -1,6 +1,5 @@
 
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -70,10 +69,9 @@
             background-color: var(--beige-bg);
             padding: 1rem 2rem;
             position: fixed;
-            left: 0;
+            top: 0;
             width: 100%;
             z-index: 2000;
-            top: 1rem;
         }
         
         .navbar-toggle-btn {
@@ -282,10 +280,10 @@
         }
 
         .page-title {
-            font-size: clamp(24px, 3.5vw, 40px);
+            font-size: clamp(20px, 3.5vw, 30px);
             font-weight: 700;
             margin-bottom: clamp(20px, 3vh, 30px);
-            color: #000;
+            color: var(--orange-primary);
         }
 
         .candidate-section {
@@ -301,16 +299,18 @@
         }
 
         .candidate-number {
-            font-size: clamp(24px, 3vw, 35px);
+            font-size: clamp(20px, 3vw, 25px);
             font-weight: 600;
-            color: #000;
+            color: rgba(0, 0, 0);
             margin-bottom: clamp(6px, 1vh, 8px);
+            text-align: center;
         }
 
         .candidate-note {
-            font-size: clamp(16px, 2vw, 24px);
+            font-size: clamp(14px, 2vw, 20px);
             font-weight: 500;
             color: rgba(0, 0, 0, 0.75);
+            text-align: center;
         }
 
         .candidate-cards {
@@ -344,7 +344,7 @@
         }
 
         .candidate-name {
-            font-size: clamp(18px, 2.2vw, 27px);
+            font-size: clamp(16px, 2vw, 22px);
             font-weight: 700;
             color: #000;
             margin-bottom: clamp(4px, 0.8vh, 6px);
@@ -724,6 +724,7 @@
 
             .main-content {
                 margin-left: 0;
+                overflow-y: auto;
             }
 
             .candidate-cards {
@@ -993,7 +994,7 @@
     </div>
 
     <!-- Main Content -->
-    <main class="main-content fade-in">
+    <main class="main-content fade-in" id="mainContent">
         <h1 class="page-title">CAST YOUR VOTES NOW!</h1>
 
         <!-- Candidate 01 -->
@@ -1126,7 +1127,7 @@
             <div class="candidates-row">
                 <div class="candidate-info">
                     <div class="candidate-photo">
-                        <img src="images/malik-chandra.png" alt="Malik Chandra Wirata">
+                        <img src="img/b1.png" alt="Malik Chandra Wirata">
                     </div>
                     <h3 class="candidate-name">Malik Chandra Wirata</h3>
                     <p class="candidate-label">for</p>
@@ -1134,7 +1135,7 @@
                 </div>
                 <div class="candidate-info">
                     <div class="candidate-photo">
-                        <img src="images/milania-rifa.png" alt="Milania Rifa">
+                        <img src="img/g1.png" alt="Milania Rifa">
                     </div>
                     <h3 class="candidate-name">Milania Rifa</h3>
                     <p class="candidate-label">for</p>
