@@ -98,12 +98,12 @@ $lastUpdated = date('d M Y, H:i') . ' WIB';
         
         /* Navbar Styles */
         .navbar {
-            background-color: var(--beige-sidebar);
+            background-color: var(--beige-bg);
             padding: 1rem 2rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            position: fixed;
+            left: 0;
+            width: 100%;
+            z-index: 2000;
         }
         
         .navbar-toggle-btn {
@@ -113,6 +113,7 @@ $lastUpdated = date('d M Y, H:i') . ' WIB';
             font-size: 1.8rem;
             cursor: pointer;
             transition: .3s ease;
+            margin-right: -10px;
         }
 
         .navbar-toggle-btn:hover {
@@ -121,17 +122,21 @@ $lastUpdated = date('d M Y, H:i') . ' WIB';
         }
         
         .navbar .logo {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
+            margin-left: 8px;
             font-weight: bold;
             color: var(--orange-primary);
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 1rem;
         }
         
-        .navbar .logo i {
-            font-size: 1.8rem;
+        .logo-img {
+            height: 45px;   /* sesuaikan */
+            width: auto;
+            object-fit: contain;
+            transform: scale(1.5);
         }
         
         .navbar .search-bar {
@@ -188,6 +193,8 @@ $lastUpdated = date('d M Y, H:i') . ' WIB';
             height: calc(100vh - 76px);
             width: 280px;
             background-color: var(--beige-sidebar);
+            border-top: 1px solid rgba(0,0,0,0.08);
+            border-top-right-radius: 50px;
             box-shadow: 2px 0 4px rgba(0,0,0,0.1);
             transition: transform 0.3s ease;
             z-index: 999;

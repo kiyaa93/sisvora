@@ -207,6 +207,43 @@
         font-weight:700;
         font-size:16px
     }
+    .footer-links{
+        display:flex;
+        gap:30px
+    }
+    .footer-links a{
+        color:#333;
+        text-decoration:none;
+        font-size:13px;
+        cursor:pointer;
+        transition:color .3s
+    }
+    .footer-links a:hover{
+        color:#d64933
+    }
+
+    .footer-social{
+        display:flex;
+        gap:12px
+    }
+    .social-icon{
+        width:32px;
+        height:32px;
+        background:#d64933;
+        border-radius:50%;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        color:#fff;
+        font-size:14px;
+        cursor:pointer;
+        transition:all .3s
+    }
+    .social-icon:hover{
+        background:#c03d29;
+        transform:scale(1.1)
+    }
+    
     .notification{
         position:fixed;
         top:20px;
@@ -223,30 +260,35 @@
         display:block;
         animation:slideIn .3s
     }
+
     @keyframes slideIn{
         from{
             transform:translateX(400px);
             opacity:0
-        }to{
+        }
+        to{
             transform:translateX(0);
             opacity:1
         }
     }
+
     @media(max-width:768px){
         nav{
             padding:15px 20px;
             flex-direction:column;
             gap:15px
-        }.nav-links{
+        }
+        .nav-links{
             flex-wrap:wrap;
             gap:15px
-        }.contact{
+        }
+        .about{
             padding:50px 20px
-        }.form-row{
+        }
+        .strengths-grid{
             grid-template-columns:1fr
         }
     }
-
   </style>
 </head>
 <body>
@@ -319,7 +361,7 @@
       <span>SISVORA</span>
     </div>
 
-      <div class="footer-links">
+       <div class="footer-links">
         <a href="#" onclick="showNotification('Product info coming soon!'); return false;">Product</a>
         <a href="#" onclick="showNotification('Legal info coming soon!'); return false;">Legal</a>
         <a href="LandingPageContact.html">Contact Us</a>
