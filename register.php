@@ -180,34 +180,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <p>Please fill out your information below.</p>
 </div>
 
-<form action="registerpw.php">
+<form action="registerpw.php" method="POST">
 
     <div class="row">
         <div>
             <label>FIRST NAME</label>
-            <input type="text">
+            <input type="text" name="first_name" required>
         </div>
 
         <div>
             <label>MIDDLE NAME</label>
-            <input type="text">
+            <input type="text" name="middle_name">
         </div>
 
         <div>
             <label>LAST NAME</label>
-            <input type="text">
+            <input type="text" name="last_name">
         </div>
     </div>
 
     <div class="row-2">
         <div>
             <label>NIS</label>
-            <input type="text">
+            <input type="text" name="nis" required>
         </div>
 
         <div>
             <label>BIRTHDAY</label>
-            <input type="date">
+            <input type="date" name="birthday" required>
         </div>
     </div>
 
@@ -216,13 +216,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <label>CONTACT NUMBER</label>
             <div class="contact-wrapper">
                 <div class="country-code">+62 🇮🇩</div>
-                <input type="tel">
+                <input type="tel" name="contact">
             </div>
         </div>
 
         <div>
             <label>EMAIL</label>
-            <input type="email">
+            <input type="email" name="email">
+        </div>
+    </div>
+
+    <div class="row">
+        <div>
+            <label>PASSWORD</label>
+            <input type="password" name="password" required>
         </div>
     </div>
 
