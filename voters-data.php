@@ -1,3 +1,10 @@
+<?php
+include 'config.php';
+
+$sql = "SELECT * FROM voters_admin ORDER BY nama ASC";
+$result = mysqli_query($conn, $sql);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -381,6 +388,8 @@
             height: 40px;
             border-radius: 8px;
         }
+
+        
     </style>
 </head>
 <body>
@@ -452,41 +461,36 @@
         <div class="table-responsive">
             <table class="table table-bordered align-middle text-center">
                 <thead>
-                <tr>
-                    <th>NO</th>
-                    <th>ID</th>
-                    <th>NAMA SISWA</th>
-                    <th>NIS</th>
-                    <th>STATUS VOTING</th>
-                </tr>
+                    <tr>
+                        <th>NO</th>
+                        <th>ID</th>
+                        <th>NAMA SISWA</th>
+                        <th>NIS</th>
+                        <th>STATUS VOTING</th>
+                    </tr>
                 </thead>
-                <tbody id="voterTable"></tbody>
+                <tbody id="voterTable">
+                    <?php 
+                    $no = 1;
+                    while ($v = mysqli_fetch_assoc($result)) { 
+                        $statusClass = $v['status'] == "Voted" ? "status-voted" : "status-unvoted";
+                    ?>
+                        <tr>
+                            <td><?= $no++; ?>.</td>
+                            <td><?= $v['id'] ?></td>
+                            <td><?= $v['nama'] ?></td>
+                            <td><?= $v['nis'] ?></td>
+                            <td><span class="<?= $statusClass ?>"><?= $v['status'] ?></span></td>
+                        </tr>
+                    <?php } ?>
+                </tbody>
             </table>
         </div> 
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    const voters = [
-      { id: '001', nama: 'A***** F****', nis: '-', voted: false },
-      { id: '002', nama: 'B***** A****', nis: '-', voted: false },
-      { id: '003', nama: 'J***** Y****', nis: '-', voted: true },
-      { id: '004', nama: 'M***** S****', nis: '-', voted: false },
-    ];
-
-    const tableBody = document.getElementById("voterTable");
-
-    voters.forEach((v, index) => {
-      const row = document.createElement("tr");
-      row.innerHTML = `
-        <td>${index + 1}.</td>
-        <td>${v.id}</td>
-        <td>${v.nama}</td>
-        <td>${v.nis}</td>
-        <td><span class="${v.voted ? 'status-voted' : 'status-unvoted'}">${v.voted ? 'Voted' : 'Unvoted'}</span></td>
-      `;
-      tableBody.appendChild(row);
-    });
+    
 
     // Sidebar Toggle
     function toggleSidebar() {
