@@ -6,290 +6,229 @@
   <title>SISVORA - About</title>
 
   <style>
-    *{
-        margin:0;
-        padding:0;
-        box-sizing:border-box
+    * {
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
     }
-    body{
-        font-family:Arial, sans-serif;
-        background:#2a2a2a
-    }
-    nav{
-        background:#f5d5b8;
-        padding:15px 60px;
-        display:flex;
-        justify-content:space-between;
-        align-items:center
+    body {
+      font-family:Arial, sans-serif;
+      background:#2a2a2a;
     }
 
-    /* === LOGO NAV === */
-    .nav-logo{
-        display:flex;
-        align-items:center;
-        gap:10px;
-        cursor:pointer
+    /* ================= NAV ================= */
+    nav {
+      background:#f5d5b8;
+      padding:14px 60px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
     }
-    .nav-logo img{
-        width:40px;
-        height:40px;
+    .nav-logo {
+      display:flex;
+      align-items:center;
+      gap:10px;
+      cursor:pointer;
     }
-    .nav-logo span{
-        color:#d64933;
-        font-weight:700;
-        font-size:16px
+    .nav-logo img {
+      width:60px;
+      height:50px;
     }
-
-    .nav-links{
-        display:flex;
-        gap:35px
+    .nav-logo span {
+      color:#d64933;
+      font-weight:700;
+      font-size:16px;
     }
-    .nav-links a{
-        color:#333;
-        text-decoration:none;
-        font-size:14px;
-        cursor:pointer;
-        transition:color .3s
+    .nav-links {
+      display:flex;
+      gap:35px;
+    }
+    .nav-links a {
+      color:#333;
+      text-decoration:none;
+      font-size:14px;
+      transition:.3s;
     }
     .nav-links a:hover,
-    .nav-links a.active{
-        color:#d64933
+    .nav-links a.active {
+      color:#d64933;
     }
 
-    .nav-buttons{
-        display:flex;
-        gap:10px
+    .nav-buttons {
+      display:flex;
+      gap:10px;
+    }
+    .btn-login,.btn-register {
+      padding:8px 24px;
+      border-radius:20px;
+      font-size:13px;
+      font-weight:600;
+      cursor:pointer;
+      border:2px solid #d64933;
+      text-decoration:none;
+      transition:.3s;
+    }
+    .btn-login {
+      background:transparent;
+      color:#d64933;
+    }
+    .btn-login:hover {
+      background:#d64933;
+      color:#fff;
+    }
+    .btn-register {
+      background:#d64933;
+      color:#fff;
+    }
+    .btn-register:hover {
+      background:#c03d29;
     }
 
-    .btn-login,.btn-register{
-        padding:8px 24px;
-        border-radius:20px;
-        font-size:13px;
-        font-weight:600;
-        cursor:pointer;
-        transition:all .3s;
-        border:2px solid #d64933;
-        text-decoration:none
+    /* ================= ABOUT ================= */
+    .about {
+      background:linear-gradient(to bottom right,#f5c4a0,#f5e6d3);
+      padding:70px 60px;
     }
-    .btn-login{
-        background:transparent;
-        color:#d64933
-    }
-    .btn-login:hover{
-        background:#d64933;
-        color:#fff
-    }
-    .btn-register{
-        background:#d64933;
-        color:#fff
-    }
-    .btn-register:hover{
-        background:#c03d29
-    }
-
-    .about{
-        background:linear-gradient(to bottom right,#f5c4a0,#f5e6d3);
-        padding:70px 60px
-    }
-    .about-content{
-        max-width:1100px;
-        margin:0 auto;
-        text-align:center
-    }
-
-    /* === TITLE KECILIN SESUAI PERMINTAAN === */
-    .about-content h2{
-        font-size:30px;
-        letter-spacing:1px;
-        color:#333;
-        font-weight:700;
-        margin-bottom:25px
-    }
-
-    .about-content > p{
-        font-size:15px;
-        color:#666;
-        line-height:1.8;
-        margin-bottom:50px;
-        max-width:800px;
-        margin-left:auto;
-        margin-right:auto
-    }
-
-    /* === ICON ORANGE FLAT STYLE === */
-    .strengths-grid{
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 25px;
-    margin-top: 60px; /* ⭐ tambahan biar turun */
+    .about-content {
+     max-width:1100px;
+     margin:auto;
+     text-align:center;
 }
 
-    .strength-item{
-        text-align:center;
-        transition:transform .3s
+.about-content h2 {
+  font-size:30px;
+  font-weight:700;
+  margin-bottom:35px; /* turunin jarak */
+  color:#333;
+}
+
+.about-content > p {
+  font-size:16px;
+  color:#2c2c2c; /* warna diperjelas */
+  line-height:1.8;
+  margin-bottom:50px;
+  max-width:800px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+    /* ================= STRENGTHS ================= */
+    .strengths-grid {
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:25px;
+      margin-top:60px;
     }
-    .strength-item:hover{
-        transform:translateY(-10px)
+    .strength-item {
+      text-align:center;
+      transition:.3s;
+    }
+    .strength-item:hover {
+      transform:translateY(-10px);
+    }
+    .strength-icon {
+      width:110px;
+      height:110px;
+      background:#e86f3e;
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      margin:0 auto 18px;
+      box-shadow:0 4px 10px rgba(0,0,0,.15);
+      transition:.3s;
+    }
+    .strength-icon svg {
+      width:48px;
+      height:48px;
+      fill:#fff;
     }
 
-    .strength-icon{
-        width:110px;
-        height:110px;
-        background:#e86f3e;           /* WARNA ORANGE KAYA SS */
-        border-radius:50%;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        margin:0 auto 18px;
-        box-shadow:0 4px 10px rgba(0,0,0,0.15);
-        transition:transform .3s
-    }
-    .strength-item:hover .strength-icon{
-        transform:scale(1.08)
-    }
-    .strength-icon svg{
-        width:48px;
-        height:48px;
-        fill:#fff
+    /* =================== FOOTER BARU =================== */
+    footer {
+      background:#f5d5b8;
+      padding:30px 50px;
     }
 
-    .strength-item h4{
-        font-size:16px;
-        color:#333;
-        margin-bottom:10px;
-        font-weight:700
+    .footer-container {
+      max-width:1200px;
+      margin:auto;
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:60px;
     }
 
-    .strength-item p{
-        font-size:14px;
-        color:#666;
-        line-height:1.5
+    /* LEFT */
+    .footer-left img {
+      width:90px;
+      margin-bottom:10px;
+    }
+    .footer-left p {
+      font-size:14px;
+      color:#333;
+      margin-bottom:15px;
     }
 
-    /* === FOOTER === */
-    footer{
-        background:#f5d5b8;
-        padding:35px 60px
-    }
-    .footer-content{
-        max-width:1100px;
-        margin:0 auto;
-        display:flex;
-        justify-content:space-between;
-        align-items:center
-    }
+   .social-icons img {
+    width: 38px;
+    height: 38px;
+    padding: 8px;
+    background: #e86f3e; /* sama seperti strength-icon */
+    border-radius: 50%;
+    cursor: pointer;
+    transition: .3s;
+    box-shadow: 0 4px 10px rgba(0,0,0,.15);
+  }
 
-    /* === LOGO FOOTER === */
-    .footer-logo{
-        display:flex;
-        align-items:center;
-        gap:10px
-    }
-    .footer-logo img{
-        width:38px;
-        height:38px
-    }
-    .footer-logo span{
-        color:#d64933;
-        font-weight:700;
-        font-size:16px
-    }
+   .social-icons img:hover {
+  transform: scale(1.1);
+  background: #d35f32; /* versi hover sedikit gelap */
+   }
 
-    .footer-links{
-        display:flex;
-        gap:30px
+    /* FOOTER COLUMN */
+    .footer-column h3 {
+      color:#a64721;
+      font-size:17px;
+      margin-bottom:12px;
     }
-    .footer-links a{
-        color:#333;
-        text-decoration:none;
-        font-size:13px;
-        cursor:pointer;
-        transition:color .3s
+    .footer-column a,
+    .footer-column p {
+      display:block;
+      color:#333;
+      font-size:14px;
+      text-decoration:none;
+      margin-bottom:8px;
     }
-    .footer-links a:hover{
-        color:#d64933
-    }
-
-    .footer-social{
-        display:flex;
-        gap:12px
-    }
-    .social-icon{
-        width:32px;
-        height:32px;
-        background:#d64933;
-        border-radius:50%;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        color:#fff;
-        font-size:14px;
-        cursor:pointer;
-        transition:all .3s
-    }
-    .social-icon:hover{
-        background:#c03d29;
-        transform:scale(1.1)
-    }
-
-    .notification{
-        position:fixed;
-        top:20px;
-        right:20px;
-        background:#4caf50;
-        color:#fff;
-        padding:15px 25px;
-        border-radius:8px;
-        box-shadow:0 4px 12px rgba(0,0,0,.2);
-        z-index:1000;
-        display:none
-    }
-    .notification.show{
-        display:block;
-        animation:slideIn .3s
-    }
-
-    @keyframes slideIn{
-        from{
-            transform:translateX(400px);
-            opacity:0
-        }
-        to{
-            transform:translateX(0);
-            opacity:1
-        }
+    .footer-column a:hover {
+      color:#d64933;
     }
 
     @media(max-width:768px){
-        nav{
-            padding:15px 20px;
-            flex-direction:column;
-            gap:15px
-        }
-        .nav-links{
-            flex-wrap:wrap;
-            gap:15px
-        }
-        .about{
-            padding:50px 20px
-        }
-        .strengths-grid{
-            grid-template-columns:1fr
-        }
+      nav {
+        flex-direction:column;
+        gap:15px;
+        padding:15px 20px;
+      }
+      .strengths-grid {
+        grid-template-columns:1fr;
+      }
+      .footer-container {
+        flex-direction:column;
+        gap:40px;
+      }
     }
   </style>
 </head>
 
 <body>
-  <div id="notification" class="notification"></div>
 
   <!-- NAV -->
   <nav>
-  <div class="nav-logo" onclick="location.href='LandingPageHome.html'">
-    <img src="./img/logo.png" alt="logo">
-    <span>SISVORA</span>
-  </div>
-
+    <div class="nav-logo" onclick="location.href='LandingPageHome.html'">
+      <img src="./img/logo.png" alt="logo">
+      <span>SISVORA</span>
+    </div>
 
     <div class="nav-links">
       <a id="nav-home" href="LandingPageHome.html">Home</a>
@@ -304,18 +243,17 @@
     </div>
   </nav>
 
-  <!-- MAIN -->
+  <!-- MAIN ABOUT -->
   <main class="about">
     <div class="about-content">
-
       <h2>ABOUT US</h2>
       <p>
         SISVORA is a Digital Voting System designed for the OSIS presidential election.
-        It helps schools conduct fair and transparent elections by providing modern and reliable results.
-        We aim to make student voting simple, secure, and accessible for everyone.
+        It helps schools conduct fair and transparent elections by providing modern and reliable results.We aim to
+        make student voting simple, secure, and accessible for everyone.
       </p>
 
-     <h2 style="margin-top:120px; margin-bottom:25px;">OUR STRENGTHS</h2>
+      <h2 style="margin-top:120px;">OUR STRENGTHS</h2>
       <div class="strengths-grid">
 
         <div class="strength-item">
@@ -323,23 +261,23 @@
             <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
           </div>
           <h4>Increased Voter Turnout</h4>
-          <p>Encourage more participation by making it easy and convenient for everyone to vote.</p>
+          <p>The System can increase voter turnout by making it</p>
         </div>
 
         <div class="strength-item">
           <div class="strength-icon">
-            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
           </div>
           <h4>Accurate Vote Records</h4>
-          <p>With automatic vote-tabulation, there is no error in the counting method and can be verified.</p>
+          <p>Whit this System, the results are instantly tallied and can be verified.</p>
         </div>
 
         <div class="strength-item">
           <div class="strength-icon">
-            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg>
           </div>
           <h4>Cost-Effective</h4>
-          <p>Digital elections cut costs. No papers to be printed, and only a few equipment needed.</p>
+          <p>The System can be less expensive than tradisional paper-based methods</p>
         </div>
 
         <div class="strength-item">
@@ -347,49 +285,58 @@
             <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
           </div>
           <h4>Guaranteed Security</h4>
-          <p>The student's identity and vote data are kept extremely secure compared with paper-based methods.</p>
+          <p>The System is highly secure and can use encryption an other security</p>
         </div>
 
       </div>
     </div>
   </main>
 
-  <!-- FOOTER -->
- <footer>
-  <div class="footer-content">
-    <div class="footer-logo">
-      <img src="./img/logo.png" alt="logo">
-      <span>SISVORA</span>
-    </div>
+  <!-- ============== FOOTER FIX ============== -->
+  <footer>
+    <div class="footer-container">
 
+      <!-- LEFT LOGO -->
+      <div class="footer-left">
+        <img src="./img/logo.png" alt="logo">
+        <p>Copyright 2025</p>
 
-      <div class="footer-links">
-        <a href="#" onclick="showNotification('Product info coming soon!'); return false;">Product</a>
-        <a href="#" onclick="showNotification('Legal info coming soon!'); return false;">Legal</a>
-        <a href="LandingPageContact.html">Contact Us</a>
+        <div class="social-icons">
+          <img src="./img/19af02a3f9098fb13761d1c66e7c7328562b7f6f.png" alt="">
+          <img src="./img/c0f29f82d079100d4afd0c8cb7a2411515f1ea3d.png" alt="">
+          <img src="./img/ad697c59197b3edbf18bcbad9d365d6d0e4c4bb6.png" alt="">
+        </div>
       </div>
 
-      <div class="footer-social">
-        <a class="social-icon" href="#" onclick="showNotification('Email: info@sisvora.com'); return false;">📧</a>
-        <a class="social-icon" href="#" onclick="showNotification('LinkedIn coming soon!'); return false;">🔗</a>
-        <a class="social-icon" href="#" onclick="showNotification('Instagram coming soon!'); return false;">📱</a>
+      <!-- PRODUCT -->
+      <div class="footer-column">
+        <h3>Product</h3>
+        <a href="#">Website</a>
+      </div>
+
+      <!-- LEGAL -->
+      <div class="footer-column">
+        <h3>Legal</h3>
+        <a href="#">Terms And Conditions</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">FAQs</a>
+      </div>
+
+      <!-- CONTACT -->
+      <div class="footer-column">
+        <h3>Contact Us</h3>
+        <p>Address : Purbalingga Kota</p>
+        <p>Email : sisvora@gmail.com</p>
+        <p>Phone No : 08</p>
       </div>
     </div>
   </footer>
 
   <script>
-    function showNotification(message) {
-      const notification = document.getElementById('notification');
-      notification.textContent = message;
-      notification.classList.add('show');
-      setTimeout(() => notification.classList.remove('show'), 3000);
-    }
-
     (function markActive(){
       const path = location.pathname.split('/').pop() || 'index.html';
       const maps = {
         'LandingPageHome.html': 'nav-home',
-        '': 'nav-home',
         'LandingPageAbout.html': 'nav-about',
         'LandingPageContact.html': 'nav-contact',
         'LandingPageFaqs.html': 'nav-faqs'
