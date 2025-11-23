@@ -1,3 +1,55 @@
+<?php
+session_start();
+include 'config.php';
+
+// Cek login
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login_user.php");
+    exit();
+}
+
+// Cek apakah ada data voting success
+if (!isset($_SESSION['vote_success'])) {
+    header("Location: dashboarduser.php");
+    exit();
+}
+
+$user_id = $_SESSION['user_id'];
+
+// Ambil data user dari login_user
+$query_user = "SELECT * FROM login_user WHERE id = ?";
+$stmt_user = mysqli_prepare($conn, $query_user);
+mysqli_stmt_bind_param($stmt_user, "i", $user_id);
+mysqli_stmt_execute($stmt_user);
+$result_user = mysqli_stmt_get_result($stmt_user);
+$user = mysqli_fetch_assoc($result_user);
+
+// Ambil data voting dari voters_admin
+$query_vote = "SELECT * FROM voters_admin WHERE nis = ? ORDER BY vote_time DESC LIMIT 1";
+$stmt_vote = mysqli_prepare($conn, $query_vote);
+mysqli_stmt_bind_param($stmt_vote, "s", $user['nis']);
+mysqli_stmt_execute($stmt_vote);
+$result_vote = mysqli_stmt_get_result($stmt_vote);
+$vote_data = mysqli_fetch_assoc($result_vote);
+
+if (!$vote_data) {
+    header("Location: vote.php");
+    exit();
+}
+
+// Gabungkan nama lengkap
+$user_name = trim($user['first_name'] . ' ' . ($user['middle_name'] ?? '') . ' ' . $user['last_name']);
+
+// Generate voter ID
+$voter_id_display = "VP-2025-" . str_pad($vote_data['id'], 5, '0', STR_PAD_LEFT);
+
+// Format waktu
+$vote_time = date('d M Y, H:i', strtotime($vote_data['vote_time'])) . ' WIB';
+
+// Clear session vote_success
+unset($_SESSION['vote_success']);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -578,7 +630,7 @@
 
     <div id="logoutModal" class="modal-overlay">
         <div class="modal-box">
-            <div class="modal-icon">⚠️</div>
+            <div class="modal-icon">⚠</div>
 
             <h2>Are you sure to leave?</h2>
             <p>You can always login back any time.</p>
@@ -605,15 +657,15 @@
             <div class="proof-body">
                 <div class="proof-row">
                     <span class="proof-label">Voter Name</span>
-                    <span class="proof-value">Jan Adam</span>
+                    <span class="proof-value"><?= htmlspecialchars($user_name) ?></span>
                 </div>
                 <div class="proof-row">
                     <span class="proof-label">Voter ID</span>
-                    <span class="proof-value">VP-2025-10234</span>
+                    <span class="proof-value"><?= $voter_id_display ?></span>
                 </div>
                 <div class="proof-row">
                     <span class="proof-label">DATE, TIME</span>
-                    <span class="proof-value">03 Nov 2025, 14:35 WIB</span>
+                    <span class="proof-value"><?= $vote_time ?></span>
                 </div>
                 
                 <hr class="proof-divider">
@@ -629,7 +681,7 @@
                 </div>
                 <div class="proof-code-box">
                     <div class="proof-code-label">Kode Verifikasi</div>
-                    <div class="proof-code-value">XAT7-Z5TS-9GNB</div>
+                    <div class="proof-code-value"><?= htmlspecialchars($vote_data['verification_code']) ?></div>
                 </div>
             </div>
             

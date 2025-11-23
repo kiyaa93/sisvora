@@ -1,11 +1,54 @@
+<?php
+session_start();
+include 'config.php';
 
+// Cek apakah user sudah login
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login_user.php");
+    exit();
+}
+
+$user_id = $_SESSION['user_id'];
+
+// Ambil data user dari login_user berdasarkan ID
+$query = "SELECT * FROM login_user WHERE id = ?";
+$stmt = mysqli_prepare($conn, $query);
+mysqli_stmt_bind_param($stmt, "i", $user_id);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
+$user = mysqli_fetch_assoc($result);
+
+if (!$user) {
+    session_destroy();
+    header("Location: login_user.php");
+    exit();
+}
+
+// Cek status voting di voters_admin berdasarkan NIS
+$check_vote = "SELECT * FROM voters_admin WHERE nis = ?";
+$stmt_check = mysqli_prepare($conn, $check_vote);
+mysqli_stmt_bind_param($stmt_check, "s", $user['nis']);
+mysqli_stmt_execute($stmt_check);
+$result_check = mysqli_stmt_get_result($stmt_check);
+$voter_data = mysqli_fetch_assoc($result_check);
+
+// Jika sudah vote, redirect ke dashboard
+if ($voter_data && $voter_data['status'] === 'Voted') {
+    $_SESSION['info'] = "You have already voted!";
+    header("Location: dashboarduser.php");
+    exit();
+}
+
+// Gabungkan nama lengkap
+$user_name = trim($user['first_name'] . ' ' . ($user['middle_name'] ?? '') . ' ' . $user['last_name']);
+?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sisvora - Student Voting System</title>
+    <title>SISVORA - Student Voting System</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></style>
     <style>
@@ -23,7 +66,7 @@
         }
 
         body {
-            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f7f1e5;
             overflow-x: hidden;
         }
@@ -69,7 +112,7 @@
             background-color: var(--beige-bg);
             padding: 1rem 2rem;
             position: fixed;
-            top: 0;
+            left: 0;
             width: 100%;
             z-index: 2000;
         }
@@ -273,8 +316,8 @@
 
         /* Main Content */
         .main-content {
-            margin-left: clamp(280px, 25vw, 360px);
-            margin-top: clamp(80px, 15vh, 150px);
+            margin-left: 280px;
+            margin-top: 80px;
             padding: clamp(20px, 3vw, 38px);
             min-height: calc(100vh - clamp(80px, 15vh, 150px));
         }
@@ -964,8 +1007,8 @@
     <div class="sidebar-wrapper" id="sidebar">
         <div class="user-profile">
             <div class="avatar"><i class="fas fa-user"></i></div>
-            <div class="user-name">Jan Adam</div>
-            <div class="user-status">Student, Unvoted</div>
+            <div class="user-name"><?php echo htmlspecialchars($_SESSION['user_name']); ?></div>
+            <div class="user-status">Student</div>
         </div>
 
         <div class="sidebar-menu">
@@ -994,8 +1037,12 @@
     </div>
 
     <!-- Main Content -->
-    <main class="main-content fade-in" id="mainContent">
+    <div class="main-content fade-in" id="mainContent">
         <h1 class="page-title">CAST YOUR VOTES NOW!</h1>
+
+        <?php if (isset($_SESSION['error'])): ?>
+            <div class="alert alert-danger"><?= $_SESSION['error']; unset($_SESSION['error']); ?></div>
+        <?php endif; ?>
 
         <!-- Candidate 01 -->
         <section class="candidate-section">
@@ -1092,7 +1139,7 @@
                 </div>
             </div>
         </section>
-    </main>
+    </div>
 
     <!-- Vote Alert Modal -->
     <div class="modal-overlay" id="alertModal">
@@ -1264,7 +1311,7 @@
         function go(page) {
             window.location.href = page + ".php";
         }
-
+        
         // Sidebar Toggle
         function toggleSidebar() {
             document.getElementById("sidebar").classList.toggle("collapsed");
@@ -1360,16 +1407,64 @@
             }
         });
 
+        et currentCandidate = '';
+        let userLocation = '';
+
+        function showVoteAlert(candidateName) {
+            currentCandidate = candidateName;
+            document.getElementById('alertModal').classList.add('active');
+        }
+
+        function closeAlert() {
+            document.getElementById('alertModal').classList.remove('active');
+        }
+
+        function confirmVoteAlert() {
+            closeAlert();
+            
+            // Get user location
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        userLocation = position.coords.latitude + ',' + position.coords.longitude;
+                        processVote();
+                    },
+                    (error) => {
+                        userLocation = 'Location unavailable';
+                        processVote();
+                    }
+                );
+            } else {
+                userLocation = 'Geolocation not supported';
+                processVote();
+            }
+        }
+
+        function processVote() {
+            // Generate verification code
+            const verificationCode = generateVerificationCode();
+            
+            // Fill form and submit
+            document.getElementById('selectedCandidate').value = currentCandidate;
+            document.getElementById('verificationCode').value = verificationCode;
+            document.getElementById('locationData').value = userLocation;
+            document.getElementById('voteForm').submit();
+        }
+
+        function generateVerificationCode() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let code = '';
+            for (let i = 0; i < 12; i++) {
+                if (i === 4 || i === 8) code += '-';
+                else code += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return code;
+        }
+
         // Proses logout
         confirmLogout.addEventListener("click", function() {
             window.location.href = "logout.php"; 
         });
-
-        function logout() {
-            if (confirm('Are you sure you want to logout?')) {
-                alert('Logged out successfully!');
-            }
-        }
 
         document.getElementById("notifBtn").addEventListener("click", () => {
             document.getElementById("notifOverlay").style.display = "block";

@@ -487,8 +487,8 @@
     <div class="sidebar-wrapper" id="sidebar">
         <div class="user-profile">
             <div class="avatar"><i class="fas fa-user"></i></div>
-            <div class="user-name">Jan Adam</div>
-            <div class="user-status">Student, Unvoted</div>
+            <div class="user-name"><?php echo htmlspecialchars($_SESSION['user_name']); ?></div>
+            <div class="user-status">Student</div>
         </div>
 
         <div class="sidebar-menu">
