@@ -1,6 +1,6 @@
 <?php session_start(); 
     if ($login_success) {
-    $_SESSION['voter_id'] = $data['id']; 
+    $_SESSION['user_id'] = $data['id']; 
     }
 ?>
 

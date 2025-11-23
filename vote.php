@@ -1,4 +1,47 @@
+<?php
+session_start();
+include 'config.php';
 
+// Cek apakah user sudah login
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login_user.php");
+    exit();
+}
+
+$user_id = $_SESSION['user_id'];
+
+// Ambil data user dari login_user berdasarkan ID
+$query = "SELECT * FROM login_user WHERE id = ?";
+$stmt = mysqli_prepare($conn, $query);
+mysqli_stmt_bind_param($stmt, "i", $user_id);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
+$user = mysqli_fetch_assoc($result);
+
+if (!$user) {
+    session_destroy();
+    header("Location: login_user.php");
+    exit();
+}
+
+// Cek status voting di voters_admin berdasarkan NIS
+$check_vote = "SELECT * FROM voters_admin WHERE nis = ?";
+$stmt_check = mysqli_prepare($conn, $check_vote);
+mysqli_stmt_bind_param($stmt_check, "s", $user['nis']);
+mysqli_stmt_execute($stmt_check);
+$result_check = mysqli_stmt_get_result($stmt_check);
+$voter_data = mysqli_fetch_assoc($result_check);
+
+// Jika sudah vote, redirect ke bukti
+if ($voter_data && $voter_data['status'] === 'Voted') {
+    $_SESSION['info'] = "You have already voted!";
+    header("Location: bukti.php");
+    exit();
+}
+
+// Gabungkan nama lengkap
+$user_name = trim($user['first_name'] . ' ' . ($user['middle_name'] ?? '') . ' ' . $user['last_name']);
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -1049,7 +1092,7 @@
                 </div>
                 <div class="candidate-card">
                     <div class="candidate-photo">
-                        <img src="img/g1.png" alt="Jemima Saghi Larissa">
+                        <img src="img/g2.png" alt="Jemima Saghi Larissa">
                     </div>
                     <h3 class="candidate-name">Jemima Saghi Larissa</h3>
                     <p class="candidate-position">Vice President Student Council</p>

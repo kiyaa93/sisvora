@@ -134,10 +134,10 @@ body {
                 <div class="col-md-4 label-title">Jenis Kandidat :</div>
                 <div class="col-md-8 d-flex gap-3 mt-2">
                     <label><input type="radio" name="jenis_kandidat" value="Ketua"
-                        <?= isset($editData['jenis_kandidat']) && $editData['jenis_kandidat']=="Ketua" ? "checked" : "" ?> required> Ketua</label>
+                        <?= isset($editData['jenis_kandidat']) && $editData['jenis_kandidat']=="Ketua" ? "checked" : "" ?> required> President Student Council</label>
 
                     <label><input type="radio" name="jenis_kandidat" value="Wakil Ketua"
-                        <?= isset($editData['jenis_kandidat']) && $editData['jenis_kandidat']=="Wakil Ketua" ? "checked" : "" ?>> Wakil Ketua</label>
+                        <?= isset($editData['jenis_kandidat']) && $editData['jenis_kandidat']=="Wakil Ketua" ? "checked" : "" ?>> Vice President Student Council</label>
                 </div>
             </div>
 

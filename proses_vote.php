@@ -16,13 +16,13 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 // Ambil data dari form
 $nis = $_POST['nis'] ?? '';
-$nama = $_POST['nama'] ?? '';
-$nama_kandidat = $_POST['nama_kandidat'] ?? '';
+$voter_name = $_POST['voter_name'] ?? '';
+$candidate_name = $_POST['candidate_name'] ?? '';
 $verification_code = $_POST['verification_code'] ?? '';
-$vote_location = $_POST['vote_location'] ?? '';
+$location = $_POST['location'] ?? '';
 
 // Validasi data
-if (empty($nis) || empty($nama_kandidat) || empty($verification_code)) {
+if (empty($nis) || empty($candidate_name) || empty($verification_code)) {
     $_SESSION['error'] = "Data tidak lengkap!";
     header("Location: vote.php");
     exit();
@@ -49,13 +49,13 @@ try {
         // Update data voting
         $update_query = "UPDATE voters_admin 
                         SET status = 'Voted',
-                            nama_kandidat = ?,
+                            candidate_name = ?,
                             verification_code = ?,
                             vote_time = NOW(),
                             vote_location = ?
                         WHERE nis = ?";
         $stmt_update = mysqli_prepare($conn, $update_query);
-        mysqli_stmt_bind_param($stmt_update, "ssss", $nama_kandidat, $verification_code, $location, $nis);
+        mysqli_stmt_bind_param($stmt_update, "ssss", $candidate_name, $verification_code, $location, $nis);
         
         if (!mysqli_stmt_execute($stmt_update)) {
             throw new Exception("Failed to update vote!");
@@ -63,14 +63,14 @@ try {
     } else {
         // Jika belum ada, insert data baru
         $insert_query = "INSERT INTO voters_admin 
-                        (voter_id, nama, nis, status, nama_kandidat, verification_code, vote_time, vote_location) 
+                        (voter_id, nama, nis, status, candidate_name, verification_code, vote_time, vote_location) 
                         VALUES (?, ?, ?, 'Voted', ?, ?, NOW(), ?)";
         
         // Generate voter_id
         $voter_id = 'V' . str_pad(rand(1, 9999), 4, '0', STR_PAD_LEFT);
         
         $stmt_insert = mysqli_prepare($conn, $insert_query);
-        mysqli_stmt_bind_param($stmt_insert, "ssssss", $voter_id, $nama, $nis, $nama_kandidat, $verification_code, $vote_location);
+        mysqli_stmt_bind_param($stmt_insert, "ssssss", $voter_id, $voter_name, $nis, $candidate_name, $verification_code, $location);
         
         if (!mysqli_stmt_execute($stmt_insert)) {
             throw new Exception("Failed to save vote!");
@@ -82,7 +82,7 @@ try {
     
     // Set session untuk bukti voting
     $_SESSION['vote_success'] = true;
-    $_SESSION['voted_candidate'] = $nama_kandidat;
+    $_SESSION['voted_candidate'] = $candidate_name;
     $_SESSION['verification_code'] = $verification_code;
     $_SESSION['vote_time'] = date('d M Y, H:i') . ' WIB';
     $_SESSION['voter_nis'] = $nis;

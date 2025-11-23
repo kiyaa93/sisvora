@@ -390,7 +390,23 @@ $result = mysqli_query($conn, $sql);
             border-radius: 8px;
         }
 
-        
+        .status-voted {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status-unvoted {
+            background-color: #fff3cd;
+            color: #856404;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            border: 1px solid #ffeaa7;
+        }
     </style>
 </head>
 <body>
