@@ -112,7 +112,7 @@ $user_name = trim($user['first_name'] . ' ' . ($user['middle_name'] ?? '') . ' '
             background-color: var(--beige-bg);
             padding: 1rem 2rem;
             position: fixed;
-            left: 0;
+            top: 0;
             width: 100%;
             z-index: 2000;
         }
