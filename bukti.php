@@ -2,53 +2,40 @@
 session_start();
 include 'config.php';
 
-// Cek login
-if (!isset($_SESSION['user_id'])) {
-    header("Location: login_user.php");
-    exit();
+// Cek apakah user sudah login
+if (!isset($_SESSION['user_nis'])) {
+    echo "Akses ditolak";
+    exit;
 }
 
-// Cek apakah ada data voting success
-if (!isset($_SESSION['vote_success'])) {
-    header("Location: dashboarduser.php");
-    exit();
+$nis = $_SESSION['user_nis'];
+
+// Ambil detail voter + kandidat
+$sql = $conn->prepare("
+    SELECT 
+        v.nama, v.nis, v.kelas, v.voted_at,
+        c.nama_kandidat, c.jenis_kandidat,
+        e.election_name
+    FROM voters_admin v
+    LEFT JOIN votes_admin va ON va.voter_id = v.nis
+    LEFT JOIN candidates_admin c ON c.id = va.candidate_id
+    LEFT JOIN elections_admin e ON e.id = va.election_id
+    WHERE v.nis = ?
+");
+$sql->bind_param("s", $nis);
+$sql->execute();
+$data = $sql->get_result()->fetch_assoc();
+
+// Jika belum vote, tidak boleh buka bukti.php
+if (!$data || !$data['voted_at']) {
+    echo "Anda belum melakukan voting";
+    exit;
 }
 
-$user_id = $_SESSION['user_id'];
-
-// Ambil data user dari login_user
-$query_user = "SELECT * FROM login_user WHERE id = ?";
-$stmt_user = mysqli_prepare($conn, $query_user);
-mysqli_stmt_bind_param($stmt_user, "i", $user_id);
-mysqli_stmt_execute($stmt_user);
-$result_user = mysqli_stmt_get_result($stmt_user);
-$user = mysqli_fetch_assoc($result_user);
-
-// Ambil data voting dari voters_admin
-$query_vote = "SELECT * FROM voters_admin WHERE nis = ? ORDER BY vote_time DESC LIMIT 1";
-$stmt_vote = mysqli_prepare($conn, $query_vote);
-mysqli_stmt_bind_param($stmt_vote, "s", $user['nis']);
-mysqli_stmt_execute($stmt_vote);
-$result_vote = mysqli_stmt_get_result($stmt_vote);
-$vote_data = mysqli_fetch_assoc($result_vote);
-
-if (!$vote_data) {
-    header("Location: vote.php");
-    exit();
-}
-
-// Gabungkan nama lengkap
-$user_name = trim($user['first_name'] . ' ' . ($user['middle_name'] ?? '') . ' ' . $user['last_name']);
-
-// Generate voter ID
-$voter_id_display = "VP-2025-" . str_pad($vote_data['id'], 5, '0', STR_PAD_LEFT);
-
-// Format waktu
-$vote_time = date('d M Y, H:i', strtotime($vote_data['vote_time'])) . ' WIB';
-
-// Clear session vote_success
-unset($_SESSION['vote_success']);
+// Generate kode
+$verification_code = strtoupper(substr(md5($nis . $data['voted_at']), 0, 10));
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -657,15 +644,15 @@ unset($_SESSION['vote_success']);
             <div class="proof-body">
                 <div class="proof-row">
                     <span class="proof-label">Voter Name</span>
-                    <span class="proof-value">Jan Adam</span>
+                    <span class="proof-value"><?= $data['nama'] ?></span>
                 </div>
                 <div class="proof-row">
-                    <span class="proof-label">Voter ID</span>
-                    <span class="proof-value">VP-2025-10234</span>
+                    <span class="proof-label">Voter NIS</span>
+                    <span class="proof-value"><?= $data['nis'] ?></span>
                 </div>
                 <div class="proof-row">
                     <span class="proof-label">DATE, TIME</span>
-                    <span class="proof-value">03 Nov 2025, 14:35 WIB</span>
+                    <span class="proof-value"><?= $data['voted_at'] ?></span>
                 </div>
                 
                 <hr class="proof-divider">
@@ -681,7 +668,7 @@ unset($_SESSION['vote_success']);
                 </div>
                 <div class="proof-code-box">
                     <div class="proof-code-label">Kode Verifikasi</div>
-                    <div class="proof-code-value">XAT7-Z5TS-9GNB</div>
+                    <div class="proof-code-value"><?= htmlspecialchars($verification_code) ?></div>
                 </div>
             </div>
             
@@ -702,6 +689,10 @@ unset($_SESSION['vote_success']);
     </main>
 
     <script>
+        function go(page) {
+            window.location.href = page + ".php";
+        }
+
         function toggleSidebar() {
         document.getElementById("sidebar").classList.toggle("collapsed");
         document.getElementById("mainContent").classList.toggle("expanded");
