@@ -72,45 +72,103 @@
         transform:rotate(180deg);
     }
 
-    /* FOOTER */
-    footer{
-        background:#f5d5b8; padding:35px 60px
-    }
-    .footer-content{
-        max-width:1100px; margin:0 auto;
-        display:flex; justify-content:space-between; align-items:center
-    }
-    .footer-logo{ display:flex; align-items:center; gap:10px }
-    .footer-logo-img{ width:35px; height:35px; object-fit:contain }
-    .footer-logo span{ color:#d64933; font-weight:700; font-size:16px }
+    /* ===============================  FOOTER
+================================ */
+/* ================================
+   FOOTER FIX RAPI KE SAMPING
+================================ */
+footer {
+  background: #f5d5b8;
+  padding: 60px 50px;
+}
 
-    /* Footer Links (PERBAIKAN) */
-    .footer-links{
-        display:flex; gap:35px;
-    }
-    .footer-links a{
-        color:#333; text-decoration:none; font-size:14px;
-        cursor:pointer; transition:color .3s;
-    }
-    .footer-links a:hover{
-        color:#d64933;
-    }
+.footer-container {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px;
+}
 
-    /* Social Icons */
-    .footer-social a{
-        font-size:18px; background:#d64933; color:white;
-        padding:10px; border-radius:50%; text-decoration:none;
-        transition:.3s;
-    }
-    .footer-social a:hover{
-        background:#c03d29; transform:translateY(-3px);
-    }
+/* LEFT SIDE */
+.footer-left {
+  flex: 1.2; /* dibuat sedikit lebih lebar */
+}
 
-    @media(max-width:768px){
-        nav{ padding:15px 20px; flex-direction:column; gap:15px }
-        .nav-links{ flex-wrap:wrap; gap:15px }
-        .faqs{ padding:50px 20px }
-    }
+.footer-left img {
+  width: 90px;
+  margin-bottom: 10px;
+}
+
+.footer-left p {
+  font-size: 14px;
+  color: #333;
+  margin: 10px 0 20px;
+}
+
+/* SOCIAL ICONS */
+.social-icons {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.social-icons img {
+  width: 38px;
+  height: 38px;
+  padding: 8px;
+  background: #e86f3e;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: .3s;
+  box-shadow: 0 4px 10px rgba(0,0,0,.15);
+}
+
+.social-icons img:hover {
+  transform: scale(1.1);
+  background: #d35f32;
+}
+
+/* COLUMNS */
+.footer-column {
+  flex: 1;
+  min-width: 180px; /* biar tidak mepet */
+}
+
+.footer-column h3 {
+  color: #a64721;
+  font-size: 18px;
+  margin-bottom: 14px;
+}
+
+.footer-column a,
+.footer-column p {
+  display: block;
+  color: #333;
+  font-size: 14px;
+  text-decoration: none;
+  margin-bottom: 8px;
+}
+
+.footer-column a:hover {
+  color: #d64933;
+}
+
+/* ================================
+   RESPONSIVE
+================================ */
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  footer {
+    padding: 40px 30px;
+  }
+}
+
   </style>
 </head>
 <body>
@@ -197,28 +255,49 @@
 
   <footer>
     <div class="footer-content">
-      <div class="footer-logo">
-        <img src="img/logo.png" alt="SISVORA Logo" class="footer-logo-img">
-        <span>SISVORA</span>
+      <div class="footer-left">
+        <img src="./img/logo.png" alt="logo">
+        <p>Copyright 2025</p>
+
+        <div class="social-icons">
+          <img src="./img/19af02a3f9098fb13761d1c66e7c7328562b7f6f.png" alt="">
+          <img src="./img/c0f29f82d079100d4afd0c8cb7a2411515f1ea3d.png" alt="">
+          <img src="./img/ad697c59197b3edbf18bcbad9d365d6d0e4c4bb6.png" alt="">
+        </div>
       </div>
 
-      <div class="footer-links">
-        <a href="#" onclick="showNotification('Product info coming soon!'); return false;">Product</a>
-        <a href="#" onclick="showNotification('Legal info coming soon!'); return false;">Legal</a>
-        <a href="LandingPageContact.html">Contact Us</a>
+      <!-- PRODUCT -->
+      <div class="footer-column">
+        <h3>Product</h3>
+        <a href="#">Website</a>
       </div>
 
-      <div class="footer-social">
-        <a href="#" onclick="showNotification('Email: info@sisvora.com'); return false;">📧</a>
-        <a href="#" onclick="showNotification('LinkedIn coming soon!'); return false;">🔗</a>
-        <a href="#" onclick="showNotification('Instagram coming soon!'); return false;">📱</a>
+      <!-- LEGAL -->
+      <div class="footer-column">
+        <h3>Legal</h3>
+        <a href="#">Terms And Conditions</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">FAQs</a>
+      </div>
+
+      <!-- CONTACT -->
+      <div class="footer-column">
+        <h3>Contact Us</h3>
+        <p>Address : Purbalingga Kota</p>
+        <p>Email : sisvora@gmail.com</p>
+        <p>Phone No : 08</p>
       </div>
     </div>
   </footer>
+    </div>
+  </footer>
 
-  <script>
+ <script>
     function showNotification(message) {
-      alert(message);
+      const notification = document.getElementById('notification');
+      notification.textContent = message;
+      notification.classList.add('show');
+      setTimeout(() => notification.classList.remove('show'), 3000);
     }
 
     // Toggle FAQ
