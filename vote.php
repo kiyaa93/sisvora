@@ -1,4 +1,50 @@
+<?php
+session_start();
+include 'config.php';
 
+// Cek apakah user sudah login
+if (!isset($_SESSION['user_id'])) {
+    header("Location: loginuser.php");
+    exit();
+}
+
+$user_id = $_SESSION['user_id'];
+$candidates = $conn->query("SELECT * FROM candidates_admin ORDER BY urutan_kandidat ASC");
+
+// Ambil data user dari login_user berdasarkan ID
+$query = "SELECT * FROM login_user WHERE id = ?";
+$stmt = mysqli_prepare($conn, $query);
+mysqli_stmt_bind_param($stmt, "i", $user_id);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
+$user = mysqli_fetch_assoc($result);
+
+if (!$user) {
+    session_destroy();
+    header("Location: loginuser.php");
+    exit();
+}
+
+$_SESSION['voter_nis'] = $user['nis'];
+
+// Cek status voting di voters_admin berdasarkan NIS
+$check_vote = "SELECT * FROM voters_admin WHERE nis = ?";
+$stmt_check = mysqli_prepare($conn, $check_vote);
+mysqli_stmt_bind_param($stmt_check, "s", $user['nis']);
+mysqli_stmt_execute($stmt_check);
+$result_check = mysqli_stmt_get_result($stmt_check);
+$voter_data = mysqli_fetch_assoc($result_check);
+
+// Jika sudah vote, redirect ke bukti
+if ($voter_data && $voter_data['status'] === 'Voted') {
+    $_SESSION['info'] = "You have already voted!";
+    header("Location: bukti.php");
+    exit();
+}
+
+// Gabungkan nama lengkap
+$user_name = trim($user['first_name'] . ' ' . ($user['middle_name'] ?? '') . ' ' . $user['last_name']);
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -1004,15 +1050,16 @@
                 <p class="candidate-note">You can only vote for one candidate</p>
             </div>
             <div class="candidate-cards">
+                <?php while ($row = $candidates->fetch_assoc()): ?>
                 <div class="candidate-card">
                     <div class="candidate-photo">
-                        <img src="img/b1.png" alt="Malik Chandra Wirata">
+                        <img src="upload/<?= $row['foto'] ?>" alt="<?= $row['nama_kandidat'] ?>">
                     </div>
-                    <h3 class="candidate-name">Malik Chandra Wirata</h3>
-                    <p class="candidate-position">President Student Council</p>
+                    <h3 class="candidate-name"><?= $row['nama_kandidat'] ?></h3>
+                    <p class="candidate-position"><?= $row['jenis_kandidat'] ?></p>
                     <div class="candidate-actions">
-                        <button class="btn btn-primary" onclick="showVoteAlert('Malik Chandra Wirata')">VOTE</button>
-                        <button class="btn btn-secondary" onclick="showDetails('candidate01')">View Details</button>
+                        <button class="btn btn-primary" onclick="showVoteAlert(<?= $row['id'] ?>)">VOTE</button>
+                        <button class="btn btn-secondary" onclick="showDetails(<?= $row['id'] ?>)">View Details</button>
                     </div>
                 </div>
                 <div class="candidate-card">
@@ -1026,6 +1073,7 @@
                         <button class="btn btn-secondary" onclick="showDetails('candidate01')">View Details</button>
                     </div>
                 </div>
+                <?php endwhile; ?>
             </div>
         </section>
 
@@ -1049,7 +1097,7 @@
                 </div>
                 <div class="candidate-card">
                     <div class="candidate-photo">
-                        <img src="img/g1.png" alt="Jemima Saghi Larissa">
+                        <img src="img/g2.png" alt="Jemima Saghi Larissa">
                     </div>
                     <h3 class="candidate-name">Jemima Saghi Larissa</h3>
                     <p class="candidate-position">Vice President Student Council</p>
@@ -1156,7 +1204,7 @@
                     4. Bridge communication between students and administration
                 </p>
             </div>
-            <button class="btn btn-primary details-vote-btn" onclick="showVoteAlertFromDetails()">VOTE</button>
+            <button class="btn btn-primary details-vote-btn" onclick="showVoteAlertFromDetails()">VOTE(<?= $row['id'] ?>)</button>
         </div>
     </div>
 
@@ -1186,13 +1234,13 @@
             <p class="success-subtitle">Your identity has verified. Check before confirm.</p>
             
             <div class="verification-photo">
-                <img src="images/jan-adam-photo.png" alt="Jan Adam">
+                <img src="uploads/<?= $user['foto'] ?>" alt="<?= $user['nama'] ?>">
             </div>
             
             <div class="verification-grid">
                 <div class="verification-item">
                     <div class="verification-label">NIS</div>
-                    <div class="verification-value">012345678</div>
+                    <div class="verification-value"><?= $user['nis'] ?></div>
                 </div>
                 <div class="verification-item">
                     <div class="verification-label">LOCATION</div>
@@ -1200,16 +1248,16 @@
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                             <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 7.62 10.62 6.5 12 6.5C13.38 6.5 14.5 7.62 14.5 9C14.5 10.38 13.38 11.5 12 11.5Z" fill="#FF8C00"/>
                         </svg>
-                        <span>-1.995243965</span>
+                        <span id="locText">Loading...</span>
                     </div>
                 </div>
                 <div class="verification-item">
                     <div class="verification-label">NAME</div>
-                    <div class="verification-value">Jan Adam</div>
+                    <div class="verification-value"><?= $user_name ?></div>
                 </div>
                 <div class="verification-item">
                     <div class="verification-label">TIME</div>
-                    <div class="verification-value">09:28 WIB</div>
+                    <div class="verification-value" id="timeText"></div>
                 </div>
             </div>
             
@@ -1275,8 +1323,10 @@
         let currentCandidate = '';
         
         // Step 1: Show Vote Alert first
-        function showVoteAlert(candidateName) {
-            currentCandidate = candidateName;
+        let selectedCandidateID = null;
+
+        function showVoteAlert(candidateID) {
+            selectedCandidateID = candidateID;
             document.getElementById('alertModal').classList.add('active');
         }
 
@@ -1288,9 +1338,10 @@
         // Step 2: After clicking "YES, I'M SURE" → Show Camera
         function confirmVoteAlert() {
             closeAlert();
+
+            // buka kamera
             document.getElementById('cameraModal').classList.add('active');
-            
-            // Simulate camera verification after 3 seconds
+
             setTimeout(() => {
                 closeCameraModal();
                 document.getElementById('successModal').classList.add('active');
@@ -1310,13 +1361,31 @@
         // Step 3: After confirming identity → Redirect to Proof Page
         function confirmVerification() {
             closeSuccessModal();
-            // Update user status
-            document.querySelector('.user-status').textContent = 'Voted';
-            document.querySelector('.user-status').style.backgroundColor = '#e5641f';
-            document.querySelector('.user-status').style.color = 'white';
-            // Redirect to proof page
-            window.location.href = 'bukti.php';
+
+            // Kirim vote ke proses_vote.php
+            fetch("proses_vote.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: "candidate_id=" + selectedCandidateID
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === "success") {
+                    window.location.href = "bukti.php";
+                } else {
+                    alert(data.message);
+                }
+            });
         }
+
+        // Set waktu otomatis
+        document.getElementById("timeText").innerText =
+            new Date().toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit" }) + " WIB";
+
+        // Ambil lokasi GPS
+        navigator.geolocation.getCurrentPosition(pos => {
+            document.getElementById("locText").innerText = pos.coords.latitude + ", " + pos.coords.longitude;
+        });
 
         // Show Details Modal
         function showDetails(candidateId) {
@@ -1329,9 +1398,9 @@
         }
 
         // Show Vote Alert from Details Modal
-        function showVoteAlertFromDetails() {
+        function showVoteAlertFromDetails(candidateID) {
             closeDetails();
-            showVoteAlert('Malik Chandra Wirata & Milania Rifa');
+            showVoteAlert(candidateID);
         }
 
         // Handle Logout
@@ -1387,6 +1456,23 @@
         function closeNotifPanel() {
             document.getElementById("notifOverlay").style.display = "none";
             document.getElementById("notifPanel").style.right = "-380px";
+        }
+
+
+        function vote(candidateID) {
+            fetch("proses_vote.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: "candidate_id=" + candidateID
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === "success") {
+                    window.location.href = "bukti.php";
+                } else {
+                    alert(data.message);
+                }
+            });
         }
     </script>
 </body>

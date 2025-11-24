@@ -34,7 +34,7 @@
         background-color: var(--beige-bg);
         padding: 1rem 2rem;
         position: fixed;
-        top: 0;
+        left: 0;
         width: 100%;
         z-index: 2000;
     }

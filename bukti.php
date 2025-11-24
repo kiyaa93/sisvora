@@ -1,3 +1,42 @@
+<?php
+session_start();
+include 'config.php';
+
+// Cek apakah user sudah login
+if (!isset($_SESSION['user_nis'])) {
+    echo "Akses ditolak";
+    exit;
+}
+
+$nis = $_SESSION['user_nis'];
+
+// Ambil detail voter + kandidat
+$sql = $conn->prepare("
+    SELECT 
+        v.nama, v.nis, v.kelas, v.voted_at,
+        c.nama_kandidat, c.jenis_kandidat,
+        e.election_name
+    FROM voters_admin v
+    LEFT JOIN votes_admin va ON va.voter_id = v.nis
+    LEFT JOIN candidates_admin c ON c.id = va.candidate_id
+    LEFT JOIN elections_admin e ON e.id = va.election_id
+    WHERE v.nis = ?
+");
+$sql->bind_param("s", $nis);
+$sql->execute();
+$data = $sql->get_result()->fetch_assoc();
+
+// Jika belum vote, tidak boleh buka bukti.php
+if (!$data || !$data['voted_at']) {
+    echo "Anda belum melakukan voting";
+    exit;
+}
+
+// Generate kode
+$verification_code = strtoupper(substr(md5($nis . $data['voted_at']), 0, 10));
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -605,15 +644,15 @@
             <div class="proof-body">
                 <div class="proof-row">
                     <span class="proof-label">Voter Name</span>
-                    <span class="proof-value">Jan Adam</span>
+                    <span class="proof-value"><?= $data['nama'] ?></span>
                 </div>
                 <div class="proof-row">
-                    <span class="proof-label">Voter ID</span>
-                    <span class="proof-value">VP-2025-10234</span>
+                    <span class="proof-label">Voter NIS</span>
+                    <span class="proof-value"><?= $data['nis'] ?></span>
                 </div>
                 <div class="proof-row">
                     <span class="proof-label">DATE, TIME</span>
-                    <span class="proof-value">03 Nov 2025, 14:35 WIB</span>
+                    <span class="proof-value"><?= $data['voted_at'] ?></span>
                 </div>
                 
                 <hr class="proof-divider">
@@ -629,7 +668,7 @@
                 </div>
                 <div class="proof-code-box">
                     <div class="proof-code-label">Kode Verifikasi</div>
-                    <div class="proof-code-value">XAT7-Z5TS-9GNB</div>
+                    <div class="proof-code-value"><?= htmlspecialchars($verification_code) ?></div>
                 </div>
             </div>
             
@@ -650,6 +689,10 @@
     </main>
 
     <script>
+        function go(page) {
+            window.location.href = page + ".php";
+        }
+
         function toggleSidebar() {
         document.getElementById("sidebar").classList.toggle("collapsed");
         document.getElementById("mainContent").classList.toggle("expanded");

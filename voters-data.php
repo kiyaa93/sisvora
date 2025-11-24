@@ -40,7 +40,6 @@ $result = mysqli_query($conn, $sql);
         .navbar {
             background-color: var(--beige-bg);
             padding: 1rem 2rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             position: fixed;
             left: 0;
             width: 100%;
@@ -63,7 +62,8 @@ $result = mysqli_query($conn, $sql);
         }
 
         .navbar .logo {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
+            margin-left: 8px;
             font-weight: bold;
             color: var(--orange-primary);
             text-decoration: none;
@@ -390,7 +390,23 @@ $result = mysqli_query($conn, $sql);
             border-radius: 8px;
         }
 
-        
+        .status-voted {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status-unvoted {
+            background-color: #fff3cd;
+            color: #856404;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            border: 1px solid #ffeaa7;
+        }
     </style>
 </head>
 <body>

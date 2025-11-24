@@ -55,7 +55,7 @@ while($row = mysqli_fetch_assoc($candidatesQuery)){
     
     $candidates[] = [
         'no' => $rank,
-        'name' => $row['name'],
+        'name' => $row['nama_kandidat'],
         'votes' => $row['votes'],
         'percentage' => $percentage,
         'status' => $status
@@ -102,6 +102,7 @@ $lastUpdated = date('d M Y, H:i') . ' WIB';
             padding: 1rem 2rem;
             position: fixed;
             left: 0;
+            top: 0;
             width: 100%;
             z-index: 2000;
         }
@@ -296,10 +297,12 @@ $lastUpdated = date('d M Y, H:i') . ' WIB';
 
         .main-content {
             background: #fff;
-            border-radius: 10px;
+            border-radius: 30px;
             margin-bottom: 25px;
+            margin-top: 85px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            margin-left: 280px;
+            margin-left: 300px;
+            margin-right: 20px;
             padding: 2rem;
             transition: margin-left 0.3s ease;
             min-height: calc(100vh - 76px);
@@ -311,9 +314,10 @@ $lastUpdated = date('d M Y, H:i') . ' WIB';
 
         .page-header {
             background: #fff;
-            padding: 25px;
+            padding: 40px;
             border-radius: 10px;
             margin-bottom: 25px;
+            margin-top: 0;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
 
@@ -558,7 +562,7 @@ $lastUpdated = date('d M Y, H:i') . ' WIB';
                 <i class="fas fa-bars"></i>
             </button>
             <a href="#" class="logo">
-                <i class="fas fa-vote-yea"></i>
+                <img src="img/logo.png" alt="SISVORA Logo" class="logo-img">
                 <span>SISVORA</span>
             </a>
             <div class="search-bar mx-4 d-none d-md-block">
