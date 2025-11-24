@@ -605,7 +605,7 @@ if (!isset($_SESSION['adminID'])) {
     <div class="sidebar-wrapper" id="sidebar">
         <div class="user-profile">
             <div class="avatar"><i class="fas fa-user"></i></div>
-            <div class="admin-id">Admin_ID</div>
+            <div class="admin-id"><?php echo $_SESSION['adminID']; ?></div>
             <div class="user-status"><p class="text-muted">Administrator</p></div>
         </div>
 
@@ -637,7 +637,7 @@ if (!isset($_SESSION['adminID'])) {
     <!-- Main Content -->
     <div class="main-content" id="mainContent">
         <div class="welcome-text">
-            <h2>Hello,<strong><?php echo $_SESSION['adminID']; ?>!</strong></h2>
+            <h2>Hello, <strong><?php echo $_SESSION['adminID']; ?>!</strong></h2>
             <p>Welcome Back to SISVORA Management Panel.</p>
         </div>
 

@@ -40,7 +40,6 @@ $result = mysqli_query($conn, $sql);
         .navbar {
             background-color: var(--beige-bg);
             padding: 1rem 2rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             position: fixed;
             left: 0;
             width: 100%;
@@ -63,7 +62,8 @@ $result = mysqli_query($conn, $sql);
         }
 
         .navbar .logo {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
+            margin-left: 8px;
             font-weight: bold;
             color: var(--orange-primary);
             text-decoration: none;
