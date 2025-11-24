@@ -7,7 +7,8 @@
   <style>
     /* same main styles, plus contact form grid */
     *
-    {margin:0;
+    *{
+        margin:0;
         padding:0;
         box-sizing:border-box
     }
@@ -22,16 +23,18 @@
         justify-content:space-between;
         align-items:center
     }
-    .nav-logo{
-        display:flex;
-        align-items:center;
-        gap:10px;
-        cursor:pointer
-    }
-    .nav-logo img{
-        width:35px;
-        height:35px;
-    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+  }
+
+  .nav-logo-img {
+      width: 45px;
+      height: 45px;
+      object-fit: contain;
+  }
     .nav-logo span{
         color:#d64933;
         font-weight:700;
@@ -311,7 +314,7 @@
 
   <nav>
     <div class="nav-logo" onclick="location.href='LandingPageHome.html'">
-    <img src="./img/logo.png" alt="logo">
+      <img src="img/logo.png" alt="SISVORA Logo" class="nav-logo-img">
       <span>SISVORA</span>
     </div>
 
