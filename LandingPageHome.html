@@ -258,67 +258,81 @@
         height:45px;
         fill:#fff
     }
-    footer{
-        background:#f5d5b8;
-        padding:35px 60px
+    footer {
+      background:#f5d5b8;
+      padding:30px 50px;
     }
-    .footer-content{
-        max-width:1100px;
-        margin:0 auto;
-        display:flex;
-        justify-content:space-between;
-        align-items:center
+
+    .footer-container {
+      max-width:1200px;
+      margin:auto;
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:60px;
     }
-    .footer-logo{
-        display:flex;
-        align-items:center;
-        gap:10px
+
+    /* LEFT */
+    .footer-left img {
+      width:90px;
+      margin-bottom:10px;
     }
-    .footer-logo-img{
-        width:35px;
-        height:35px;
-        object-fit: contain;
+    .footer-left p {
+      font-size:14px;
+      color:#333;
+      margin-bottom:15px;
     }
-    .footer-logo span{
-        color:#d64933;
-        font-weight:700;
-        font-size:16px
+
+   .social-icons img {
+    width: 38px;
+    height: 38px;
+    padding: 8px;
+    background: #e86f3e; /* sama seperti strength-icon */
+    border-radius: 50%;
+    cursor: pointer;
+    transition: .3s;
+    box-shadow: 0 4px 10px rgba(0,0,0,.15);
+  }
+
+   .social-icons img:hover { 
+    transform: scale(1.1);
+    background: #d35f32; /* versi hover sedikit gelap */
+   }
+
+    /* FOOTER COLUMN */
+    .footer-column h3 {
+      color:#a64721;
+      font-size:17px;
+      margin-bottom:12px;
     }
-    .footer-links{
-        display:flex;
-        gap:30px
+    .footer-column a,
+    .footer-column p {
+      display:block;
+      color:#333;
+      font-size:14px;
+      text-decoration:none;
+      margin-bottom:8px;
     }
-    .footer-links a{
-        color:#333;
-        text-decoration:none;
-        font-size:13px;
-        cursor:pointer;
-        transition:color .3s
+    .footer-column a:hover {
+      color:#d64933;
     }
-    .footer-links a:hover{
-        color:#d64933
-    }
-    .footer-social{
-        display:flex;
-        gap:12px
-    }
-    .social-icon{
-        width:32px;
-        height:32px;
-        background:#d64933;
-        border-radius:50%;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        color:#fff;
-        font-size:14px;
-        cursor:pointer;
-        transition:all .3s
-    }
-    .social-icon:hover{
-        background:#c03d29;
-        transform:scale(1.1)
-    }
+
+    .social-icons img {
+    width: 38px;
+    height: 38px;
+    padding: 8px;
+    background: #e86f3e; /* sama seperti strength-icon */
+    border-radius: 50%;
+    cursor: pointer;
+    transition: .3s;
+    box-shadow: 0 4px 10px rgba(0,0,0,.15);
+  }
+
+   .social-icons img:hover { 
+    transform: scale(1.1);
+    background: #d35f32; /* versi hover sedikit gelap */
+   }
+    
     .notification{
         position:fixed;
         top:20px;
@@ -328,43 +342,40 @@
         padding:15px 25px;
         border-radius:8px;
         box-shadow:0 4px 12px rgba(0,0,0,.2);
-        z-index:1000;display:none
+        z-index:1000;
+        display:none
     }
     .notification.show{
         display:block;
         animation:slideIn .3s
     }
+
     @keyframes slideIn{
         from{
             transform:translateX(400px);
             opacity:0
-        }to{
+        }
+        to{
             transform:translateX(0);
             opacity:1
         }
     }
+
     @media(max-width:768px){
         nav{
             padding:15px 20px;
             flex-direction:column;
             gap:15px
-        }.nav-links{
+        }
+        .nav-links{
             flex-wrap:wrap;
             gap:15px
-        }.hero{
+        }
+        .about{
             padding:50px 20px
-        }.hero-title{
-            font-size:28px
-        }.action-cards,.features-grid{
-            grid-template-columns:1fr;
-            padding:0 20px
-        }.footer-content{
-            flex-direction:column;
-            gap:20px
-        }.footer-links{
-            flex-direction:column;
-            gap:10px;
-            text-align:center
+        }
+        .strengths-grid{
+            grid-template-columns:1fr
         }
     }
 
@@ -470,24 +481,44 @@
     </section>
   </main>
 
-  <footer>
-    <div class="footer-content">
-      <div class="footer-logo">
-        <img src="img/logo.png" alt="SISVORA Logo" class="footer-logo-img">
-        <span>SISVORA</span>
+<footer>
+    <div class="footer-container">
+
+      <!-- LEFT LOGO -->
+      <div class="footer-left">
+        <img src="./img/logo.png" alt="logo">
+        <p>Copyright 2025</p>
+
+        <div class="social-icons">
+          <img src="./img/19af02a3f9098fb13761d1c66e7c7328562b7f6f.png" alt="">
+          <img src="./img/c0f29f82d079100d4afd0c8cb7a2411515f1ea3d.png" alt="">
+          <img src="./img/ad697c59197b3edbf18bcbad9d365d6d0e4c4bb6.png" alt="">
+        </div>
       </div>
 
-      <div class="footer-links">
-        <a href="#" onclick="showNotification('Product info coming soon!'); return false;">Product</a>
-        <a href="#" onclick="showNotification('Legal info coming soon!'); return false;">Legal</a>
-        <a href="LandingPageContact.html">Contact Us</a>
+      <!-- PRODUCT -->
+      <div class="footer-column">
+        <h3>Product</h3>
+        <a href="#">Website</a>
       </div>
 
-      <div class="footer-social">
-        <a class="social-icon" href="#" onclick="showNotification('Email: info@sisvora.com'); return false;">📧</a>
-        <a class="social-icon" href="#" onclick="showNotification('LinkedIn coming soon!'); return false;">🔗</a>
-        <a class="social-icon" href="#" onclick="showNotification('Instagram coming soon!'); return false;">📱</a>
+      <!-- LEGAL -->
+      <div class="footer-column">
+        <h3>Legal</h3>
+        <a href="#">Terms And Conditions</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">FAQs</a>
       </div>
+
+      <!-- CONTACT -->
+      <div class="footer-column">
+        <h3>Contact Us</h3>
+        <p>Address : Purbalingga Kota</p>
+        <p>Email : sisvora@gmail.com</p>
+        <p>Phone No : 08</p>
+      </div>
+    </div>
+      
     </div>
   </footer>
 
@@ -513,5 +544,22 @@
       if (id) document.getElementById(id).classList.add('active');
     })();
   </script>
+</body>
+</html>
+
+  <script>
+    (function markActive(){
+      const path = location.pathname.split('/').pop() || 'index.html';
+      const maps = {
+        'LandingPageHome.html': 'nav-home',
+        'LandingPageAbout.html': 'nav-about',
+        'LandingPageContact.html': 'nav-contact',
+        'LandingPageFaqs.html': 'nav-faqs'
+      };
+      const id = maps[path];
+      if (id) document.getElementById(id).classList.add('active');
+    })();
+  </script>
+
 </body>
 </html>
