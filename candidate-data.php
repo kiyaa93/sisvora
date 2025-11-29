@@ -1,13 +1,8 @@
 <?php
 include "config.php";
 
-$result = $conn->query("SELECT * FROM candidates_admin ORDER BY id DESC");
-
-$candidates = [];
-while ($row = $result->fetch_assoc()) {
-    $candidates[] = $row;
-}
-
+$no = 1;
+$q = $conn->query("SELECT * FROM candidates_admin ORDER BY urutan_kandidat ASC");
 ?>
 
 <!DOCTYPE html>
@@ -410,60 +405,58 @@ while ($row = $result->fetch_assoc()) {
         <table class="table table-bordered align-middle text-center">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Nama Kandidat</th>
-                    <th>Urutan</th>
-                    <th>Jenis</th>
+                    <th>#</th>
+                    <th>Nama Ketua</th>
+                    <th>Nama Wakil</th>
+                    <th>Foto Ketua</th>
+                    <th>Foto Wakil</th>
                     <th>Visi</th>
                     <th>Misi</th>
-                    <th>Foto</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
-            <tbody>
-                <?php if (empty($candidates)): ?>
-                    <tr><td colspan="8" class="text-muted">Belum ada data kandidat</td></tr>
-                <?php else: ?>
-                    <?php foreach ($candidates as $idx => $c): ?>
-                        <tr>
-                            <td><?= $idx + 1 ?></td>
-                            <td><?= htmlspecialchars($c['nama_kandidat']) ?></td>
-                            <td><?= htmlspecialchars($c['urutan_kandidat']) ?></td>
-                            <td><?= htmlspecialchars($c['jenis_kandidat']) ?></td>
-                            <td><?= htmlspecialchars($c['visi']) ?></td>
-                            <td><?= htmlspecialchars($c['misi']) ?></td>
-                            
-                            <td>
-                                <?php if (!empty($c['foto']) && file_exists(__DIR__ . '/uploads/' . $c['foto'])): ?>
-                                    <button class="btn btn-sm btn-warning view-photo" 
-                                            data-photo="uploads/<?= htmlspecialchars($c['foto']) ?>">
-                                        View Photo
-                                    </button>
-                                <?php else: ?>
-                                    <span class="text-muted">-</span>
-                                <?php endif; ?>
-                            </td>
+           <tbody>
+            <?php if ($q->num_rows === 0): ?>
+                <tr><td colspan="8" class="text-muted">Belum ada data kandidat</td></tr>
+            <?php else: ?>
+                <?php while ($row = $q->fetch_assoc()): ?>
+                    <tr>
+                        <td><?= $no++ ?></td>
+                        <td><?= htmlspecialchars($row['nama_ketua'] ?? '-') ?></td>
+                        <td><?= htmlspecialchars($row['nama_wakil'] ?? '-') ?></td>
 
-                            <td>
-                                <a href="add-candidate.php?id=<?= $c['id'] ?>" title="Edit">
-                                    <i class="fa-solid fa-pen-to-square icon-action"></i>
-                                </a>
+                        <td>
+                            <?php if (!empty($row['foto_ketua'])): ?>
+                                <img src="uploads/<?= $row['foto_ketua'] ?>" width="70" class="rounded" style="object-fit:cover;">
+                            <?php else: ?>
+                                <span class="text-muted">No photo</span>
+                            <?php endif; ?>
+                        </td>
 
-                                <a href="delete-candidate.php?id=<?= $c['id'] ?>"
-                                onclick="return confirm('Yakin ingin menghapus kandidat ini?')"
-                                title="Delete">
-                                    <i class="fa-solid fa-trash icon-action"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                <?php endif; ?>
+                        <td>
+                            <?php if (!empty($row['foto_wakil'])): ?>
+                                <img src="uploads/<?= $row['foto_wakil'] ?>" width="70" class="rounded" style="object-fit:cover;">
+                            <?php else: ?>
+                                <span class="text-muted">No photo</span>
+                            <?php endif; ?>
+                        </td>
+
+                        <td><?= htmlspecialchars($row['visi'] ?? '-') ?></td>
+                        <td><?= nl2br(htmlspecialchars($row['misi'] ?? '-')) ?></td>
+
+                        <td>
+                            <a href="add-candidate.php?id=<?= $row['id'] ?>" class="btn btn-warning btn-sm">Edit</a>
+                            <a href="delete-candidate.php?id=<?= $row['id'] ?>" class="btn btn-danger btn-sm"
+                            onclick="return confirm('Hapus pasangan ini?')">Delete</a>
+                        </td>
+                    </tr>
+                <?php endwhile; ?>
+            <?php endif; ?>
             </tbody>
         </table>
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     // Sidebar Toggle
     function toggleSidebar() {
@@ -499,8 +492,6 @@ while ($row = $result->fetch_assoc()) {
             });
         });
 
-</script>
-<script>
         document.getElementById("notifBtn").addEventListener("click", () => {
             document.getElementById("notifOverlay").style.display = "block";
             document.getElementById("notifPanel").style.right = "0";

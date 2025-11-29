@@ -55,7 +55,7 @@ while($row = mysqli_fetch_assoc($candidatesQuery)){
     
     $candidates[] = [
         'no' => $rank,
-        'name' => $row['nama_kandidat'],
+        'name' => $row['nama_ketua'],
         'votes' => $row['votes'],
         'percentage' => $percentage,
         'status' => $status

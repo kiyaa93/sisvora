@@ -1,59 +1,86 @@
 <?php
 include "config.php";
 
+// Cek Edit atau Insert
 $isEdit = isset($_POST['id']) && !empty($_POST['id']);
 $id = $isEdit ? (int)$_POST['id'] : null;
 
-$nama = $_POST['nama_kandidat'];
 $urutan = $_POST['urutan_kandidat'];
-$jenis = $_POST['jenis_kandidat'];
+$nama_ketua = $_POST['nama_ketua'];
+$nama_wakil = $_POST['nama_wakil'];
 $visi = $_POST['visi'];
 $misi = $_POST['misi'];
 
-$fotoBaru = null;
+// Prepare filename variable
+$fotoKetuaBaru = null;
+$fotoWakilBaru = null;
 
-// Upload foto
-if (!empty($_FILES['foto']['name'])) {
+$maxSize = 10 * 1024 * 1024; // 10MB
+$allowedExt = ['jpg', 'jpeg', 'png', 'webp'];
 
-    $file = $_FILES['foto'];
-    $maxSize = 10 * 1024 * 1024;
-
-    if ($file['size'] > $maxSize) die("Ukuran foto melebihi 10MB!");
-
-    $allowed = ['jpg','jpeg','png','webp'];
+// === Upload Foto Ketua ===
+if (!empty($_FILES['foto_ketua']['name'])) {
+    $file = $_FILES['foto_ketua'];
     $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-    if (!in_array($ext, $allowed)) die("Format tidak didukung");
 
-    $fotoBaru = time() . "_" . rand(1000,9999) . "." . $ext;
+    if ($file['size'] > $maxSize) die("Ukuran foto ketua melebihi 10MB!");
+    if (!in_array($ext, $allowedExt)) die("Format foto ketua tidak didukung!");
 
-    move_uploaded_file($file['tmp_name'], __DIR__."/uploads/".$fotoBaru);
+    $fotoKetuaBaru = "ketua_" . time() . "_" . rand(1000, 9999) . "." . $ext;
 
-    // Hapus foto lama jika edit
+    move_uploaded_file($file['tmp_name'], __DIR__ . "/uploads/" . $fotoKetuaBaru);
+
+    // Hapus foto lama (edit)
     if ($isEdit) {
-        $cek = $conn->query("SELECT foto FROM candidates_admin WHERE id = $id")->fetch_assoc();
-        if ($cek && $cek['foto']) {
-            $old = __DIR__."/uploads/".$cek['foto'];
+        $cek = $conn->query("SELECT foto_ketua FROM candidates_admin WHERE id = $id")->fetch_assoc();
+        if ($cek && $cek['foto_ketua']) {
+            $old = __DIR__ . "/uploads/" . $cek['foto_ketua'];
             if (file_exists($old)) unlink($old);
         }
     }
 }
 
-// INSERT
+// === Upload Foto Wakil ===
+if (!empty($_FILES['foto_wakil']['name'])) {
+    $file = $_FILES['foto_wakil'];
+    $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+
+    if ($file['size'] > $maxSize) die("Ukuran foto wakil melebihi 10MB!");
+    if (!in_array($ext, $allowedExt)) die("Format foto wakil tidak didukung!");
+
+    $fotoWakilBaru = "wakil_" . time() . "_" . rand(1000, 9999) . "." . $ext;
+
+    move_uploaded_file($file['tmp_name'], __DIR__ . "/uploads/" . $fotoWakilBaru);
+
+    // Hapus foto lama (edit)
+    if ($isEdit) {
+        $cek = $conn->query("SELECT foto_wakil FROM candidates_admin WHERE id = $id")->fetch_assoc();
+        if ($cek && $cek['foto_wakil']) {
+            $old = __DIR__ . "/uploads/" . $cek['foto_wakil'];
+            if (file_exists($old)) unlink($old);
+        }
+    }
+}
+
+// =========================
+// INSERT DATA BARU
+// =========================
 if (!$isEdit) {
 
     $stmt = $conn->prepare("
         INSERT INTO candidates_admin
-        (nama_kandidat, urutan_kandidat, jenis_kandidat, visi, misi, foto)
-        VALUES (?, ?, ?, ?, ?, ?)
+        (urutan_kandidat, nama_ketua, nama_wakil, visi, misi, foto_ketua, foto_wakil)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
     ");
 
-    $stmt->bind_param("sissss",
-        $nama,
+    $stmt->bind_param("issssss",
         $urutan,
-        $jenis,
+        $nama_ketua,
+        $nama_wakil,
         $visi,
         $misi,
-        $fotoBaru
+        $fotoKetuaBaru,
+        $fotoWakilBaru
     );
 
     $stmt->execute();
@@ -62,40 +89,47 @@ if (!$isEdit) {
     exit;
 }
 
-// UPDATE
+// =========================
+// UPDATE DATA
+// =========================
 else {
 
-    if (!$fotoBaru) {
-        $old = $conn->query("SELECT foto FROM candidates_admin WHERE id=$id")->fetch_assoc();
-        $fotoBaru = $old['foto'];
+    // Ambil foto lama jika tidak upload baru
+    if (!$fotoKetuaBaru) {
+        $getOld = $conn->query("SELECT foto_ketua FROM candidates_admin WHERE id = $id")->fetch_assoc();
+        $fotoKetuaBaru = $getOld['foto_ketua'];
+    }
+
+    if (!$fotoWakilBaru) {
+        $getOld = $conn->query("SELECT foto_wakil FROM candidates_admin WHERE id = $id")->fetch_assoc();
+        $fotoWakilBaru = $getOld['foto_wakil'];
     }
 
     $stmt = $conn->prepare("
         UPDATE candidates_admin SET
-            nama_kandidat = ?,
             urutan_kandidat = ?,
-            jenis_kandidat = ?,
+            nama_ketua = ?,
+            nama_wakil = ?,
             visi = ?,
             misi = ?,
-            foto = ?
+            foto_ketua = ?,
+            foto_wakil = ?
         WHERE id = ?
     ");
 
-    $stmt->bind_param("sissssi",
-        $nama,
+    $stmt->bind_param("issssssi",
         $urutan,
-        $jenis,
+        $nama_ketua,
+        $nama_wakil,
         $visi,
         $misi,
-        $fotoBaru,
+        $fotoKetuaBaru,
+        $fotoWakilBaru,
         $id
     );
 
     $stmt->execute();
 
-    $newID = $stmt->insert_id;
-
-    header("Location: candidate-data.php?id=$newID&msg=added");
+    header("Location: candidate-data.php?msg=updated&id=$id");
     exit;
-
 }

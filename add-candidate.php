@@ -1,7 +1,7 @@
 <?php
 include "config.php";
 
-// Jika Edit Mode
+// Edit mode
 $editData = null;
 if (isset($_GET['id'])) {
     $id = (int)$_GET['id'];
@@ -17,7 +17,6 @@ if (isset($_GET['id'])) {
 <title>Add Candidate</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-
 <style>
 body {
     background: #f7f2e9;
@@ -38,7 +37,7 @@ body {
     color: #6c3b16;
 }
 
-.form-control, .form-select {
+.form-control {
     border-radius: 10px;
     border: 2px solid #e6b48c !important;
 }
@@ -55,7 +54,7 @@ body {
     background: #fff7ef;
 }
 
-#previewImg {
+.preview {
     width: 180px;
     height: 180px;
     object-fit: cover;
@@ -109,11 +108,12 @@ body {
 
         <form action="save-candidate.php" method="POST" enctype="multipart/form-data">
 
-            <!-- Hidden ID for edit -->
+            <!-- Hidden ID -->
             <?php if ($editData): ?>
                 <input type="hidden" name="id" value="<?= $editData['id'] ?>">
             <?php endif; ?>
 
+            <!-- Urutan -->
             <div class="row mb-3">
                 <div class="col-md-4 label-title">Urutan Kandidat :</div>
                 <div class="col-md-8">
@@ -122,25 +122,25 @@ body {
                 </div>
             </div>
 
+            <!-- Nama Ketua -->
             <div class="row mb-3">
-                <div class="col-md-4 label-title">Nama Kandidat :</div>
+                <div class="col-md-4 label-title">Nama Ketua :</div>
                 <div class="col-md-8">
                     <input type="text" name="nama_kandidat" class="form-control"
                            value="<?= $editData['nama_kandidat'] ?? '' ?>" required>
                 </div>
             </div>
 
+            <!-- Nama Wakil -->
             <div class="row mb-3">
-                <div class="col-md-4 label-title">Jenis Kandidat :</div>
-                <div class="col-md-8 d-flex gap-3 mt-2">
-                    <label><input type="radio" name="jenis_kandidat" value="Ketua"
-                        <?= isset($editData['jenis_kandidat']) && $editData['jenis_kandidat']=="Ketua" ? "checked" : "" ?> required> President Student Council</label>
-
-                    <label><input type="radio" name="jenis_kandidat" value="Wakil Ketua"
-                        <?= isset($editData['jenis_kandidat']) && $editData['jenis_kandidat']=="Wakil Ketua" ? "checked" : "" ?>> Vice President Student Council</label>
+                <div class="col-md-4 label-title">Nama Wakil :</div>
+                <div class="col-md-8">
+                    <input type="text" name="nama_wakil" class="form-control"
+                           value="<?= $editData['nama_wakil'] ?? '' ?>" required>
                 </div>
             </div>
 
+            <!-- Visi -->
             <div class="row mb-3">
                 <div class="col-md-4 label-title">Visi :</div>
                 <div class="col-md-8">
@@ -149,6 +149,7 @@ body {
                 </div>
             </div>
 
+            <!-- Misi -->
             <div class="row mb-4">
                 <div class="col-md-4 label-title">Misi :</div>
                 <div class="col-md-8">
@@ -156,20 +157,35 @@ body {
                 </div>
             </div>
 
-            <!-- Upload Foto -->
+            <!-- Foto Ketua -->
             <div class="mb-4">
-                <label class="label-title mb-2">Upload Foto :</label>
+                <label class="label-title mb-2">Foto Ketua :</label>
 
-                <div class="upload-box" onclick="document.getElementById('fotoInput').click()">
+                <div class="upload-box" onclick="document.getElementById('foto').click()">
                     <i class="fa-solid fa-upload fs-2" style="color:#b04b0f;"></i>
                     <p class="mt-2">Upload foto maksimal 10MB</p>
                 </div>
 
-                <input type="file" id="fotoInput" name="foto" accept="image/*" class="d-none">
+                <input type="file" id="foto" name="foto" accept="image/*" class="d-none">
 
-                <img id="previewImg"
-                     src="<?= $editData && $editData['foto'] ? 'uploads/'.$editData['foto'] : '' ?>"
-                     style="<?= $editData && $editData['foto'] ? 'display:block;' : 'display:none;' ?>">
+                <img id="previewKetua" class="preview"
+                     src="<?= $editData && $editData['foto_ketua'] ? 'uploads/'.$editData['foto_ketua'] : '' ?>"
+                     style="<?= $editData && $editData['foto_ketua'] ? 'display:block;' : '' ?>">
+            </div>
+
+            <!-- Foto Wakil -->
+            <div class="mb-4">
+                <label class="label-title mb-2">Foto Wakil :</label>
+
+                <div class="upload-box" onclick="document.getElementById('fotoWakil').click()">
+                    <i class="fa-solid fa-upload fs-2" style="color:#b04b0f;"></i>
+                    <p class="mt-2">Upload foto maksimal 10MB</p>
+                </div>
+                <input type="file" id="fotoWakil" name="foto_wakil" accept="image/*" class="d-none">
+
+                <img id="previewWakil" class="preview"
+                     src="<?= $editData && $editData['foto_wakil'] ? 'uploads/'.$editData['foto_wakil'] : '' ?>"
+                     style="<?= $editData && $editData['foto_wakil'] ? 'display:block;' : '' ?>">
             </div>
 
             <div class="actions">
@@ -184,11 +200,15 @@ body {
     </div>
 </div>
 
-
 <script>
-// Preview Image
-document.getElementById('fotoInput').addEventListener('change', function(e){
-    const img = document.getElementById('previewImg');
+document.getElementById('foto').addEventListener('change', function(e) {
+    const img = document.getElementById('previewKetua');
+    img.src = URL.createObjectURL(e.target.files[0]);
+    img.style.display = "block";
+});
+
+document.getElementById('fotoWakil').addEventListener('change', function(e) {
+    const img = document.getElementById('previewWakil');
     img.src = URL.createObjectURL(e.target.files[0]);
     img.style.display = "block";
 });
