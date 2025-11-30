@@ -123,12 +123,7 @@
 <body>
 
 <div class="logo-area">
-    <svg viewBox="0 0 100 100">
-        <circle cx="50" cy="50" r="45" fill="none" stroke="#d64933" stroke-width="3"/>
-        <circle cx="50" cy="35" r="12" fill="#d64933"/>
-        <path d="M 30 70 Q 50 55 70 70" fill="none" stroke="#d64933" stroke-width="3"/>
-    </svg>
-    <div class="logo-text">SISVORA</div>
+    <img src="img/logo.png" alt="SISVORA Logo" style="max-width:150px; display:block; margin:auto;">
 </div>
 
 <div class="title">
