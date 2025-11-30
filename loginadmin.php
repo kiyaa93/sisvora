@@ -18,21 +18,34 @@
         color:#333;
     }
 
-    /* Logo Area */
     .logo-area {
-        text-align:center;
-        margin-bottom:40px;
-    }
-    .logo-area svg {
-        width:90px;
-        height:90px;
-    }
-    .logo-text {
-        color:#d66933;
-        font-size:24px;
-        font-weight:700;
-        margin-top:10px;
-    }
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.hero-logo-img {
+    width: 120px;
+    height: auto;
+    display: block;
+}
+
+.main-logo {
+    width: 110px;  /* bebas atur */
+}
+
+.logo-text {
+    font-size: 32px;
+    font-weight: bold;
+    color: #d64933;
+    text-align: center;
+    margin-top: 5px;
+}
+
 
     /* Title */
     .title {
@@ -123,12 +136,15 @@
 <body>
 
 <div class="logo-area">
-    <svg viewBox="0 0 100 100">
-        <circle cx="50" cy="50" r="45" fill="none" stroke="#d64933" stroke-width="3"/>
-        <circle cx="50" cy="35" r="12" fill="#d64933"/>
-        <path d="M 30 70 Q 50 55 70 70" fill="none" stroke="#d64933" stroke-width="3"/>
-    </svg>
-    <div class="logo-text">SISVORA</div>
+  <div class="logo-area">
+    <img src="img/logo.png" alt="SISVORA Logo" class="hero-logo-img main-logo">
+</div>
+
+</div>
+
+</div>
+
+</div>
 </div>
 
 <div class="title">
