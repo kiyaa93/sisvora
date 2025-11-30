@@ -25,21 +25,21 @@ if (isset($login_success) && $login_success === true) {
         color:#333;
     }
 
-    /* Logo Area */
     .logo-area {
-        text-align:center;
-        margin-bottom:40px;
-    }
-    .logo-area svg {
-        width:90px;
-        height:90px;
-    }
-    .logo-text {
-        color:#d66933;
-        font-size:24px;
-        font-weight:700;
-        margin-top:10px;
-    }
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.hero-logo-img {
+    width: 120px;
+    height: auto;
+    display: block;
+}
 
     /* Title */
     .title {
@@ -129,9 +129,15 @@ if (isset($login_success) && $login_success === true) {
 </head>
 
 <body>
+<<<<<<< HEAD
 
 <div class="logo-area">
     <img src="img/logo.png" alt="SISVORA Logo" style="max-width:150px; display:block; margin:auto;">
+=======
+</div><div class="logo-area">
+  <div class="logo-area">
+    <img src="img/logo.png" alt="SISVORA Logo" class="hero-logo-img main-logo">
+>>>>>>> d9a5d8eafb8c2b9bf6ce497eb60278d6f383a933
 </div>
 
 
