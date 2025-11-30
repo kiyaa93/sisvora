@@ -405,7 +405,7 @@ $q = $conn->query("SELECT * FROM candidates_admin ORDER BY urutan_kandidat ASC")
         <table class="table table-bordered align-middle text-center">
             <thead>
                 <tr>
-                    <th>#</th>
+                    <th>NO</th>
                     <th>Nama Ketua</th>
                     <th>Nama Wakil</th>
                     <th>Foto Ketua</th>

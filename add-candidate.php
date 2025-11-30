@@ -126,8 +126,8 @@ body {
             <div class="row mb-3">
                 <div class="col-md-4 label-title">Nama Ketua :</div>
                 <div class="col-md-8">
-                    <input type="text" name="nama_kandidat" class="form-control"
-                           value="<?= $editData['nama_kandidat'] ?? '' ?>" required>
+                    <input type="text" name="nama_ketua" class="form-control"
+                           value="<?= $editData['nama_ketua'] ?? '' ?>" required>
                 </div>
             </div>
 
@@ -161,12 +161,12 @@ body {
             <div class="mb-4">
                 <label class="label-title mb-2">Foto Ketua :</label>
 
-                <div class="upload-box" onclick="document.getElementById('foto').click()">
+                <div class="upload-box" onclick="document.getElementById('foto_ketua').click()">
                     <i class="fa-solid fa-upload fs-2" style="color:#b04b0f;"></i>
                     <p class="mt-2">Upload foto maksimal 10MB</p>
                 </div>
 
-                <input type="file" id="foto" name="foto" accept="image/*" class="d-none">
+                <input type="file" id="foto_ketua" name="foto_ketua" accept="image/*" class="d-none">
 
                 <img id="previewKetua" class="preview"
                      src="<?= $editData && $editData['foto_ketua'] ? 'uploads/'.$editData['foto_ketua'] : '' ?>"
@@ -177,11 +177,11 @@ body {
             <div class="mb-4">
                 <label class="label-title mb-2">Foto Wakil :</label>
 
-                <div class="upload-box" onclick="document.getElementById('fotoWakil').click()">
+                <div class="upload-box" onclick="document.getElementById('foto_wakil').click()">
                     <i class="fa-solid fa-upload fs-2" style="color:#b04b0f;"></i>
                     <p class="mt-2">Upload foto maksimal 10MB</p>
                 </div>
-                <input type="file" id="fotoWakil" name="foto_wakil" accept="image/*" class="d-none">
+                <input type="file" id="foto_wakil" name="foto_wakil" accept="image/*" class="d-none">
 
                 <img id="previewWakil" class="preview"
                      src="<?= $editData && $editData['foto_wakil'] ? 'uploads/'.$editData['foto_wakil'] : '' ?>"
@@ -201,13 +201,13 @@ body {
 </div>
 
 <script>
-document.getElementById('foto').addEventListener('change', function(e) {
+document.getElementById('foto_ketua').addEventListener('change', function(e) {
     const img = document.getElementById('previewKetua');
     img.src = URL.createObjectURL(e.target.files[0]);
     img.style.display = "block";
 });
 
-document.getElementById('fotoWakil').addEventListener('change', function(e) {
+document.getElementById('foto_wakil').addEventListener('change', function(e) {
     const img = document.getElementById('previewWakil');
     img.src = URL.createObjectURL(e.target.files[0]);
     img.style.display = "block";
