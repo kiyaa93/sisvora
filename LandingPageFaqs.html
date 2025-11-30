@@ -72,12 +72,16 @@
         transform:rotate(180deg);
     }
 
+    /* ===============================  FOOTER
+================================ */
+/* ================================
+   FOOTER FIX RAPI KE SAMPING
+================================ */
 footer {
-      background:#f5d5b8;
-      padding:30px 50px;
-    }
+  background: #f5d5b8;
+  padding: 60px 50px;
+}
 
-<<<<<<< HEAD
 .footer-content {
   max-width: 1200px;
   margin: auto;
@@ -86,123 +90,84 @@ footer {
   align-items: flex-start;
   gap: 40px;
 }
-=======
-    .footer-container {
-      max-width:1200px;
-      margin:auto;
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-start;
-      gap:60px;
-    }
->>>>>>> 7ac8145208e1abe6f77a8c1be1b13a60d68c6d90
 
-    /* LEFT */
-    .footer-left img {
-      width:90px;
-      margin-bottom:10px;
-    }
-    .footer-left p {
-      font-size:14px;
-      color:#333;
-      margin-bottom:15px;
-    }
+/* LEFT SIDE */
+.footer-left {
+  flex: 1.2; /* dibuat sedikit lebih lebar */
+}
 
-   .social-icons img {
-    width: 38px;
-    height: 38px;
-    padding: 8px;
-    background: #e86f3e; /* sama seperti strength-icon */
-    border-radius: 50%;
-    cursor: pointer;
-    transition: .3s;
-    box-shadow: 0 4px 10px rgba(0,0,0,.15);
+.footer-left img {
+  width: 90px;
+  margin-bottom: 10px;
+}
+
+.footer-left p {
+  font-size: 14px;
+  color: #333;
+  margin: 10px 0 20px;
+}
+
+/* SOCIAL ICONS */
+.social-icons {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.social-icons img {
+  width: 38px;
+  height: 38px;
+  padding: 8px;
+  background: #e86f3e;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: .3s;
+  box-shadow: 0 4px 10px rgba(0,0,0,.15);
+}
+
+.social-icons img:hover {
+  transform: scale(1.1);
+  background: #d35f32;
+}
+
+/* COLUMNS */
+.footer-column {
+  flex: 1;
+  min-width: 180px; /* biar tidak mepet */
+}
+
+.footer-column h3 {
+  color: #a64721;
+  font-size: 18px;
+  margin-bottom: 14px;
+}
+
+.footer-column a,
+.footer-column p {
+  display: block;
+  color: #333;
+  font-size: 14px;
+  text-decoration: none;
+  margin-bottom: 8px;
+}
+
+.footer-column a:hover {
+  color: #d64933;
+}
+
+/* ================================
+   RESPONSIVE
+================================ */
+@media (max-width: 768px) {
+  .footer-content {
+    flex-direction: column;
+    gap: 40px;
+  }
+}
+  footer {
+    padding: 40px 30px;
   }
 
-   .social-icons img:hover { 
-    transform: scale(1.1);
-    background: #d35f32; /* versi hover sedikit gelap */
-   }
-
-    /* FOOTER COLUMN */
-    .footer-column h3 {
-      color:#a64721;
-      font-size:17px;
-      margin-bottom:12px;
-    }
-    .footer-column a,
-    .footer-column p {
-      display:block;
-      color:#333;
-      font-size:14px;
-      text-decoration:none;
-      margin-bottom:8px;
-    }
-    .footer-column a:hover {
-      color:#d64933;
-    }
-
-    .social-icons img {
-    width: 38px;
-    height: 38px;
-    padding: 8px;
-    background: #e86f3e; /* sama seperti strength-icon */
-    border-radius: 50%;
-    cursor: pointer;
-    transition: .3s;
-    box-shadow: 0 4px 10px rgba(0,0,0,.15);
-  }
-
-   .social-icons img:hover { 
-    transform: scale(1.1);
-    background: #d35f32; /* versi hover sedikit gelap */
-   }
-    
-    .notification{
-        position:fixed;
-        top:20px;
-        right:20px;
-        background:#4caf50;
-        color:#fff;
-        padding:15px 25px;
-        border-radius:8px;
-        box-shadow:0 4px 12px rgba(0,0,0,.2);
-        z-index:1000;
-        display:none
-    }
-    .notification.show{
-        display:block;
-        animation:slideIn .3s
-    }
-
-    @keyframes slideIn{
-        from{
-            transform:translateX(400px);
-            opacity:0
-        }
-        to{
-            transform:translateX(0);
-            opacity:1
-        }
-    }
-
-    @media(max-width:768px){
-        nav{
-            padding:15px 20px;
-            flex-direction:column;
-            gap:15px
-        }
-        .nav-links{
-            flex-wrap:wrap;
-            gap:15px
-        }
-        .about{
-            padding:50px 20px
-        }
-        .strengths-grid{
-            grid-template-columns:1fr
-        }
-    }
 
   </style>
 </head>
@@ -289,7 +254,6 @@ footer {
   </main>
 
   <footer>
-    
     <div class="footer-content">
       <div class="footer-left">
         <img src="./img/logo.png" alt="logo">
