@@ -1069,11 +1069,11 @@ $user_name = trim(
             <?php while ($row = $candidates->fetch_assoc()): ?>
             <div class="candidate-wrapper">
 
-               <div class="candidate-cards-two">
+               <div class="candidate-cards">
             <!-- CARD KETUA -->
             <div class="candidate-card">
                 <div class="candidate-photo">
-                    <img src="upload/<?= $row['foto_ketua'] ?>" alt="<?= $row['nama_ketua'] ?>">
+                    <img src="uploads/<?= $row['foto_ketua'] ?>" alt="<?= $row['nama_ketua'] ?>">
                 </div>
                 <h3 class="candidate-name"><?= $row['nama_ketua'] ?></h3>
                 <p class="candidate-position">Ketua OSIS</p>
@@ -1082,7 +1082,7 @@ $user_name = trim(
             <!-- CARD WAKIL -->
             <div class="candidate-card">
                 <div class="candidate-photo">
-                    <img src="upload/<?= $row['foto_wakil'] ?>" alt="<?= $row['nama_wakil'] ?>">
+                    <img src="uploads/<?= $row['foto_wakil'] ?>" alt="<?= $row['nama_wakil'] ?>">
                 </div>
                 <h3 class="candidate-name"><?= $row['nama_wakil'] ?></h3>
                 <p class="candidate-position">Wakil Ketua OSIS</p>
@@ -1090,7 +1090,7 @@ $user_name = trim(
         </div>
 
         <!-- ACTION BUTTONS -->
-        <div class="candidate-actions-center">
+        <div class="candidate-actions">
             <button class="btn btn-primary" onclick="showVoteAlert(<?= $row['id'] ?>)">VOTE</button>
             <button class="btn btn-secondary" onclick="showDetails(<?= $row['id'] ?>)">VIEW DETAILS</button>
         </div>
