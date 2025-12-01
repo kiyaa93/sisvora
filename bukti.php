@@ -14,7 +14,7 @@ $nis = $_SESSION['user_nis'];
 $sql = $conn->prepare("
     SELECT 
         v.nama, v.nis, v.kelas, v.voted_at,
-        c.nama_kandidat, c.jenis_kandidat,
+        c.nama_ketua, c.urutan_kandidat,
         e.election_name
     FROM voters_admin v
     LEFT JOIN votes_admin va ON va.voter_id = v.nis

@@ -1359,7 +1359,10 @@ $user_name = trim(
                     document.getElementById("detail_misi").innerHTML = data.misi.replace(/\n/g, "<br>");
 
                     document.getElementById("voteFromDetails").onclick = () => {
-                        showVoteAlert(data.id);
+                        closeDetails();
+                        setTimeout(() => {
+                            showVoteAlert(data.id);
+                        }, 200);
                     };
 
                     // OPEN MODAL
