@@ -9,7 +9,18 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $user_id = $_SESSION['user_id'];
-$candidates = $conn->query("SELECT * FROM candidates_admin ORDER BY urutan_kandidat ASC");
+
+// Ambil semua pasangan kandidat (ketua + wakil)
+// Ambil semua kandidat dari DB
+$candidates = $conn->query("SELECT 
+    id,
+    nama_ketua,
+    nama_wakil,
+    foto_ketua,
+    foto_wakil,
+    visi,
+    misi
+FROM candidates_admin ORDER BY id ASC");
 
 // Ambil data user dari login_user berdasarkan ID
 $query = "SELECT * FROM login_user WHERE id = ?";
@@ -25,6 +36,7 @@ if (!$user) {
     exit();
 }
 
+// Simpan NIS user ke session
 $_SESSION['voter_nis'] = $user['nis'];
 
 // Cek status voting di voters_admin berdasarkan NIS
@@ -35,15 +47,19 @@ mysqli_stmt_execute($stmt_check);
 $result_check = mysqli_stmt_get_result($stmt_check);
 $voter_data = mysqli_fetch_assoc($result_check);
 
-// Jika sudah vote, redirect ke bukti
+// Jika sudah vote, redirect ke halaman bukti
 if ($voter_data && $voter_data['status'] === 'Voted') {
     $_SESSION['info'] = "You have already voted!";
     header("Location: bukti.php");
     exit();
 }
 
-// Gabungkan nama lengkap
-$user_name = trim($user['first_name'] . ' ' . ($user['middle_name'] ?? '') . ' ' . $user['last_name']);
+// Gabungkan nama lengkap user
+$user_name = trim(
+    $user['first_name'] . ' ' 
+    . ($user['middle_name'] ?? '') . ' ' 
+    . $user['last_name']
+);
 ?>
 
 <!DOCTYPE html>
@@ -1046,35 +1062,40 @@ $user_name = trim($user['first_name'] . ' ' . ($user['middle_name'] ?? '') . ' '
         <!-- Candidate 01 -->
         <section class="candidate-section">
             <div class="candidate-header">
-                <h2 class="candidate-number">Candidate 01</h2>
+                <h2 class="candidate-number">Candidate List</h2>
                 <p class="candidate-note">You can only vote for one candidate</p>
             </div>
-            <div class="candidate-cards">
-                <?php while ($row = $candidates->fetch_assoc()): ?>
-                <div class="candidate-card">
-                    <div class="candidate-photo">
-                        <img src="upload/<?= $row['foto'] ?>" alt="<?= $row['nama_kandidat'] ?>">
-                    </div>
-                    <h3 class="candidate-name"><?= $row['nama_kandidat'] ?></h3>
-                    <p class="candidate-position"><?= $row['jenis_kandidat'] ?></p>
-                    <div class="candidate-actions">
-                        <button class="btn btn-primary" onclick="showVoteAlert(<?= $row['id'] ?>)">VOTE</button>
-                        <button class="btn btn-secondary" onclick="showDetails(<?= $row['id'] ?>)">View Details</button>
-                    </div>
+
+            <?php while ($row = $candidates->fetch_assoc()): ?>
+            <div class="candidate-wrapper">
+
+               <div class="candidate-cards-two">
+            <!-- CARD KETUA -->
+            <div class="candidate-card">
+                <div class="candidate-photo">
+                    <img src="upload/<?= $row['foto_ketua'] ?>" alt="<?= $row['nama_ketua'] ?>">
                 </div>
-                <div class="candidate-card">
-                    <div class="candidate-photo">
-                        <img src="img/g1.png" alt="Milania Rifa">
-                    </div>
-                    <h3 class="candidate-name">Milania Rifa</h3>
-                    <p class="candidate-position">Vice President Student Council</p>
-                    <div class="candidate-actions">
-                        <button class="btn btn-primary" onclick="showVoteAlert('Milania Rifa')">VOTE</button>
-                        <button class="btn btn-secondary" onclick="showDetails('candidate01')">View Details</button>
-                    </div>
-                </div>
-                <?php endwhile; ?>
+                <h3 class="candidate-name"><?= $row['nama_ketua'] ?></h3>
+                <p class="candidate-position">Ketua OSIS</p>
             </div>
+
+            <!-- CARD WAKIL -->
+            <div class="candidate-card">
+                <div class="candidate-photo">
+                    <img src="upload/<?= $row['foto_wakil'] ?>" alt="<?= $row['nama_wakil'] ?>">
+                </div>
+                <h3 class="candidate-name"><?= $row['nama_wakil'] ?></h3>
+                <p class="candidate-position">Wakil Ketua OSIS</p>
+            </div>
+        </div>
+
+        <!-- ACTION BUTTONS -->
+        <div class="candidate-actions-center">
+            <button class="btn btn-primary" onclick="showVoteAlert(<?= $row['id'] ?>)">VOTE</button>
+            <button class="btn btn-secondary" onclick="showDetails(<?= $row['id'] ?>)">VIEW DETAILS</button>
+        </div>
+            <?php endwhile; ?>
+
         </section>
 
 
@@ -1107,40 +1128,40 @@ $user_name = trim($user['first_name'] . ' ' . ($user['middle_name'] ?? '') . ' '
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M17.5 0C7.83333 0 0 7.83333 0 17.5C0 27.1667 7.83333 35 17.5 35C27.1667 35 35 27.1667 35 17.5C35 7.83333 27.1667 0 17.5 0ZM23.3333 21.875L21.875 23.3333L17.5 18.9583L13.125 23.3333L11.6667 21.875L16.0417 17.5L11.6667 13.125L13.125 11.6667L17.5 16.0417L21.875 11.6667L23.3333 13.125L18.9583 17.5L23.3333 21.875Z" fill="#09244B"/>
                 </svg>
             </button>
+
             <h2 class="details-title">Details</h2>
+
             <div class="candidates-row">
+
                 <div class="candidate-info">
                     <div class="candidate-photo">
-                        <img src="img/b1.png" alt="Malik Chandra Wirata">
+                        <img id="detail_foto_ketua" src="" alt="Ketua">
                     </div>
-                    <h3 class="candidate-name">Malik Chandra Wirata</h3>
+                    <h3 class="candidate-name" id="detail_nama_ketua"></h3>
                     <p class="candidate-label">for</p>
                     <p class="candidate-position">President Student Council</p>
                 </div>
+
                 <div class="candidate-info">
                     <div class="candidate-photo">
-                        <img src="img/g1.png" alt="Milania Rifa">
+                        <img id="detail_foto_wakil" src="" alt="Wakil">
                     </div>
-                    <h3 class="candidate-name">Milania Rifa</h3>
+                    <h3 class="candidate-name" id="detail_nama_wakil"></h3>
                     <p class="candidate-label">for</p>
-                    <p class="candidate-position">VICE President Student</p>
+                    <p class="candidate-position">Vice President Student</p>
                 </div>
             </div>
             <div class="vision-mission">
                 <h3 class="section-title">Vision</h3>
-                <p class="section-content">
-                    To create an inclusive and dynamic student community that promotes academic excellence, 
-                    personal growth, and social responsibility.
-                </p>
+                <p class="section-content" id="detail_visi"></p>
+
                 <h3 class="section-title">Mission</h3>
-                <p class="section-content">
-                    1. Enhance student engagement through diverse programs and activities<br>
-                    2. Foster a culture of collaboration and mutual respect<br>
-                    3. Advocate for student rights and welfare<br>
-                    4. Bridge communication between students and administration
-                </p>
+                <p class="section-content" id="detail_misi"></p>
             </div>
-            <button class="btn btn-primary details-vote-btn" onclick="showVoteAlertFromDetails()">VOTE(<?= $row['id'] ?>)</button>
+
+            <button id="voteFromDetails" class="btn btn-primary details-vote-btn">
+            VOTE
+            </button>
         </div>
     </div>
 
@@ -1323,14 +1344,31 @@ $user_name = trim($user['first_name'] . ' ' . ($user['middle_name'] ?? '') . ' '
             document.getElementById("locText").innerText = pos.coords.latitude + ", " + pos.coords.longitude;
         });
 
-        // Show Details Modal
-        function showDetails(candidateId) {
-            document.getElementById('detailsModal').classList.add('active');
+        function showDetails(id) {
+            fetch("fetch_details.php?id=" + id)
+                .then(res => res.json())
+                .then(data => {
+
+                    document.getElementById("detail_foto_ketua").src = "upload/" + data.foto_ketua;
+                    document.getElementById("detail_foto_wakil").src = "upload/" + data.foto_wakil;
+
+                    document.getElementById("detail_nama_ketua").innerText = data.nama_ketua;
+                    document.getElementById("detail_nama_wakil").innerText = data.nama_wakil;
+
+                    document.getElementById("detail_visi").innerText = data.visi;
+                    document.getElementById("detail_misi").innerHTML = data.misi.replace(/\n/g, "<br>");
+
+                    document.getElementById("voteFromDetails").onclick = () => {
+                        showVoteAlert(data.id);
+                    };
+
+                    // OPEN MODAL
+                    document.getElementById("detailsModal").classList.add("active");
+                });
         }
 
-        // Close Details
-        function closeDetails() {
-            document.getElementById('detailsModal').classList.remove('active');
+            function closeDetails() {
+            document.getElementById("detailsModal").classList.remove("active");
         }
 
         // Show Vote Alert from Details Modal

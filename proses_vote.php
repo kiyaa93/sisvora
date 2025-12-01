@@ -2,17 +2,17 @@
 session_start();
 include 'config.php';
 
-// Wajib ada session NIS
+// Pastikan session ada
 if (!isset($_SESSION['voter_nis'])) {
-    echo json_encode(["status" => "error", "message" => "Session hilang. Login ulang."]);
+    echo json_encode(["status" => "error", "message" => "Session hilang, silakan login ulang"]);
     exit;
 }
 
 $nis = $_SESSION['voter_nis'];
-$candidateID = $_POST['candidate_id'];
+$candidateID = intval($_POST['candidate_id']);
 $electionID = 1;
 
-// Ambil voter ID dari tabel voters_admin
+// Ambil data voter
 $q = $conn->prepare("SELECT id, status FROM voters_admin WHERE nis = ?");
 $q->bind_param("s", $nis);
 $q->execute();
@@ -25,13 +25,22 @@ if (!$voter) {
 
 $voterID = $voter['id'];
 
-// Cek kalau sudah vote
+// Cek apakah sudah voting
 if ($voter['status'] === "Voted") {
-    echo json_encode(["status" => "error", "message" => "Anda sudah voting"]);
+    echo json_encode(["status" => "error", "message" => "Anda sudah vote"]);
     exit;
 }
 
-// Insert vote ke DB
+// Cek validasi kandidat
+$checkC = $conn->prepare("SELECT id FROM candidates_admin WHERE id = ?");
+$checkC->bind_param("i", $candidateID);
+$checkC->execute();
+if ($checkC->get_result()->num_rows === 0) {
+    echo json_encode(["status" => "error", "message" => "Kandidat tidak valid"]);
+    exit;
+}
+
+// Simpan vote
 $save = $conn->prepare("
     INSERT INTO votes_admin (voter_id, candidate_id, election_id)
     VALUES (?, ?, ?)
@@ -40,11 +49,10 @@ $save->bind_param("iii", $voterID, $candidateID, $electionID);
 
 if ($save->execute()) {
 
-    // Update status voter
     $up = $conn->prepare("
-        UPDATE voters_admin
-        SET status='Voted', voted_at=NOW()
-        WHERE id = ?
+        UPDATE voters_admin 
+        SET status='Voted', voted_at=NOW() 
+        WHERE id = ? LIMIT 1
     ");
     $up->bind_param("i", $voterID);
     $up->execute();

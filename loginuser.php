@@ -1,11 +1,7 @@
-<?php 
-session_start();
-
-if (isset($login_success) && $login_success === true) {
-    if (isset($data['nis'])) {
-        $_SESSION['nis'] = $data['nis'];
+<?php session_start(); 
+    if ($login_success) {
+    $_SESSION['nis'] = $data['nis']; 
     }
-}
 ?>
 
 <!DOCTYPE html>
@@ -25,21 +21,21 @@ if (isset($login_success) && $login_success === true) {
         color:#333;
     }
 
+    /* Logo Area */
     .logo-area {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
-.hero-logo-img {
-    width: 120px;
-    height: auto;
-    display: block;
-}
+        text-align:center;
+        margin-bottom:40px;
+    }
+    .logo-area svg {
+        width:90px;
+        height:90px;
+    }
+    .logo-text {
+        color:#d66933;
+        font-size:24px;
+        font-weight:700;
+        margin-top:10px;
+    }
 
     /* Title */
     .title {
@@ -129,17 +125,15 @@ if (isset($login_success) && $login_success === true) {
 </head>
 
 <body>
-<<<<<<< HEAD
 
 <div class="logo-area">
-    <img src="img/logo.png" alt="SISVORA Logo" style="max-width:150px; display:block; margin:auto;">
-=======
-</div><div class="logo-area">
-  <div class="logo-area">
-    <img src="img/logo.png" alt="SISVORA Logo" class="hero-logo-img main-logo">
->>>>>>> d9a5d8eafb8c2b9bf6ce497eb60278d6f383a933
+    <svg viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="45" fill="none" stroke="#d64933" stroke-width="3"/>
+        <circle cx="50" cy="35" r="12" fill="#d64933"/>
+        <path d="M 30 70 Q 50 55 70 70" fill="none" stroke="#d64933" stroke-width="3"/>
+    </svg>
+    <div class="logo-text">SISVORA</div>
 </div>
-
 
 <div class="title">
     <h2>Welcome Back!</h2>
