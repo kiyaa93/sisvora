@@ -128,7 +128,7 @@ $user_name = trim(
 
         /* Navbar Styles */
         .navbar {
-            background-color: var(--beige-bg);
+            background-color: #f7f1e5;
             padding: 1rem 2rem;
             position: fixed;
             top: 0;
@@ -424,6 +424,7 @@ $user_name = trim(
             justify-content: center;
             gap: clamp(15px, 2.5vw, 30px);
             flex-wrap: wrap;
+            margin: 30px 0;
         }
 
         .btn {
