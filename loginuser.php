@@ -1,7 +1,6 @@
-<?php session_start(); 
-    if ($login_success) {
-    $_SESSION['nis'] = $data['nis']; 
-    }
+<?php
+session_start();
+require "config.php";
 ?>
 
 <!DOCTYPE html>
